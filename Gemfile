@@ -51,17 +51,31 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+
+  # testing framework
+  gem "rspec-rails"
+
+  # in development will generate factories instead of fixtures in generators
+  gem "factory_bot_rails", "~> 6.5"
 end
 
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
-  gem "web-console"
-
   gem "bump"
+  gem "rubocop", require: false
+  gem "rubocop-capybara", require: false
+  gem "rubocop-factory_bot", require: false
+  gem "rubocop-performance", require: false
+  gem "rubocop-rspec", require: false
+  gem "rubocop-rspec_rails", require: false
+  gem "web-console"
 end
 
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
-  gem "capybara"
+  # one liners for common tests
+  gem "capybara", "~> 3.40"
+  gem "rails-controller-testing"
   gem "selenium-webdriver"
+  gem "shoulda-matchers", "~> 6.0"
 end
