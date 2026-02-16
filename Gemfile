@@ -57,6 +57,9 @@ group :development, :test do
 
   # in development will generate factories instead of fixtures in generators
   gem "factory_bot_rails", "~> 6.5"
+
+  # auto-runs tests when files are modified
+  gem "guard-rspec"
 end
 
 group :development do
