@@ -12,4 +12,9 @@ class User < ApplicationRecord
       user.skip_confirmation!
     end
   end
+
+  has_many :friendships, dependent: :destroy
+  has_many :friends, through: :friendships
+  has_many :incoming_friend_requests, class_name: "FriendRequest", dependent: :destroy, inverse_of: :to
+  has_many :outgoing_friend_requests, class_name: "FriendRequest", dependent: :destroy, inverse_of: :from
 end
