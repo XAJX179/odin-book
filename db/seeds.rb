@@ -29,7 +29,7 @@ if Rails.env.development?
   user_attrs.each do |attr|
     user = User.where(email: attr[:email]).first_or_initialize
     user.name ||= attr[:name]
-    user.password ||= Devise.friendly_token[0, 20]
+    user.password ||= (user.name == 'xajx' ? 'xajxxajx' : Devise.friendly_token[0, 20])
     user.confirmed_at ||= Time.current
     user.save!
   end
@@ -39,7 +39,7 @@ if Rails.env.development?
   users.each do |user|
     2.times do |i|
       Post.find_or_create_by!(
-        user: user,
+        author: user,
         title: "Post #{i + 1} by #{user.name}",
         body: "This is a sample post created by #{user.name}"
       )
@@ -49,30 +49,30 @@ if Rails.env.development?
   posts = Post.all
 
   posts.each do |post|
-    (users - [ post.user ]).sample(2).each do |user|
+    (users - [ post.author ]).sample(2).each do |user|
       PostLike.find_or_create_by!(
         post: post,
-        user: user
+        author: user
       )
 
       comment = PostComment.find_or_create_by!(
         post: post,
-        user: user,
-        body: "Nice post #{post.user.name}!"
+        author: user,
+        body: "Nice post #{post.author.name}!"
       )
 
       second_comment = PostComment.find_or_create_by!(
         post: post,
-        user: post.user,
+        author: post.author,
         parent: comment,
         body: "Thanks #{user.name}!"
       )
 
       PostComment.find_or_create_by!(
         post: post,
-        user: user,
+        author: user,
         parent: second_comment,
-        body: " :) bye ! #{post.user.name}!"
+        body: " :) bye ! #{post.author.name}!"
       )
     end
   end

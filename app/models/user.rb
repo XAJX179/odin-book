@@ -17,7 +17,7 @@ class User < ApplicationRecord
   has_many :friends, through: :friendships
   has_many :incoming_friend_requests, class_name: "FriendRequest", dependent: :destroy, inverse_of: :to
   has_many :outgoing_friend_requests, class_name: "FriendRequest", dependent: :destroy, inverse_of: :from
-  has_many :posts, dependent: :destroy
-  has_many :post_likes, dependent: :destroy
-  has_many :post_comments, dependent: :destroy
+  has_many :posts, dependent: :destroy, inverse_of: :author
+  has_many :post_likes, dependent: :destroy, inverse_of: :author
+  has_many :post_comments, dependent: :destroy, inverse_of: :author
 end
