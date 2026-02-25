@@ -1,0 +1,16 @@
+<%= turbo_stream.append "posts" do %>
+  <% @posts.each do |post| %>
+    <%= render post %>
+  <% end %>
+<% end %>
+
+<%= turbo_stream.replace "loader" do %>
+  <% shift = Post::LIMIT %>
+  <%= turbo_frame_tag "loader",
+  loading: "lazy",
+  src: load_posts_url(offset: @offset.to_i + shift, format: "turbo_stream") do %>
+    <p>
+      Loading more...
+    </p>
+  <% end %>
+<% end %>
