@@ -1,5 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe PostComment, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe '#create' do
+    it 'can create new post comment' do
+      create(:post_comment)
+    end
+  end
 end

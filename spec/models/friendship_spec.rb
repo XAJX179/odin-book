@@ -1,5 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Friendship, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe '#create' do
+    it 'can create new friendship' do
+      create(:friendship)
+    end
+  end
 end
