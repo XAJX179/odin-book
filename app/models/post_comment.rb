@@ -5,6 +5,4 @@ class PostComment < ApplicationRecord
   has_many :replies, class_name: "PostComment", inverse_of: :parent, dependent: :destroy
 
   validates :body, presence: true, length: { within: 1..900 }
-  validates :author, presence: true
-  validates :post, presence: true
 end

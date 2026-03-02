@@ -17,8 +17,6 @@ RSpec.describe PostComment, type: :model do
   end
 
   describe 'validations' do
-    it { is_expected.to validate_presence_of(:author) }
-    it { is_expected.to validate_presence_of(:post) }
     it {
       is_expected.to validate_length_of(:body)
         .is_at_least(1).is_at_most(900)
