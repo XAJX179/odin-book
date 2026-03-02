@@ -6,4 +6,9 @@ RSpec.describe PostLike, type: :model do
       create(:post_like)
     end
   end
+
+  describe 'associations' do
+    it { is_expected.to belong_to(:author) }
+    it { is_expected.to belong_to(:post) }
+  end
 end

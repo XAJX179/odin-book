@@ -13,6 +13,7 @@ require 'rspec/rails'
 
 require 'devise'
 require_relative 'support/controller_macros'
+require_relative 'support/shoulda_matchers'
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -81,5 +82,5 @@ RSpec.configure do |config|
   config.include Devise::Test::IntegrationHelpers, type: :request
   config.extend ControllerMacros, type: :controller
 
-  config.include Turbo::TestAssertions, type: :view
+  config.include Turbo::TestAssertions
 end

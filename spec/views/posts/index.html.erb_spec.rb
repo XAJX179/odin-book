@@ -15,7 +15,7 @@ RSpec.describe "posts/index.html.erb", type: :view do
 
   it 'has turbo frame for loader' do
     render
-    assert_turbo_frame "loader" do
+    assert_turbo_frame "posts-loader" do
       assert_select "p", text: "Loading..."
     end
   end
