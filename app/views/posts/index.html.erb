@@ -3,7 +3,7 @@
 
 <%= turbo_frame_tag "posts" %>
 
-<%= turbo_frame_tag "loader",
+<%= turbo_frame_tag "posts-loader",
 loading: "lazy",
 src: load_posts_url(format: "turbo_stream") do %>
   <p>
