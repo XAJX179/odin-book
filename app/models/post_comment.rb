@@ -2,5 +2,9 @@ class PostComment < ApplicationRecord
   belongs_to :author, class_name: "User"
   belongs_to :post
   belongs_to :parent, class_name: "PostComment", optional: true
-  has_many :replies, class_name: "PostComment", inverse_of: "parent_id", dependent: :destroy
+  has_many :replies, class_name: "PostComment", inverse_of: :parent, dependent: :destroy
+
+  validates :body, presence: true, length: { within: 1..900 }
+  validates :author, presence: true
+  validates :post, presence: true
 end

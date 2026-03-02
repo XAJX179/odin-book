@@ -20,4 +20,7 @@ class User < ApplicationRecord
   has_many :posts, dependent: :destroy, inverse_of: :author
   has_many :post_likes, dependent: :destroy, inverse_of: :author
   has_many :post_comments, dependent: :destroy, inverse_of: :author
+
+  validates :name, presence: true, length: { within: 3..25 }
+  validates :password, presence: true, length: { within: 8..100 }
 end
