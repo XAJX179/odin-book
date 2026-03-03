@@ -79,7 +79,8 @@ if Rails.env.development?
 
   FriendRequest.find_or_create_by!(
     from: users.first,
-    to: users.last
+    to: users.last,
+    status: :accepted
   )
 
   Friendship.find_or_create_by!(user: users.first, friend: users.last)
