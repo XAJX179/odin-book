@@ -1,5 +1,9 @@
 # Odin Book
 
+[![Version](https://img.shields.io/github/v/tag/xajx179/odin-book?label=version)](https://github.com/XAJX179/odin-book/tags)
+![last-commit](https://img.shields.io/github/last-commit/XAJX179/odin-book?logo=git&label=Last%20Commit)
+[![CI](https://github.com/XAJX179/odin-book/actions/workflows/ci.yml/badge.svg)](https://github.com/XAJX179/odin-book/actions/workflows/ci.yml)
+
 Building single page social media site using https://hotwired.dev/
 
 <!-- live at: https://xajx.alwaysdata.net/odin-book -->
