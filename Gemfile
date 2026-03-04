@@ -81,6 +81,7 @@ group :test do
   gem "rails-controller-testing"
   gem "selenium-webdriver"
   gem "shoulda-matchers", "~> 6.0"
+  gem 'launchy'
 end
 
 gem "devise", "~> 5.0"
