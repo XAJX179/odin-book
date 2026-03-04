@@ -23,7 +23,7 @@ class User < ApplicationRecord
     conditions = warden_conditions.dup
     if (login = conditions.delete(:login))
       where(conditions.to_h).where([ "lower(name) = :value OR lower(email) = :value", { value: login.downcase } ]).first
-    elsif conditions.has_key?(:name) || conditions.has_key?(:email)
+    elsif conditions.key?(:name) || conditions.key?(:email)
       where(conditions.to_h).first
     end
   end
@@ -36,6 +36,6 @@ class User < ApplicationRecord
   has_many :post_likes, dependent: :destroy, inverse_of: :author
   has_many :post_comments, dependent: :destroy, inverse_of: :author
 
-  validates :name, presence: true, length: { within: 3..25 }, uniqueness: { case_sensitive: false }, format: { with: /^[a-zA-Z0-9_.]*$/, multiline: true }
+  validates :name, presence: true, length: { within: 3..25 }, uniqueness: { case_sensitive: false }, format: { with: /\A[a-zA-Z0-9_.]+\z/ }
   validates :password, presence: true, length: { within: 8..100 }
 end

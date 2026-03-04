@@ -78,10 +78,10 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   # one liners for common tests
   gem "capybara", "~> 3.40"
+  gem "launchy"
   gem "rails-controller-testing"
   gem "selenium-webdriver"
   gem "shoulda-matchers", "~> 6.0"
-  gem 'launchy'
 end
 
 gem "devise", "~> 5.0"
