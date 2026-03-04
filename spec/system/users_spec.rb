@@ -11,5 +11,14 @@ RSpec.describe "Users", type: :system do
       click_on "Sign up"
       expect(page).to have_content('Forgot your password?')
     end
+
+    it 'login user' do
+      visit(new_user_session_path)
+      u = create(:user)
+      fill_in "Login", with: u.name
+      fill_in "Password", with: u.password
+      click_on "Log in"
+      expect(page).to have_content('Posts')
+    end
   end
 end
