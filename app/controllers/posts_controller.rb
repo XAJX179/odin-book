@@ -7,6 +7,21 @@ class PostsController < ApplicationController
 
   def index; end
 
+  def user_feed_index; end
+
+  def load_user_feed_posts
+    @offset = params[:offset]
+    @posts = Post.load_user_feed_posts(current_user, @offset || DEFAULT_OFFSET)
+
+    respond_to do |format|
+      if @posts.empty?
+        format.turbo_stream { render "remove_loader" }
+      else
+        format.turbo_stream { render "load_user_feed_posts" }
+      end
+    end
+  end
+
   def load_posts
     @offset = params[:offset]
     @posts = Post.load_posts(@offset || DEFAULT_OFFSET)

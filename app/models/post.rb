@@ -11,4 +11,8 @@ class Post < ApplicationRecord
   def self.load_posts(set_offset, set_limit = LIMIT)
     includes(:author).order(created_at: :desc).limit(set_limit).offset(set_offset)
   end
+
+  def self.load_user_feed_posts(user, set_offset, set_limit = LIMIT)
+    includes(:author).where(author: (user.friend_ids << user.id)).order(created_at: :desc).limit(set_limit).offset(set_offset)
+  end
 end

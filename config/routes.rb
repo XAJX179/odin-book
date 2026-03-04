@@ -4,8 +4,14 @@ Rails.application.routes.draw do
   devise_for :users,
              controllers: { omniauth_callbacks: "users/omniauth_callbacks" },
              path_names: { sign_in: "login", sign_out: "logout" }
+
   root "posts#index"
+  get "/posts" => "posts#index"
   get "/load_posts" => "posts#load_posts"
+
+  get "/user_feed_posts" => "posts#user_feed_index"
+  get "/load_user_feed_posts" => "posts#load_user_feed_posts"
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
