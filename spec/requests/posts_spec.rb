@@ -4,11 +4,11 @@ require 'rails_helper'
 
 RSpec.describe "Posts", type: :request do
   context "GET / with signed in user" do
-    it "returns http ok and render index" do
+    it "returns http moved_permanently and redirects to posts" do
       user = create(:user)
       sign_in user
       get "/"
-      expect(response).to have_http_status(:ok).and render_template(:index)
+      expect(response).to have_http_status(:moved_permanently).and redirect_to('/posts')
     end
 
     it "returns remove loader stream if no posts available!" do
@@ -31,9 +31,9 @@ RSpec.describe "Posts", type: :request do
   end
 
   context "GET / without signed in user" do
-    it "returns http found, redirecting to login page" do
+    it "returns http ok, redirecting to login page" do
       get "/"
-      expect(response).to have_http_status(:found).and redirect_to(new_user_session_url)
+      expect(response).to have_http_status(:ok).and render_template('devise/sessions/new')
     end
   end
 end

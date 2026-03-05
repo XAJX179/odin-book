@@ -5,7 +5,16 @@ Rails.application.routes.draw do
              controllers: { omniauth_callbacks: "users/omniauth_callbacks" },
              path_names: { sign_in: "login", sign_out: "logout" }
 
-  root "posts#index"
+  unauthenticated do
+    as :user do
+      root to: "devise/sessions#new"
+    end
+  end
+
+  authenticated :user do
+    root to: redirect("/posts"), as: :authenticated_root
+  end
+
   get "/posts" => "posts#index"
   get "/load_posts" => "posts#load_posts"
 

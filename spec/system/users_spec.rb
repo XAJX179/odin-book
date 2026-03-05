@@ -9,7 +9,7 @@ RSpec.describe "Users", type: :system do
       fill_in "Password", with: "hello123"
       fill_in "Password confirmation", with: "hello123"
       click_on "Sign up"
-      expect(page).to have_content('Forgot your password?')
+      expect(page).to have_content('A message with a confirmation link has been sent to your email address.')
     end
 
     it 'login user' do
