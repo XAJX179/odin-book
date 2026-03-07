@@ -14,7 +14,7 @@ RSpec.describe "Posts", type: :request do
     it "returns remove loader stream if no posts available!" do
       user = create(:user)
       sign_in user
-      get "/load_posts.turbo_stream"
+      get "/posts/load_posts.turbo_stream"
       expect(response).to have_http_status(:ok)
       assert_turbo_stream(action: "replace", target: "posts-loader")
     end
@@ -23,7 +23,7 @@ RSpec.describe "Posts", type: :request do
       8.times { create(:post) }
       user = create(:user)
       sign_in user
-      get "/load_posts.turbo_stream"
+      get "/posts/load_posts.turbo_stream"
       expect(response).to have_http_status(:ok)
       assert_turbo_stream(action: "append", target: "posts")
       assert_turbo_stream(action: "replace", target: "posts-loader")

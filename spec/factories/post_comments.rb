@@ -3,6 +3,6 @@ FactoryBot.define do
     author
     post
     parent { association :post_comment, parent: nil }
-    sequence(:body, -> { PostComment.count + 1 }) { |n| "post_comment_#{n}_by_#{author.name}" }
+    sequence(:body, -> { PostComment.count + 1 }) { |n| "a_long_post_comment_#{n}_by_#{author.name}" }
   end
 end

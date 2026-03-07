@@ -1,10 +1,13 @@
 class Post < ApplicationRecord
+  include ActionTextValidator
+
   belongs_to :author, class_name: "User"
   has_many :post_likes, dependent: :destroy
   has_many :post_comments, dependent: :destroy
   has_rich_text :body
 
   validates :title, presence: true, length: { within: 10..100 }
+  validate :has_rich_text_content
 
   LIMIT = 5
 

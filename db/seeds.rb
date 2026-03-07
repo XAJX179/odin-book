@@ -38,11 +38,12 @@ if Rails.env.development?
 
   users.each do |user|
     2.times do |i|
-      Post.find_or_create_by!(
+      p = Post.new(
         author: user,
         title: "Post #{i + 1} by #{user.name}",
         body: "This is a sample post created by #{user.name}"
       )
+      p.save!
     end
   end
 
@@ -55,25 +56,28 @@ if Rails.env.development?
         author: user
       )
 
-      comment = PostComment.find_or_create_by!(
+      comment = PostComment.new(
         post: post,
         author: user,
-        body: "Nice post #{post.author.name}!"
+        body: "Nice post really wowwwwwwwww #{post.author.name}!"
       )
+      comment.save!
 
-      second_comment = PostComment.find_or_create_by!(
+      second_comment = PostComment.new(
         post: post,
         author: post.author,
         parent: comment,
-        body: "Thanks #{user.name}!"
+        body: "Thank you vey muchhhhhh for this post #{user.name}!"
       )
+      second_comment.save!
 
-      PostComment.find_or_create_by!(
+      third_comment = PostComment.new(
         post: post,
         author: user,
         parent: second_comment,
-        body: " :) bye ! #{post.author.name}!"
+        body: " :) bye ! #{post.author.name}, keep posting more and more and more!"
       )
+      third_comment.save!
     end
   end
 

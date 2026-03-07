@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe PostComment, type: :model do
+  subject { create(:post_comment) }
   describe '#create' do
     it 'can create new post comment' do
       create(:post_comment)

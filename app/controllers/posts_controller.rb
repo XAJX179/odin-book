@@ -7,6 +7,13 @@ class PostsController < ApplicationController
 
   def index; end
 
+  def show; end
+  def new; end
+  def edit; end
+  def create; end
+  def update; end
+  def destroy; end
+
   def user_feed_index; end
 
   def load_user_feed_posts
