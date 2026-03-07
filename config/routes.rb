@@ -13,13 +13,26 @@ Rails.application.routes.draw do
 
   authenticated :user do
     root to: redirect("/posts"), as: :authenticated_root
+    resources :users, only: %i[index] do
+      resource :profile, only: %i[edit update show]
+      resources :friend_requests, only: %i[index new create show destroy]
+      get  "load_incoming_friend_requests" => "friend_requests#load_incoming_friend_requests",
+           as: :load_incoming_friend_requests
+      get  "load_outgoing_friend_requests" => "friend_requests#load_outgoing_friend_requests",
+           as: :load_outgoing_friend_requests
+      resources :friends, only: %i[index show destroy]
+    end
   end
 
-  get "/posts" => "posts#index"
-  get "/load_posts" => "posts#load_posts"
-
-  get "/user_feed_posts" => "posts#user_feed_index"
-  get "/load_user_feed_posts" => "posts#load_user_feed_posts"
+  resources :posts do
+    resources :comments
+    resources :likes, only: %i[index create destroy]
+    collection do
+      get "/user_feed_posts" => "posts#user_feed_index", as: :user_feed_index
+      get "/load_user_feed_posts" => "posts#load_user_feed_posts", as: :load_user_feed
+      get "/load_posts" => "posts#load_posts", as: :load
+    end
+  end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
