@@ -3,6 +3,6 @@ class PostComment < ApplicationRecord
   belongs_to :post
   belongs_to :parent, class_name: "PostComment", optional: true
   has_many :replies, class_name: "PostComment", inverse_of: :parent, dependent: :destroy
+  has_rich_text :body
 
-  validates :body, presence: true, length: { within: 1..900 }
 end

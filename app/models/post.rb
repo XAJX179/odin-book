@@ -2,9 +2,9 @@ class Post < ApplicationRecord
   belongs_to :author, class_name: "User"
   has_many :post_likes, dependent: :destroy
   has_many :post_comments, dependent: :destroy
+  has_rich_text :body
 
   validates :title, presence: true, length: { within: 10..100 }
-  validates :body, presence: true, length: { within: 20..900 }
 
   LIMIT = 5
 

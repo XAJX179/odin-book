@@ -17,9 +17,5 @@ RSpec.describe PostComment, type: :model do
   end
 
   describe 'validations' do
-    it {
-      is_expected.to validate_length_of(:body)
-        .is_at_least(1).is_at_most(900)
-    }
   end
 end
