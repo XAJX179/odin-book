@@ -95,9 +95,10 @@ jobs:
         run: bundle exec rspec
 
       - name: Keep screenshots from failed system tests
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         if: failure()
         with:
           name: screenshots
           path: tmp/capybara/*.png
           if-no-files-found: ignore
+          archive: false
