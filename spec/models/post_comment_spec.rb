@@ -16,6 +16,6 @@ RSpec.describe PostComment, type: :model do
     }
   end
 
-  describe 'validations' do
+  describe 'validations' do # rubocop:disable Lint/EmptyBlock
   end
 end
