@@ -26,5 +26,13 @@ module OdinBook
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+    config.after_initialize do
+      ActionText::ContentHelper.sanitizer.class.allowed_attributes += %w[
+        controls preload
+      ]
+      ActionText::ContentHelper.sanitizer.class.allowed_tags += %w[
+        source video
+      ]
+    end
   end
 end

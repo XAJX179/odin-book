@@ -67,7 +67,7 @@ if Rails.env.development?
         post: post,
         author: post.author,
         parent: comment,
-        body: "Thank you vey muchhhhhh for this post #{user.name}!"
+        body: "Thank you vey muchhhhhh for this comment #{user.name}!"
       )
       second_comment.save!
 

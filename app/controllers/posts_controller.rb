@@ -7,12 +7,93 @@ class PostsController < ApplicationController
 
   def index; end
 
-  def show; end
-  def new; end
-  def edit; end
-  def create; end
-  def update; end
-  def destroy; end
+  def show
+      @post = Post.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+      flash.now.alert = "Post not found!"
+      render :index, status: :not_found
+  end
+
+  def new
+    @post = Post.new
+  end
+
+  def edit
+    begin
+      @post = Post.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      flash.now.alert = "Post not found!"
+      render :index, status: :not_found
+      return
+    end
+
+    if current_user.posts.include?(@post)
+      render :edit
+    else
+      flash.now.alert = "You can't edit this post! contact author"
+      render :show, status: :forbidden
+    end
+  end
+
+  def create
+    @post = current_user.posts.build(post_params)
+    if @post.save
+      flash.notice = "Post Created!"
+      redirect_to posts_url, status: :see_other
+    else
+      flash.now.alert = "Post Invalid! Could not be Created!"
+      render :new, status: :unprocessable_content
+    end
+  end
+
+  def update
+    begin
+      @post = Post.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      flash.now.alert = "Post not found!"
+      render :index, status: :not_found
+      return
+    end
+
+    if current_user.posts.include?(@post)
+      @post.update(post_params)
+      if @post.valid?
+        flash.notice = "Post updated!"
+        redirect_to post_url, status: :see_other
+      else
+        flash.now.alert = "Post not valid! could not update!"
+        render :edit, status: :unprocessable_content
+      end
+    else
+      flash.now.alert = "You can't update this post! contact author"
+      render :show, status: :forbidden
+    end
+  end
+
+  def destroy
+    begin
+      @post = Post.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      flash.now.alert = "Post not found!"
+      render :index, status: :not_found
+      return
+    end
+
+    if current_user.posts.include?(@post)
+      @post.destroy
+    else
+      flash.now.alert = "You can't delete this post! contact author"
+      render :show, status: :forbidden
+      return
+    end
+
+    if @post.destroyed?
+      flash.now.notice = "Post destroyed !"
+      redirect_to posts_url, status: :see_other
+    else
+      render :show, status: :internal_server_error
+    end
+  end
 
   def user_feed_index; end
 
@@ -40,5 +121,11 @@ class PostsController < ApplicationController
         format.turbo_stream { render "load_posts" }
       end
     end
+  end
+
+  private
+
+  def post_params
+    params.expect(post: %i[title body])
   end
 end

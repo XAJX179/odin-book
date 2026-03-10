@@ -1,0 +1,21 @@
+<h2>
+  title :
+  <%= @post.title %>
+</h2>
+<h3>
+  author :
+  <%= @post.author.name %>
+</h3>
+<p>
+  <%= @post.body %>
+</p>
+<p>
+  posted :
+  <%= @post.created_at %>
+</p>
+
+<% @post.post_comments.each do |comment| %>
+  <%= comment.author.name %>
+  :-
+  <%= comment.body %>
+<% end %>

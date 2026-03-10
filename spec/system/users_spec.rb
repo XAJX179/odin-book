@@ -16,7 +16,7 @@ RSpec.describe "Users", type: :system do
       visit(new_user_session_path)
       u = create(:user)
       fill_in "Login", with: u.name
-      fill_in "Password", with: u.password
+      fill_in "Password", with: "abcdef!@123"
       click_on "Log in"
       expect(page).to have_content('Posts')
     end
