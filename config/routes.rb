@@ -14,13 +14,23 @@ Rails.application.routes.draw do
   authenticated :user do
     root to: redirect("/posts"), as: :authenticated_root
     resources :users, only: %i[index] do
-      resource :profile, only: %i[edit update show]
+      resource :profile, only: %i[edit update show], controller: "users"
       resources :friend_requests, only: %i[index new create show destroy]
-      get  "load_incoming_friend_requests" => "friend_requests#load_incoming_friend_requests",
-           as: :load_incoming_friend_requests
-      get  "load_outgoing_friend_requests" => "friend_requests#load_outgoing_friend_requests",
-           as: :load_outgoing_friend_requests
       resources :friends, only: %i[index show destroy]
+      collection do
+        get "/load_all" => "users#load_all", as: :load_all
+      end
+      member do
+        get "/posts" => "posts#index_by_user", as: :posts_index_for
+        get "/load_posts" => "posts#load_by_user", as: :load_posts_for
+        get "/load_friends" => "friends#load_for_user", as: :load_friends_for
+        get "/incoming_requests" => "friend_requests#incoming_requests", as: :incoming_requests_for
+        get  "load_incoming_requests" => "friend_requests#load_incoming_for_user",
+             as: :load_incoming_requests_for
+        get "/outgoing_requests" => "friend_requests#outgoing_requests", as: :outgoing_requests_for
+        get  "load_outgoing_requests" => "friend_requests#load_outgoing_for_user",
+             as: :load_outgoing_requests_for
+      end
     end
   end
 
@@ -28,9 +38,9 @@ Rails.application.routes.draw do
     resources :comments
     resources :likes, only: %i[index create destroy]
     collection do
-      get "/user_feed_posts" => "posts#user_feed_index", as: :user_feed_index
-      get "/load_user_feed_posts" => "posts#load_user_feed_posts", as: :load_user_feed
-      get "/load_posts" => "posts#load_posts", as: :load
+      get "/load_all" => "posts#load_all", as: :load_all
+      get "/feed" => "posts#feed", as: :feed
+      get "/load_feed" => "posts#load_feed", as: :load_feed
     end
   end
 

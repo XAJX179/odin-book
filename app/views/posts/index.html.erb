@@ -5,7 +5,7 @@
 
 <%= turbo_frame_tag "posts-loader",
 loading: "lazy",
-src: load_posts_url(format: "turbo_stream") do %>
+src: load_all_posts_url(format: "turbo_stream") do %>
   <p>
     Loading...
   </p>

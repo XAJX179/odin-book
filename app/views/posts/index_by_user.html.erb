@@ -1,0 +1,12 @@
+<h1>Posts#index_by_user</h1>
+<p>Find me in app/views/posts/index_by_user.html.erb</p>
+
+<%= turbo_frame_tag "index-by-user-posts" %>
+
+<%= turbo_frame_tag "posts-loader",
+loading: "lazy",
+src: load_posts_for_user_url(format: "turbo_stream") do %>
+  <p>
+    Loading...
+  </p>
+<% end %>

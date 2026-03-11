@@ -95,30 +95,59 @@ class PostsController < ApplicationController
     end
   end
 
-  def user_feed_index; end
+  def feed; end
 
-  def load_user_feed_posts
+  def load_feed
     @offset = params[:offset]
-    @posts = Post.load_user_feed_posts(current_user, @offset || DEFAULT_OFFSET)
+    @posts = Post.load_feed(current_user, @offset || DEFAULT_OFFSET)
 
     respond_to do |format|
       if @posts.empty?
         format.turbo_stream { render "remove_loader" }
       else
-        format.turbo_stream { render "load_user_feed_posts" }
+        format.turbo_stream { render "load_feed" }
       end
     end
   end
 
-  def load_posts
+  def load_all
     @offset = params[:offset]
-    @posts = Post.load_posts(@offset || DEFAULT_OFFSET)
+    @posts = Post.load_all(@offset || DEFAULT_OFFSET)
 
     respond_to do |format|
       if @posts.empty?
         format.turbo_stream { render "remove_loader" }
       else
-        format.turbo_stream { render "load_posts" }
+        format.turbo_stream { render "load_all" }
+      end
+    end
+  end
+
+  def index_by_user
+    user_id = params[:id]
+    @user = User.find(user_id)
+  rescue ActiveRecord::RecordNotFound
+      flash.now.alert = "User not found!"
+      render :index, status: :not_found
+  end
+
+  def load_by_user
+    @offset = params[:offset]
+    user_id = params[:id]
+    begin
+    @user = User.find(user_id)
+    rescue ActiveRecord::RecordNotFound
+      flash.alert = "User not found!"
+      redirect_to posts_url, status: :see_other
+      return
+    end
+    @posts = Post.load_by_user(@user, @offset || DEFAULT_OFFSET)
+
+    respond_to do |format|
+      if @posts.empty?
+        format.turbo_stream { render "remove_loader" }
+      else
+        format.turbo_stream { render "load_by_user" }
       end
     end
   end
