@@ -38,7 +38,20 @@ class User < ApplicationRecord
   has_many :posts, dependent: :destroy, inverse_of: :author
   has_many :post_likes, dependent: :destroy, inverse_of: :author
   has_many :post_comments, dependent: :destroy, inverse_of: :author
+  has_one  :profile, dependent: :destroy
 
   validates :name, presence: true, length: { within: 3..25 }, uniqueness: { case_sensitive: false }, format: { with: /\A[a-zA-Z0-9_.]+\z/ }
   validates :password, presence: true, length: { within: 8..100 }
+
+  after_save_commit :add_profile
+
+  LIMIT = 5
+
+  def self.load_all(set_offset, set_limit = LIMIT)
+    includes(:profile).order(created_at: :desc).limit(set_limit).offset(set_offset)
+  end
+
+  def add_profile
+    create_profile(display_name: name, about: "...")
+  end
 end
