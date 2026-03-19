@@ -2,16 +2,18 @@
 
 # PostsController
 class PostsController < ApplicationController
-  before_action :authenticate_user!
   DEFAULT_OFFSET = 0
 
   def index; end
 
   def show
-      @post = Post.find(params[:id])
-  rescue ActiveRecord::RecordNotFound
+    @post = Post.show(params[:id])
+    if @post.nil?
       flash.now.alert = "Post not found!"
       render :index, status: :not_found
+    else
+      render :show
+    end
   end
 
   def new
@@ -19,9 +21,8 @@ class PostsController < ApplicationController
   end
 
   def edit
-    begin
-      @post = Post.find(params[:id])
-    rescue ActiveRecord::RecordNotFound
+    @post = Post.find(params[:id])
+    if @post.nil?
       flash.now.alert = "Post not found!"
       render :index, status: :not_found
       return

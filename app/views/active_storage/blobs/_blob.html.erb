@@ -1,7 +1,11 @@
 <figure class="attachment attachment--<%= blob.representable? ? "preview" : "file" %> attachment--<%= blob.filename.extension %>">
   <% if blob.representable? %>
     <% if blob.image? %>
-      <%= image_tag blob.representation(resize_to_limit: local_assigns[:in_gallery] ? [ 800, 600 ] : [ 1024, 768 ]) %>
+      <% if blob.filename.extension == 'gif' %>
+        <%= image_tag url_for(blob) %>
+      <% else %>
+        <%= image_tag blob.representation(resize_to_limit: local_assigns[:in_gallery] ? [ 800, 600 ] : [ 1024, 768 ]) %>
+      <% end %>
     <% elsif blob.video? %>
       <%= video_tag url_for(blob),
             controls: true,
