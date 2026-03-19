@@ -11,7 +11,7 @@ Rails.application.routes.draw do
     end
   end
 
-  authenticated :user do
+  authenticate :user do
     root to: redirect("/posts"), as: :authenticated_root
     resources :users, only: %i[index] do
       resource :profile, only: %i[edit update show], controller: "users"
@@ -25,26 +25,26 @@ Rails.application.routes.draw do
         get "/load_friends" => "friends#load_for_user", as: :load_friends_for
       end
     end
-  end
 
-  resources :friend_requests, only: %i[index new create show destroy] do
-    collection do
-      get "/incoming" => "friend_requests#incoming", as: :incoming
-      get "load_incoming" => "friend_requests#load_incoming",
-          as: :load_incoming
-      get "/outgoing" => "friend_requests#outgoing", as: :outgoing
-      get "load_outgoing" => "friend_requests#load_outgoing",
-          as: :load_outgoing
+    resources :friend_requests, only: %i[index new create show destroy] do
+      collection do
+        get "/incoming" => "friend_requests#incoming", as: :incoming
+        get "load_incoming" => "friend_requests#load_incoming",
+            as: :load_incoming
+        get "/outgoing" => "friend_requests#outgoing", as: :outgoing
+        get "load_outgoing" => "friend_requests#load_outgoing",
+            as: :load_outgoing
+      end
     end
-  end
 
-  resources :posts do
-    resources :comments
-    resources :likes, only: %i[index create destroy]
-    collection do
-      get "/load_all" => "posts#load_all", as: :load_all
-      get "/feed" => "posts#feed", as: :feed
-      get "/load_feed" => "posts#load_feed", as: :load_feed
+    resources :posts do
+      resources :comments
+      resources :likes, only: %i[index create destroy]
+      collection do
+        get "/load_all" => "posts#load_all", as: :load_all
+        get "/feed" => "posts#feed", as: :feed
+        get "/load_feed" => "posts#load_feed", as: :load_feed
+      end
     end
   end
 

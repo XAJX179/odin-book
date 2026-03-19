@@ -1,0 +1,15 @@
+<h1>FriendRequests#index</h1>
+<p>Find me in app/views/friend_requests/index.html.erb</p>
+
+<%= link_to "Incoming",
+incoming_friend_requests_url,
+data: {
+  turbo_frame: "friend-requests",
+} %>
+<%= link_to "Outgoing",
+outgoing_friend_requests_url,
+data: {
+  turbo_frame: "friend-requests",
+} %>
+
+<%= turbo_frame_tag "friend-requests", src: incoming_friend_requests_url %>

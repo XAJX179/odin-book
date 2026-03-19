@@ -1,0 +1,16 @@
+<%= turbo_stream.before "friend-requests-loader" do %>
+  <% @friend_requests.each do |friend_request| %>
+    <%= render friend_request %>
+  <% end %>
+<% end %>
+
+<%= turbo_stream.replace "friend-requests-loader" do %>
+  <% shift = FriendRequest::LIMIT %>
+  <%= turbo_frame_tag "friend-requests-loader",
+  loading: "lazy",
+  src: load_outgoing_friend_requests_url(offset: @offset.to_i + shift, format: "turbo_stream") do %>
+    <p>
+      Loading more...
+    </p>
+  <% end %>
+<% end %>

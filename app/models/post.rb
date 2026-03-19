@@ -20,6 +20,10 @@ class Post < ApplicationRecord
   end
 
   def self.load_by_user(user, set_offset, set_limit = LIMIT)
-    includes(:author).where(author: (user.id)).order(created_at: :desc).limit(set_limit).offset(set_offset)
+    includes(:author).where(author: user.id).order(created_at: :desc).limit(set_limit).offset(set_offset)
+  end
+
+  def self.show(id)
+    includes(:author, :post_likes, post_comments: %i[author rich_text_body]).where(id: id).with_rich_text_body_and_embeds.first
   end
 end
