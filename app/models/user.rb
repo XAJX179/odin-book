@@ -43,7 +43,7 @@ class User < ApplicationRecord
   validates :name, presence: true, length: { within: 3..25 }, uniqueness: { case_sensitive: false }, format: { with: /\A[a-zA-Z0-9_.]+\z/ }
   validates :password, presence: true, length: { within: 8..100 }
 
-  after_save_commit :add_profile
+  after_create :add_profile
 
   LIMIT = 5
 

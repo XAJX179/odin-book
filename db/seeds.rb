@@ -26,10 +26,16 @@ if Rails.env.development?
     { name: 'hiss',  email: 'hiss@gmail.com' }
   ]
 
+  USERNAMES_FOR_TEST = %w[xajx hiss xplo viena].freeze
+
   user_attrs.each do |attr|
     user = User.where(email: attr[:email]).first_or_initialize
     user.name ||= attr[:name]
-    user.password ||= (user.name == 'xajx' ? 'xajxxajx' : Devise.friendly_token[0, 20])
+    user.password ||= if USERNAMES_FOR_TEST.include?(user.name)
+      'xajxxajx'
+    else
+      Devise.friendly_token[0, 20]
+    end
     user.confirmed_at ||= Time.current
     user.save!
   end
@@ -81,11 +87,18 @@ if Rails.env.development?
     end
   end
 
-  FriendRequest.find_or_create_by!(
-    from: users.first,
-    to: users.last,
-    status: :accepted
-  )
+  users[1..-2].each do |user|
+    FriendRequest.find_or_create_by!(
+      from: user,
+      to: users.first,
+      status: :pending
+    )
+    FriendRequest.find_or_create_by!(
+      from: users.first,
+      to: user,
+      status: :pending
+    )
+  end
 
   Friendship.find_or_create_by!(user: users.first, friend: users.last)
   Friendship.find_or_create_by!(user: users.last, friend: users.first)

@@ -15,7 +15,7 @@ Rails.application.routes.draw do
     root to: redirect("/posts"), as: :authenticated_root
     resources :users, only: %i[index] do
       resource :profile, only: %i[edit update show], controller: "users"
-      resources :friends, only: %i[index show destroy]
+      resources :friends, only: %i[index destroy]
       collection do
         get "/load_all" => "users#load_all", as: :load_all
       end
@@ -26,7 +26,10 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :friend_requests, only: %i[index new create show destroy] do
+    resources :friend_requests, only: %i[index new create edit update destroy] do
+      member do
+        post "/accept" => "friend_requests#accept", as: :accept
+      end
       collection do
         get "/incoming" => "friend_requests#incoming", as: :incoming
         get "load_incoming" => "friend_requests#load_incoming",
