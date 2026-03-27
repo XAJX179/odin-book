@@ -1,6 +1,10 @@
 <%= turbo_stream.before "friend-requests-loader" do %>
   <% @friend_requests.each do |friend_request| %>
-    <%= render friend_request %>
+    <%= render partial: "friend_request",
+    locals: {
+      friend_request: friend_request,
+      user_id: current_user.id,
+    } %>
   <% end %>
 <% end %>
 

@@ -1,8 +1,39 @@
-<h3>
-  to :
-  <%= friend_request.to.name %>
-</h3>
-<p>
-  status :
-  <%= friend_request.status %>
-</p>
+<div id="<%= dom_id(friend_request) %>">
+  <% if friend_request.to_id == user_id %>
+    <p>
+      from :
+      <%= friend_request.from.name %>
+    </p>
+  <% else %>
+    <p>
+      to :
+      <%= friend_request.to.name %>
+    </p>
+  <% end %>
+  <p>
+    status :
+    <%= friend_request.status %>
+  </p>
+  <% if friend_request.from_id == user_id %>
+    <p>
+      <%= link_to "Cancel",
+      friend_request_path(friend_request),
+      data: {
+        turbo_method: :delete,
+      } %>
+    </p>
+  <% else %>
+    <p>
+      <%= link_to "Accept",
+      accept_friend_request_path(friend_request),
+      data: {
+        turbo_method: :post,
+      } %>
+      <%= link_to "Reject",
+      friend_request_path(friend_request),
+      data: {
+        turbo_method: :delete,
+      } %>
+    </p>
+  <% end %>
+</div>
