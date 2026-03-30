@@ -1,0 +1,26 @@
+<div id="<%=
+  dom_id(Friendship.find_by(friend: friend)) 
+%>">
+  <p>
+    id :
+    <%= friend.id %>
+  </p>
+  <h2>
+    name :
+    <%= friend.profile.display_name %>
+  </h2>
+  <h3>
+    username : @<%= friend.name %>
+  </h3>
+  <p>
+    about :
+    <%= friend.profile.about %>
+  </p>
+  <% if current_user == user %>
+    <%= link_to "Remove",
+    user_friend_path(user.id, friend.id),
+    data: {
+      turbo_method: :delete,
+    } %>
+  <% end %>
+</div>

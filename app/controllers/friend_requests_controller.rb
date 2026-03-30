@@ -20,6 +20,12 @@ class FriendRequestsController < ApplicationController
       return
     end
 
+    if user == current_user
+      flash.now.alert = "Can't send request to yourself!"
+      render :new, status: :not_found
+      return
+    end
+
     existing_reqs = FriendRequest.between(current_user, user)
     if current_user.friends.include? user
       flash.now.alert = "Already friended!"
