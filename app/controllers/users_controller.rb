@@ -55,6 +55,11 @@ class UsersController < ApplicationController
     end
   end
 
+  def search
+    @users = User.search(params[:name])
+    render "search", layout: false
+  end
+
   private
 
   def profile_params

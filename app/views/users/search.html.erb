@@ -1,0 +1,7 @@
+<%= tag.ul id: "search-results" do %>
+  <% if @users.any? %>
+    <%= render partial: "user", collection: @users %>
+  <% else %>
+    <li>No results</li>
+  <% end %>
+<% end %>
