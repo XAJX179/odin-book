@@ -12,18 +12,24 @@ class Post < ApplicationRecord
   LIMIT = 5
 
   def self.load_all(set_offset, set_limit = LIMIT)
-    includes(:author).order(created_at: :desc).limit(set_limit).offset(set_offset)
+    includes(:author, :post_likes, :post_comments).order(created_at: :desc).limit(set_limit).offset(set_offset)
+                                                  .with_rich_text_body_and_embeds
   end
 
   def self.load_feed(user, set_offset, set_limit = LIMIT)
-    includes(:author).where(author: (user.friend_ids << user.id)).order(created_at: :desc).limit(set_limit).offset(set_offset)
+    includes(:author, :post_likes, :post_comments).where(author: (user.friend_ids << user.id))
+                                                  .order(created_at: :desc).limit(set_limit).offset(set_offset)
+                                                  .with_rich_text_body_and_embeds
   end
 
   def self.load_by_user(user, set_offset, set_limit = LIMIT)
-    includes(:author).where(author: user.id).order(created_at: :desc).limit(set_limit).offset(set_offset)
+    includes(:author, :post_likes, :post_comments).where(author: user.id)
+                                                  .order(created_at: :desc).limit(set_limit).offset(set_offset)
+                                                  .with_rich_text_body_and_embeds
   end
 
   def self.show(id)
-    includes(:author, :post_likes, post_comments: %i[author rich_text_body]).where(id: id).with_rich_text_body_and_embeds.first
+    includes(:author, :post_likes, post_comments: %i[author rich_text_body]).where(id: id)
+                                                                            .with_rich_text_body_and_embeds.first
   end
 end

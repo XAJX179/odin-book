@@ -1,19 +1,34 @@
-<h2>
-  title :
-  <%= @post.title %>
-</h2>
-<h3>
-  author :
-  <%= @post.author.name %>
-</h3>
-<p>
-  <%= @post.body %>
-</p>
-<p>
-  posted :
-  <%= @post.created_at %>
-</p>
+<%= link_to "Back", :back %>
 
+<%= turbo_frame_tag "post" do %>
+  <h2>
+    title :
+    <%= @post.title %>
+  </h2>
+  <h3>
+    author :
+    <%= @post.author.name %>
+  </h3>
+  <p>
+    <%= @post.body %>
+  </p>
+  <p>
+    posted :
+    <%= @post.created_at %>
+  </p>
+
+  <p>
+    <% if current_user.posts.include?(@post) %>
+      <%= link_to "Edit", edit_post_url(@post) %>
+      <%= link_to "Delete",
+      post_url(@post),
+      data: {
+        turbo_method: :delete,
+        turbo_frame: "_top",
+      } %>
+    <% end %>
+  </p>
+<% end %>
 <% @post.post_comments.each do |comment| %>
   <%= comment.author.name %>
   :-

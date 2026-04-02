@@ -1,16 +1,19 @@
-<% if !@post.errors.empty? %>
-  <%= @post.errors.full_messages %>
-<% end %>
-<%= form_with model: @post do |f| %>
-  <div>
-    <%= f.label :title %>
-    <%= f.text_field :title %>
-  </div>
-  <div>
-    <%= f.label :body %>
-    <%= f.rich_text_area :body %>
-  </div>
-  <div>
-    <%= f.submit %>
-  </div>
+<%= turbo_frame_tag "post" do %>
+  <% if !@post.errors.empty? %>
+    <%= @post.errors.full_messages %>
+  <% end %>
+  <%= form_with model: @post do |f| %>
+    <div>
+      <%= f.label :title %>
+      <%= f.text_field :title %>
+    </div>
+    <div>
+      <%= f.label :body %>
+      <%= f.rich_text_area :body %>
+    </div>
+    <div>
+      <%= f.submit %>
+    </div>
+  <% end %>
+  <%= link_to "Cancel", @post %>
 <% end %>

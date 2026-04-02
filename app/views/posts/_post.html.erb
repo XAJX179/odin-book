@@ -1,15 +1,27 @@
-<h2>
-  title :
-  <%= post.title %>
-</h2>
-<h3>
-  author :
-  <%= post.author.name %>
-</h3>
-<p>
-  <%= post.body %>
-</p>
-<p>
-  posted :
-  <%= post.created_at %>
-</p>
+<%# for index posts %>
+<%= link_to url_for(post), data: { turbo_frame: "_top" } do %>
+  <div class="post">
+    <h2>
+      title :
+      <%= post.title %>
+    </h2>
+    <h3>
+      author :
+      <%= post.author.name %>
+    </h3>
+    <%= post.body %>
+    <p>
+      likes:
+      <%= post.post_likes.size %>
+    </p>
+    <p>
+      comments:
+      <%= post.post_comments.size %>
+    </p>
+
+    <p>
+      posted :
+      <%= post.created_at %>
+    </p>
+  </div>
+<% end %>
