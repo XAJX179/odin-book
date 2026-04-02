@@ -1,12 +1,9 @@
 <h1>Posts#feed</h1>
 <p>Find me in app/views/posts/feed.html.erb</p>
 
-<%= turbo_frame_tag "feed-posts" %>
-
-<%= turbo_frame_tag "posts-loader",
-loading: "lazy",
-src: load_feed_posts_url(format: "turbo_stream") do %>
-  <p>
-    Loading...
-  </p>
+<%= turbo_frame_tag "posts" do %>
+  <%= turbo_frame_tag "posts-loader",loading: "lazy",
+                                    src: load_feed_posts_url(format: "turbo_stream") do %>
+    <%= render "shared/posts/loader" %>
+  <% end %>
 <% end %>

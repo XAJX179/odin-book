@@ -1,4 +1,4 @@
-<%= turbo_stream.append "posts" do %>
+<%= turbo_stream.before "posts-loader" do %>
   <% @posts.each do |post| %>
     <%= render post %>
   <% end %>
@@ -9,8 +9,6 @@
   <%= turbo_frame_tag "posts-loader",
   loading: "lazy",
   src: load_all_posts_url(offset: @offset.to_i + shift, format: "turbo_stream") do %>
-    <p>
-      Loading more...
-    </p>
+    <%= render "shared/posts/loader" %>
   <% end %>
 <% end %>

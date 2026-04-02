@@ -96,6 +96,7 @@ class PostsController < ApplicationController
     end
   end
 
+  def all; end
   def feed; end
 
   def load_feed
