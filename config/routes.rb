@@ -18,6 +18,7 @@ Rails.application.routes.draw do
       resources :friends, only: %i[index destroy]
       collection do
         get "/load_all" => "users#load_all", as: :load_all
+        get :search
       end
       member do
         get "/posts" => "posts#index_by_user", as: :posts_index_for

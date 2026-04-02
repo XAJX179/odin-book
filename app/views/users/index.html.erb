@@ -1,7 +1,21 @@
-<h1>Users#index</h1>
-<p>Find me in app/views/users/index.html.erb</p>
+<%= tag.div data: {
+              controller: "search",
+              search_url_value: search_users_url,
+              }  do %>
 
-<%= turbo_frame_tag "users" %>
+  <%= text_field_tag :name,
+  "",
+  placeholder: "Search people by name",
+  data: {
+    action: "keyup->search#fetchResults",
+    search_target: "nameField",
+  },
+  autofocus: true,
+  autocomplete: "off" %>
+  <div data-search-target="results"></div>
+<% end %>
+
+<%= tag.ul id: "users" %>
 
 <%= turbo_frame_tag "users-loader",
 loading: "lazy",

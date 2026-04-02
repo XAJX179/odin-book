@@ -51,6 +51,11 @@ class User < ApplicationRecord
     includes(:profile).order(created_at: :desc).limit(set_limit).offset(set_offset)
   end
 
+  def self.search(name)
+    where("name ILIKE ?", "%#{User.sanitize_sql_like(name)}%")
+      .includes(:profile).order(created_at: :desc).limit(10)
+  end
+
   def add_profile
     create_profile(display_name: name, about: "...")
   end
