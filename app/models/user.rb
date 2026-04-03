@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  require "open-uri"
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -14,12 +15,33 @@ class User < ApplicationRecord
   end
 
   def self.from_omniauth(auth)
-    find_or_create_by(provider: auth.provider, uid: auth.uid) do |user|
+    user = find_or_create_by(provider: auth.provider, uid: auth.uid) do |user|
       user.email = auth.info.email
       user.password = Devise.friendly_token[0, 20]
       user.name = auth.info.name + "_from_#{auth.provider}"
       user.skip_confirmation!
     end
+    size_query = if auth.provider == "discord"
+                   "?size=256"
+    else
+                   "&size=256"
+    end
+    image_url = auth.info.image + size_query
+    Rails.logger.info(image_url)
+    begin
+      file = URI.parse(image_url).open
+      user.profile ||= user.build_profile
+      user.profile.avatar.attach(
+        io: file,
+        filename: "avatar-#{user.id}.png",
+        content_type: file.content_type
+      )
+
+      user.profile.save!
+    rescue StandardError => e
+      Rails.logger.error "Avatar download/attach failed: #{e.message}"
+    end
+    user
   end
 
   def self.find_for_database_authentication(warden_conditions)
@@ -48,12 +70,12 @@ class User < ApplicationRecord
   LIMIT = 5
 
   def self.load_all(set_offset, set_limit = LIMIT)
-    includes(:profile).order(created_at: :desc).limit(set_limit).offset(set_offset)
+    includes(profile: { avatar_attachment: :blob }).order(created_at: :desc).limit(set_limit).offset(set_offset)
   end
 
   def self.search(name)
     where("name ILIKE ?", "%#{User.sanitize_sql_like(name)}%")
-      .includes(:profile).order(created_at: :desc).limit(10)
+      .includes(profile: { avatar_attachment: :blob }).order(created_at: :desc).limit(10)
   end
 
   def add_profile

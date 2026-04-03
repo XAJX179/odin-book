@@ -4,6 +4,11 @@
   <%= @profile.errors.full_messages %>
 <% end %>
 <%= form_with model: @profile, url: :user_profile do |f| %>
+
+  <div>
+    <%= f.label :avatar %>
+    <%= f.file_field :avatar %>
+  </div>
   <div>
     <%= f.label :display_name %>
     <%= f.text_field :display_name %>

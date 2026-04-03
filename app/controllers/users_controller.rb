@@ -63,6 +63,6 @@ class UsersController < ApplicationController
   private
 
   def profile_params
-    params.expect(profile: %i[display_name about])
+    params.expect(profile: %i[display_name about avatar])
   end
 end
