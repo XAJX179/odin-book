@@ -11,8 +11,6 @@ Layout:
   Enabled: true
 Lint:
   Enabled: true
-Metrics:
-  Enabled: true
 Naming:
   Enabled: true
 Performance:
