@@ -21,8 +21,9 @@ class PostsController < ApplicationController
   end
 
   def edit
-    @post = Post.find(params[:id])
-    if @post.nil?
+    begin
+      @post = Post.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
       flash.now.alert = "Post not found!"
       render :index, status: :not_found
       return

@@ -5,29 +5,116 @@ require 'rails_helper'
 RSpec.describe "Posts", type: :request do
   context "with signed in user" do
     describe '#index' do
-      it "returns http moved_permanently and redirects to posts" do
-        user = create(:user)
-        sign_in user
-        get "/"
-        expect(response).to have_http_status(:moved_permanently).and redirect_to(posts_url)
+      context 'on root path' do
+        it "returns http moved_permanently and redirects to /posts" do
+          user = create(:user)
+          sign_in user
+          get root_path
+          expect(response).to have_http_status(:moved_permanently).and redirect_to(posts_url)
+        end
       end
 
-      it "returns remove loader stream if no posts available!" do
-        user = create(:user)
-        sign_in user
-        get "/posts/load_posts.turbo_stream"
-        expect(response).to have_http_status(:ok)
-        assert_turbo_stream(action: "replace", target: "posts-loader")
+      context 'on /posts' do
+        it "returns http ok and renders :index" do
+          user = create(:user)
+          sign_in user
+          get posts_url
+          expect(response).to have_http_status(:ok).and render_template(:index)
+        end
       end
-
-      it "returns load post stream and replace loader with new offset if posts available!" do
-        8.times { create(:post) }
-        user = create(:user)
-        sign_in user
-        get "/posts/load_posts.turbo_stream"
-        expect(response).to have_http_status(:ok)
-        assert_turbo_stream(action: "append", target: "posts")
-        assert_turbo_stream(action: "replace", target: "posts-loader")
+    end
+    describe '#all' do
+      it "returns http ok and renders :all" do
+          user = create(:user)
+          sign_in user
+          get all_posts_url
+          expect(response).to have_http_status(:ok).and render_template(:all)
+      end
+    end
+    describe '#load_all' do
+      it "returns http ok and performs turbo_stream actions" do
+          8.times { create(:post) }
+          user = create(:user)
+          sign_in user
+          get load_all_posts_url(format: "turbo_stream")
+          expect(response).to have_http_status(:ok).and render_template(:load_all)
+          assert_turbo_stream(action: "before", target: "posts-loader")
+          assert_turbo_stream(action: "replace", target: "posts-loader")
+      end
+      it "performs remove loader turbo_stream action if no posts available!" do
+          user = create(:user)
+          sign_in user
+          get load_all_posts_url(format: "turbo_stream")
+          expect(response).to have_http_status(:ok)
+          assert_turbo_stream(action: "replace", target: "posts-loader") do
+            assert_select "template p", text: /End/
+          end
+      end
+    end
+    describe '#feed' do
+      it "returns http ok and renders :feed" do
+          user = create(:user)
+          sign_in user
+          get feed_posts_url
+          expect(response).to have_http_status(:ok).and render_template(:feed)
+      end
+    end
+    describe '#load_feed' do
+      it "returns http ok and performs turbo_stream actions" do
+          user = create(:user)
+          8.times { create(:post, author: user) }
+          sign_in user
+          get load_feed_posts_url(format: "turbo_stream")
+          expect(response).to have_http_status(:ok).and render_template(:load_feed)
+          assert_turbo_stream(action: "before", target: "posts-loader")
+          assert_turbo_stream(action: "replace", target: "posts-loader")
+      end
+      it "performs remove loader turbo_stream action if no posts available!" do
+          user = create(:user)
+          8.times { create(:post) }
+          sign_in user
+          get load_feed_posts_url(format: "turbo_stream")
+          expect(response).to have_http_status(:ok)
+          assert_turbo_stream(action: "replace", target: "posts-loader") do
+            assert_select "template p", text: /End/
+          end
+      end
+    end
+    describe '#index_by_user' do
+      it "when user found it returns http ok and renders :feed" do
+          user = create(:user)
+          create(:post, author: user)
+          sign_in user
+          get posts_index_for_user_url(user)
+          expect(response).to have_http_status(:ok).and render_template(:index_by_user)
+      end
+      it "when user NOT found it returns http ok and renders :index" do
+          user = create(:user)
+          create(:post, author: user)
+          sign_in user
+          get posts_index_for_user_url(99_999)
+          expect(response).to have_http_status(:not_found).and render_template(:index)
+      end
+    end
+    describe '#load_by_user' do
+      it "returns http ok and performs turbo_stream actions" do
+          user = create(:user)
+          8.times { create(:post, author: user) }
+          sign_in user
+          get load_posts_for_user_url(id: user.id, format: "turbo_stream")
+          expect(response).to have_http_status(:ok).and render_template(:load_by_user)
+          assert_turbo_stream(action: "append", target: "index-by-user-posts")
+          assert_turbo_stream(action: "replace", target: "posts-loader")
+      end
+      it "performs remove loader turbo_stream action if no posts available!" do
+          user = create(:user)
+          8.times { create(:post) }
+          sign_in user
+          get load_posts_for_user_url(id: user.id, format: "turbo_stream")
+          expect(response).to have_http_status(:ok)
+          assert_turbo_stream(action: "replace", target: "posts-loader") do
+            assert_select "template p", text: /End/
+          end
       end
     end
     describe '#show' do
