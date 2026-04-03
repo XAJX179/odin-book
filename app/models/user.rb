@@ -21,26 +21,7 @@ class User < ApplicationRecord
       user.name = auth.info.name + "_from_#{auth.provider}"
       user.skip_confirmation!
     end
-    size_query = if auth.provider == "discord"
-                   "?size=256"
-    else
-                   "&size=256"
-    end
-    image_url = auth.info.image + size_query
-    Rails.logger.info(image_url)
-    begin
-      file = URI.parse(image_url).open
-      user.profile ||= user.build_profile
-      user.profile.avatar.attach(
-        io: file,
-        filename: "avatar-#{user.id}.png",
-        content_type: file.content_type
-      )
-
-      user.profile.save!
-    rescue StandardError => e
-      Rails.logger.error "Avatar download/attach failed: #{e.message}"
-    end
+    attach_profile_avatar(user, auth)
     user
   end
 
@@ -80,5 +61,30 @@ class User < ApplicationRecord
 
   def add_profile
     create_profile(display_name: name, about: "...")
+  end
+
+  private
+
+  def avatar_image_url(auth)
+    size_query = if auth.provider == "discord"
+                   "?size=256"
+    else
+                   "&size=256"
+    end
+    auth.info.image + size_query
+  end
+
+  def attach_profile_avatar(user, auth)
+      file = URI.parse(avatar_image_url(auth)).open
+      user.profile ||= user.build_profile
+      user.profile.avatar.attach(
+        io: file,
+        filename: "avatar-#{user.id}.png",
+        content_type: file.content_type
+      )
+
+      user.profile.save!
+  rescue StandardError => e
+      Rails.logger.error "Avatar download/attach failed: #{e.message}"
   end
 end

@@ -11,7 +11,7 @@ module ActionTextValidator
   ].freeze
 
   included do
-    def has_rich_text_content # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity,Naming/PredicatePrefix
+    def has_rich_text_content # rubocop:disable Naming/PredicatePrefix
       errors.add(:base, "Body too short (minimum length: 20)") if body&.body&.to_plain_text.to_s.length < 20
 
       return if body&.body&.attachments.blank?
