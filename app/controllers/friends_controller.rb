@@ -12,7 +12,7 @@ class FriendsController < ApplicationController
     @offset = params[:offset]
     @id = params[:id]
     @user = User.find(@id)
-    @friends = @user.friends.limit(Friendship::LIMIT).offset(@offset || DEFAULT_OFFSET)
+    @friends = @user.friends.order(created_at: :desc).limit(Friendship::LIMIT).offset(@offset || DEFAULT_OFFSET)
 
     respond_to do |format|
       if @friends.empty?
