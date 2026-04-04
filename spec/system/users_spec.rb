@@ -18,7 +18,7 @@ RSpec.describe "Users", type: :system do
       fill_in "Login", with: u.name
       fill_in "Password", with: "abcdef!@123"
       click_on "Log in"
-      expect(page).to have_content('Posts')
+      expect(page).to have_content('Feed')
     end
   end
 end

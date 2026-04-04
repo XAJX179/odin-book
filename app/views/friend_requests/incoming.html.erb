@@ -6,6 +6,6 @@
     incoming requests:
   </div>
   <%= turbo_frame_tag "friend-requests-loader",
-    loading: "lazy", src: load_incoming_friend_requests_url(format: "turbo_stream") do %>
+    loading: "lazy", src: load_incoming_friend_requests_path(format: "turbo_stream") do %>
   <% end %>
 <% end %>

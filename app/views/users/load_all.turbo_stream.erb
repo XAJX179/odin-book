@@ -8,7 +8,7 @@
   <% shift = User::LIMIT %>
   <%= turbo_frame_tag "users-loader",
   loading: "lazy",
-  src: load_all_users_url(offset: @offset.to_i + shift, format: "turbo_stream") do %>
+  src: load_all_users_path(offset: @offset.to_i + shift, format: "turbo_stream") do %>
     <p>
       Loading more...
     </p>

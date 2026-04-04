@@ -12,6 +12,6 @@
 
 <%= tag.div id: "friends" do %>
   <%= turbo_frame_tag "friends-loader",
-    loading: "lazy", src: load_friends_for_user_url(id: @user.id,format: "turbo_stream") do %>
+    loading: "lazy", src: load_friends_for_user_path(id: @user.id,format: "turbo_stream") do %>
   <% end %>
 <% end %>

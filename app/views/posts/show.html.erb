@@ -19,9 +19,9 @@
 
   <p>
     <% if current_user.posts.include?(@post) %>
-      <%= link_to "Edit", edit_post_url(@post) %>
+      <%= link_to "Edit", edit_post_path(@post) %>
       <%= link_to "Delete",
-      post_url(@post),
+      post_path(@post),
       data: {
         turbo_method: :delete,
         turbo_frame: "_top",

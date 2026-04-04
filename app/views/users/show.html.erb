@@ -19,6 +19,6 @@
 
 <%= turbo_frame_tag "profile-posts",
 loading: "lazy",
-src: posts_index_for_user_url(id: @user.id) do %>
+src: posts_index_for_user_path(id: @user.id) do %>
 
 <% end %>

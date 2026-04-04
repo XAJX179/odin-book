@@ -13,7 +13,7 @@
   <% shift = Friendship::LIMIT %>
   <%= turbo_frame_tag "friends-loader",
   loading: "lazy",
-  src: load_friends_for_user_url(id: @user.id, offset: @offset.to_i + shift, format: "turbo_stream") do %>
+  src: load_friends_for_user_path(id: @user.id, offset: @offset.to_i + shift, format: "turbo_stream") do %>
     <p>
       Loading more...
     </p>
