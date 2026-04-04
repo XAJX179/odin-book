@@ -6,6 +6,34 @@ class Post < ApplicationRecord
   has_many :post_comments, dependent: :destroy
   has_rich_text :body
 
+  after_create_commit do
+    broadcast_prepend_to "all-posts", target: "posts"
+    current_user_id = author.id
+    user_ids = author.friend_ids
+    user_ids << current_user_id
+    user_ids.each do |user_id|
+      broadcast_prepend_to "feed-posts-for-#{user_id}", target: "posts"
+    end
+  end
+  after_update_commit do
+    broadcast_replace_to "all-posts", target: "post_#{id}"
+    current_user_id = author.id
+    follower_user_ids = author.friend_ids
+    follower_user_ids << current_user_id
+    follower_user_ids.each do |user_id|
+      broadcast_replace_to "feed-posts-for-#{user_id}", target: "post_#{id}"
+    end
+  end
+  after_destroy_commit do
+    broadcast_remove_to "all-posts", target: "post_#{id}"
+    current_user_id = author.id
+    follower_user_ids = author.friend_ids
+    follower_user_ids << current_user_id
+    follower_user_ids.each do |user_id|
+      broadcast_remove_to "feed-posts-for-#{user_id}", target: "post_#{id}"
+    end
+  end
+
   validates :title, presence: true, length: { within: 10..100 }
   validate :has_rich_text_content
 
