@@ -2,16 +2,16 @@
 <p>Find me in app/views/friend_requests/index.html.erb</p>
 
 <%= link_to "Incoming",
-incoming_friend_requests_url,
+incoming_friend_requests_path,
 data: {
   turbo_frame: "friend-requests",
 } %>
 <%= link_to "Outgoing",
-outgoing_friend_requests_url,
+outgoing_friend_requests_path,
 data: {
   turbo_frame: "friend-requests",
 } %>
 
 <%= turbo_stream_from "friend-requests-#{current_user.id}" %>
 
-<%= turbo_frame_tag "friend-requests", src: incoming_friend_requests_url %>
+<%= turbo_frame_tag "friend-requests", src: incoming_friend_requests_path %>

@@ -19,7 +19,7 @@
 
 <%= turbo_frame_tag "users-loader",
 loading: "lazy",
-src: load_all_users_url(format: "turbo_stream") do %>
+src: load_all_users_path(format: "turbo_stream") do %>
   <p>
     Loading...
   </p>
