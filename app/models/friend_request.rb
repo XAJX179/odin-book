@@ -12,8 +12,8 @@ class FriendRequest < ApplicationRecord
     broadcast_prepend_to "friend-requests-#{from_id}", target: "friend-requests", locals: { user_id: from_id }
   end
   after_update_commit do
-    broadcast_replace_to "friend-requests-#{to_id}", target: "friend-requests", locals: { user_id: to_id }
-    broadcast_replace_to "friend-requests-#{from_id}", target: "friend-requests", locals: { user_id: from_id }
+    broadcast_replace_to "friend-requests-#{to_id}", target: "friend_request_#{id}", locals: { user_id: to_id }
+    broadcast_replace_to "friend-requests-#{from_id}", target: "friend_request_#{id}", locals: { user_id: from_id }
   end
 
   validates :status, presence: true
