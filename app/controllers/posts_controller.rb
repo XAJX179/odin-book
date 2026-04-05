@@ -155,6 +155,11 @@ class PostsController < ApplicationController
     end
   end
 
+  def search
+    @posts = Post.search(params[:title])
+    render "search", layout: false
+  end
+
   private
 
   def post_params

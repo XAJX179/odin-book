@@ -49,6 +49,7 @@ Rails.application.routes.draw do
         get "/load_all" => "posts#load_all", as: :load_all
         get "/feed" => "posts#feed", as: :feed
         get "/load_feed" => "posts#load_feed", as: :load_feed
+        get :search
       end
     end
   end
