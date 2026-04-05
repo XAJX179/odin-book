@@ -2,25 +2,28 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="search"
 export default class extends Controller {
-  static targets = [ "nameField", "results" ]
+  static targets = ["searchField", "results"]
   static values = { url: String }
 
   connect() {
+    console.log(
+      this.searchFieldTarget.name
+    )
   }
 
   fetchResults() {
-    if(this.nameField == "") {
+    if (this.searchField == "") {
       this.reset()
       return
     }
 
-    if(this.nameField == this.previousQuery) {
+    if (this.searchField == this.previousQuery) {
       return
     }
-    this.previousQuery = this.nameField
+    this.previousQuery = this.searchField
 
     const url = new URL(this.urlValue)
-    url.searchParams.append("name", this.nameField)
+    url.searchParams.append(this.searchFieldTarget.name, this.searchField)
 
     this.abortPreviousFetchRequest()
 
@@ -30,24 +33,24 @@ export default class extends Controller {
       .then(html => {
         this.resultsTarget.innerHTML = html
       })
-      .catch(() => {})
+      .catch(() => { })
   }
 
   // private
 
   reset() {
     this.resultsTarget.innerHTML = ""
-    this.nameFieldTarget.value = ""
+    this.searchFieldTarget.value = ""
     this.previousQuery = null
   }
 
   abortPreviousFetchRequest() {
-    if(this.abortController) {
+    if (this.abortController) {
       this.abortController.abort()
     }
   }
 
-  get nameField() {
-    return this.nameFieldTarget.value
+  get searchField() {
+    return this.searchFieldTarget.value
   }
 }

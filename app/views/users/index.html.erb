@@ -5,10 +5,10 @@
 
   <%= text_field_tag :name,
   "",
-  placeholder: "Search people by name",
+  placeholder: "Search users by name",
   data: {
     action: "keyup->search#fetchResults",
-    search_target: "nameField",
+    search_target: "searchField",
   },
   autofocus: true,
   autocomplete: "off" %>

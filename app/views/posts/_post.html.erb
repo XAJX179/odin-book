@@ -1,5 +1,5 @@
 <%# for index posts %>
-<%= link_to url_for(post), data: { turbo_frame: "_top" }, id: dom_id(post) do %>
+<%= link_to post_path(post), data: { turbo_frame: "_top" }, id: dom_id(post) do %>
   <div class="post">
     <h2>
       title :

@@ -60,4 +60,11 @@ class Post < ApplicationRecord
     includes(:author, :post_likes, post_comments: %i[author rich_text_body]).where(id: id)
                                                                             .with_rich_text_body_and_embeds.first
   end
+
+  def self.search(title)
+    where("title ILIKE ?", "%#{Post.sanitize_sql_like(title)}%")
+      .includes(:author, :post_likes, :post_comments)
+      .order(created_at: :desc).limit(10)
+      .with_rich_text_body_and_embeds
+  end
 end
