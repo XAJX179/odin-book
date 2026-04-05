@@ -71,7 +71,7 @@ class User < ApplicationRecord
   has_many :post_comments, dependent: :destroy, inverse_of: :author
   has_one  :profile, dependent: :destroy
 
-  validates :name, presence: true, length: { within: 3..25 }, uniqueness: { case_sensitive: false }, format: { with: /\A[a-zA-Z0-9_.]+\z/ }
+  validates :name, presence: true, length: { within: 3..25 }, uniqueness: { case_sensitive: false }, format: { with: /\A[a-zA-Z0-9_.-]+\z/ }
   validates :password, presence: true, length: { within: 8..100 }
 
   after_create :add_profile
