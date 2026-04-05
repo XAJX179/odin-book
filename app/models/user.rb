@@ -18,11 +18,39 @@ class User < ApplicationRecord
     user = find_or_create_by(provider: auth.provider, uid: auth.uid) do |user|
       user.email = auth.info.email
       user.password = Devise.friendly_token[0, 20]
-      user.name = auth.info.name + "_from_#{auth.provider}"
+      user.name = if auth.provider == "github"
+                    auth.info.nickname + "_from_#{auth.provider}"
+      else
+                    auth.extra.raw_info.username + "_from_#{auth.provider}"
+      end
       user.skip_confirmation!
     end
+    user.profile ||= user.build_profile
+    user.profile.display_name = auth.provider == "github" ? auth.info.name : auth.extra.raw_info.global_name
     attach_profile_avatar(user, auth)
     user
+  end
+
+  def self.avatar_image_url(auth)
+    size_query = if auth.provider == "discord"
+                   "?size=256"
+    else
+                   "&size=256"
+    end
+    auth.info.image + size_query
+  end
+
+  def self.attach_profile_avatar(user, auth)
+      file = URI.parse(avatar_image_url(auth)).open
+      user.profile.avatar.attach(
+        io: file,
+        filename: "avatar-#{user.id}.png",
+        content_type: file.content_type
+      )
+
+      user.profile.save!
+  rescue StandardError => e
+      Rails.logger.error "Avatar download/attach failed: #{e.message}"
   end
 
   def self.find_for_database_authentication(warden_conditions)
@@ -61,30 +89,5 @@ class User < ApplicationRecord
 
   def add_profile
     create_profile(display_name: name, about: "...")
-  end
-
-  private
-
-  def avatar_image_url(auth)
-    size_query = if auth.provider == "discord"
-                   "?size=256"
-    else
-                   "&size=256"
-    end
-    auth.info.image + size_query
-  end
-
-  def attach_profile_avatar(user, auth)
-      file = URI.parse(avatar_image_url(auth)).open
-      user.profile ||= user.build_profile
-      user.profile.avatar.attach(
-        io: file,
-        filename: "avatar-#{user.id}.png",
-        content_type: file.content_type
-      )
-
-      user.profile.save!
-  rescue StandardError => e
-      Rails.logger.error "Avatar download/attach failed: #{e.message}"
   end
 end
