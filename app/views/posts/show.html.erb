@@ -29,8 +29,13 @@
     <% end %>
   </p>
 <% end %>
+<!-- TODO: implement nested comments -->
+<%= button_to "♡ Like" %>
+<%= button_to "💬 New Comment" %>
 <% @post.post_comments.each do |comment| %>
   <%= comment.author.name %>
   :-
   <%= comment.body %>
+  <%= button_to "💬 Reply" %>
+  <%= button_to "🗑 Delete" if comment.author == current_user %>
 <% end %>

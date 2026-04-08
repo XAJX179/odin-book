@@ -17,8 +17,30 @@
   <%= @user.profile.about %>
 </p>
 
+<%= turbo_stream_from "profile_#{@user.id}_viewer_#{current_user.id}" %>
+
+<%= turbo_frame_tag "profile_action_button" do %>
+  <% if current_user.id != @user.id %>
+    <% if  current_user.friend_ids.include?(@user.id) %>
+      <%= button_to "Remove Friend",
+      user_friend_path(user_id: current_user.id, id: @user.id),
+      id: dom_id(@user, :remove),
+      method: :delete %>
+    <% elsif @requests.empty? || @requests.first.to_id == current_user.id %>
+      <%= button_to "Send friend request",
+      friend_requests_path(friend_request: { to: @user.name }),
+      id: dom_id(@user, :send_req) %>
+    <% else %>
+      <%= button_to "Cancel friend request",
+      friend_request_path(id: @requests.first.id),
+      id: dom_id(@user, :cancel_req),
+      method: :delete %>
+    <% end %>
+  <% end %>
+<% end %>
+
 <%= turbo_frame_tag "profile-posts",
 loading: "lazy",
 src: posts_index_for_user_path(id: @user.id) do %>
-
+  <%= render "shared/posts/loader" %>
 <% end %>

@@ -2,6 +2,8 @@
 <p>Find me in app/views/friend_requests/outgoing.html.erb</p>
 
 <%= turbo_frame_tag "friend-requests" do %>
+
+  <%= turbo_stream_from "outgoing-friend-requests-#{current_user.id}" %>
   <div>
     outgoing requests:
   </div>

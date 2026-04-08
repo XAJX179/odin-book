@@ -12,6 +12,4 @@ data: {
   turbo_frame: "friend-requests",
 } %>
 
-<%= turbo_stream_from "friend-requests-#{current_user.id}" %>
-
 <%= turbo_frame_tag "friend-requests", src: incoming_friend_requests_path %>

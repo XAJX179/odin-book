@@ -1,0 +1,5 @@
+<%= turbo_frame_tag "profile_action_button" do %>
+  <%= button_to "Remove Friend",
+  user_friend_path(user_id: current_user.id, id: user.id),
+  method: :delete %>
+<% end %>

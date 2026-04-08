@@ -1,0 +1,4 @@
+<%= turbo_frame_tag "profile_action_button" do %>
+  <%= button_to "Send friend request",
+  friend_requests_path(friend_request: { to: user.name }) %>
+<% end %>

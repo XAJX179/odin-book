@@ -32,14 +32,16 @@ class FriendRequestsController < ApplicationController
       render :new, status: :unprocessable_content
     elsif existing_reqs.exists?
       flash.now.alert = "your already sent or received a request!"
-      render :new, status: :unprocessable_content
+      if turbo_frame_request?
+        render partial: "cancel_button", locals: { user: user, friend_request: existing_reqs.first }
+      else
+        head :ok
+      end
     else
       @friend_request = current_user.outgoing_friend_requests.build(to: user, status: :pending)
       if @friend_request.save
         flash.now.notice = "Friend request sent!"
-        respond_to do |format|
-          format.turbo_stream { head :ok }
-        end
+        render partial: "cancel_button", locals: { friend_request: @friend_request }
       else
         flash.now.alert = "Friend request invalid! could not be created!"
         render :new, status: :unprocessable_content
@@ -65,11 +67,16 @@ class FriendRequestsController < ApplicationController
     end
 
     if @friend_request.destroyed?
-      respond_to do |format|
-        format.turbo_stream do
-          flash.now.notice = "Friend request destroyed !"
-          head :ok
-        end
+      flash.now.notice = "Friend request destroyed !"
+      user = if @friend_request.to == current_user
+        @friend_request.from
+      else
+        @friend_request.to
+      end
+      if turbo_frame_request? && turbo_frame_request_id == "profile_action_button"
+        render partial: "send_button", locals: { user: user }
+      else
+        head :ok
       end
     else
       flash.now.alert = "Server Error"

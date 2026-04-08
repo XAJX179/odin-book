@@ -9,8 +9,6 @@
   <%= turbo_frame_tag "posts-loader",
   loading: "lazy",
   src: load_posts_for_user_path(offset: @offset.to_i + shift, format: "turbo_stream") do %>
-    <p>
-      Loading more...
-    </p>
+    <%= render "shared/posts/loader" %>
   <% end %>
 <% end %>

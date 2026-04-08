@@ -1,0 +1,5 @@
+<%= turbo_frame_tag "profile_action_button" do %>
+  <%= button_to "Cancel friend request",
+  friend_request_path(id: friend_request.id),
+  method: :delete %>
+<% end %>
