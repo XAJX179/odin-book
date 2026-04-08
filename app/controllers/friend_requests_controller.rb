@@ -38,7 +38,8 @@ class FriendRequestsController < ApplicationController
       if @friend_request.save
         flash.now.notice = "Friend request sent!"
         respond_to do |format|
-          format.turbo_stream { head :ok }
+          format.turbo_stream { render "create", locals: { user: user } }
+          format.html { head :ok }
         end
       else
         flash.now.alert = "Friend request invalid! could not be created!"
@@ -66,10 +67,14 @@ class FriendRequestsController < ApplicationController
 
     if @friend_request.destroyed?
       respond_to do |format|
-        format.turbo_stream do
-          flash.now.notice = "Friend request destroyed !"
-          head :ok
+        flash.now.notice = "Friend request destroyed !"
+        user = if @friend_request.to == current_user
+          @friend_request.from
+        else
+          @friend_request.to
         end
+        format.turbo_stream { render "destroy", locals: { user: user } }
+        format.html { head :ok }
       end
     else
       flash.now.alert = "Server Error"

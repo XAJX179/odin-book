@@ -1,0 +1,7 @@
+<%= turbo_stream.before dom_id(user, :send_req) do %>
+  <%= button_to "Cancel friend request",
+  friend_request_path(id: @friend_request.id),
+  id: dom_id(user, :cancel_req),
+  method: :delete %>
+<% end %>
+<%= turbo_stream.remove dom_id(user, :send_req) %>

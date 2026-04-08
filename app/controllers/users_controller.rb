@@ -5,6 +5,7 @@ class UsersController < ApplicationController
 
   def show
       @user = User.find(params[:user_id])
+      @requests = FriendRequest.between(@user, current_user)
   rescue ActiveRecord::RecordNotFound
       flash.now.alert = "User not found!"
       render :index, status: :not_found

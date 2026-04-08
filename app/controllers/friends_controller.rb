@@ -35,7 +35,11 @@ class FriendsController < ApplicationController
       friend_id = params[:id].to_i
       if user.friend_ids.include? friend_id
         Friendship.delete_for(user.id, friend_id)
-        head :ok
+        respond_to do |format|
+          flash.notice = "Friend removed!"
+          format.html { head :ok }
+          format.turbo_stream { render "destroy", locals: { user: User.find(friend_id) } }
+        end
       else
         flash.alert = "Friend not found!"
         redirect_to user_profile_url(user), status: :see_other

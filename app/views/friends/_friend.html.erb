@@ -1,26 +1,22 @@
-<div id="<%=
-  dom_id(friend) 
-%>">
-  <p>
-    id :
-    <%= friend.id %>
-  </p>
-  <h2>
-    name :
-    <%= friend.profile.display_name %>
-  </h2>
-  <h3>
-    username : @<%= friend.name %>
-  </h3>
-  <p>
-    about :
-    <%= friend.profile.about %>
-  </p>
+<div id=<%= dom_id(friend) %>>
+  <%= link_to user_profile_path(friend), data: { turbo_frame: "_top" } do %>
+    <p>
+      id :
+      <%= friend.id %>
+    </p>
+    <h2>
+      name :
+      <%= friend.profile.display_name %>
+    </h2>
+    <h3>
+      username : @<%= friend.name %>
+    </h3>
+    <p>
+      about :
+      <%= friend.profile.about %>
+    </p>
+  <% end %>
   <% if current_user == user %>
-    <%= link_to "Remove",
-    user_friend_path(user.id, friend.id),
-    data: {
-      turbo_method: :delete,
-    } %>
+    <%= button_to "Remove", user_friend_path(user.id, friend.id), method: :delete %>
   <% end %>
 </div>
