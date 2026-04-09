@@ -18,12 +18,12 @@
   </p>
 
   <p>
-    <% if current_user.posts.include?(@post) %>
+    <% if current_user == @post.author %>
       <%= link_to "Edit", edit_post_path(@post) %>
-      <%= link_to "Delete",
+      <%= button_to "Delete Post",
       post_path(@post),
+      method: :delete,
       data: {
-        turbo_method: :delete,
         turbo_frame: "_top",
       } %>
     <% end %>

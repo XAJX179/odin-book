@@ -1,23 +1,25 @@
-<h1>Users#edit</h1>
-<p>Find me in app/views/users/edit.html.erb</p>
-<% if !@profile.errors.empty? %>
-  <%= @profile.errors.full_messages %>
-<% end %>
-<%= form_with model: @profile, url: :user_profile do |f| %>
+<%= turbo_frame_tag "profile" do %>
+  <h1>Users#edit</h1>
+  <p>Find me in app/views/users/edit.html.erb</p>
+  <% if !@profile.errors.empty? %>
+    <%= @profile.errors.full_messages %>
+  <% end %>
+  <%= form_with model: @profile, url: :user_profile do |f| %>
 
-  <div>
-    <%= f.label :avatar %>
-    <%= f.file_field :avatar %>
-  </div>
-  <div>
-    <%= f.label :display_name %>
-    <%= f.text_field :display_name %>
-  </div>
-  <div>
-    <%= f.label :about %>
-    <%= f.text_field :about %>
-  </div>
-  <div>
-    <%= f.submit %>
-  </div>
+    <div>
+      <%= f.label :avatar %>
+      <%= f.file_field :avatar %>
+    </div>
+    <div>
+      <%= f.label :display_name %>
+      <%= f.text_field :display_name %>
+    </div>
+    <div>
+      <%= f.label :about %>
+      <%= f.text_field :about %>
+    </div>
+    <div>
+      <%= f.submit %>
+    </div>
+  <% end %>
 <% end %>
