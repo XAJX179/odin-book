@@ -14,7 +14,11 @@ Rails.application.routes.draw do
   authenticate :user do
     root to: redirect("/posts"), as: :authenticated_root
     resources :users, only: %i[index] do
-      resource :profile, only: %i[edit update show], controller: "users"
+      resource :profile, only: %i[edit update show], controller: "users" do
+        member do
+          get "/buttons" => "users#profile_buttons", as: :buttons_of
+        end
+      end
       resources :friends, only: %i[index destroy]
       collection do
         get "/load_all" => "users#load_all", as: :load_all

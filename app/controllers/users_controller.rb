@@ -61,6 +61,19 @@ class UsersController < ApplicationController
     render "search", layout: false
   end
 
+  def profile_buttons
+    begin
+      @user = User.find(params[:user_id])
+      @requests = FriendRequest.between(@user, current_user)
+    rescue ActiveRecord::RecordNotFound
+      flash.now.alert = "User not found!"
+      render :index, status: :not_found
+      return
+    end
+
+    render partial: "buttons", locals: { user: @user, requests: @requests }
+  end
+
   private
 
   def profile_params

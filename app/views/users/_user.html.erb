@@ -1,4 +1,6 @@
-<div id=<%= dom_id(user) %>>
+<div
+  id="<%= controller.action_name == "search" ? dom_id(user,:search_result) : dom_id(user) %>"
+>
   <%= link_to user_profile_path(user), data: { turbo_frame: "_top" } do %>
     <li>
       <% if user.profile.avatar.attached? %>
@@ -16,5 +18,7 @@
         <%= user.profile.about %>
       </p>
     </li>
+  <% end %>
+  <%= turbo_frame_tag "profile_action_button", src: buttons_of_user_profile_path(user) do %>
   <% end %>
 </div>
