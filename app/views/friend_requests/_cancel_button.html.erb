@@ -1,4 +1,9 @@
-<%= turbo_frame_tag "user_#{friend_request.to_id}_profile_action_button" do %>
+<% if turbo_frame_request_id&.first(13) == "search_result" || defined? search_result %>
+  <% id = "search_result_user_#{friend_request.to_id}_profile_action_button" %>
+<% else %>
+  <% id = "user_#{friend_request.to_id}_profile_action_button" %>
+<% end %>
+<%= turbo_frame_tag id do %>
   <%= button_to "Cancel friend request",
   friend_request_path(id: friend_request.id),
   method: :delete %>

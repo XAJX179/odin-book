@@ -15,6 +15,10 @@ class Friendship < ApplicationRecord
                          target: "user_#{user_id}_profile_action_button", partial: "friends/remove_button", locals: { user: user, current_user: friend }
     broadcast_replace_to "users_viewer_#{user_id}",
                          target: "user_#{friend_id}_profile_action_button", partial: "friends/remove_button", locals: { user: friend, current_user: user }
+    broadcast_replace_to "users_viewer_#{friend_id}",
+                         target: "search_result_user_#{user_id}_profile_action_button", partial: "friends/remove_button", locals: { user: user, current_user: friend, search_result: true }
+    broadcast_replace_to "users_viewer_#{user_id}",
+                         target: "search_result_user_#{friend_id}_profile_action_button", partial: "friends/remove_button", locals: { user: friend, current_user: user, search_result: true }
   end
 
   after_destroy_commit do
@@ -30,6 +34,10 @@ class Friendship < ApplicationRecord
                          target: "user_#{user_id}_profile_action_button", partial: "friend_requests/send_button", locals: { user: user }
     broadcast_replace_to "users_viewer_#{user_id}",
                          target: "user_#{friend_id}_profile_action_button", partial: "friend_requests/send_button", locals: { user: friend }
+    broadcast_replace_to "users_viewer_#{friend_id}",
+                         target: "search_result_user_#{user_id}_profile_action_button", partial: "friend_requests/send_button", locals: { user: user, search_result: true }
+    broadcast_replace_to "users_viewer_#{user_id}",
+                         target: "search_result_user_#{friend_id}_profile_action_button", partial: "friend_requests/send_button", locals: { user: friend, search_result: true }
   end
 
   LIMIT = 10

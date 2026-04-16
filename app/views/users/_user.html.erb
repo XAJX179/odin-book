@@ -20,7 +20,13 @@
         </p>
       </div>
     <% end %>
-    <%= turbo_frame_tag "user_#{user.id}_profile_action_button", src: buttons_of_user_profile_path(user) do %>
+
+    <% if controller.action_name == "search" %>
+      <%= turbo_frame_tag "search_result_user_#{user.id}_profile_action_button",
+      src: buttons_of_user_profile_path(user) %>
+    <% else %>
+      <%= turbo_frame_tag "user_#{user.id}_profile_action_button",
+      src: buttons_of_user_profile_path(user) %>
     <% end %>
   </div>
 </li>

@@ -1,4 +1,9 @@
-<%= turbo_frame_tag "user_#{user.id}_profile_action_button" do %>
+<% if turbo_frame_request_id&.first(13) == "search_result"|| defined? search_result %>
+  <% id = "search_result_user_#{user.id}_profile_action_button" %>
+<% else %>
+  <% id = "user_#{user.id}_profile_action_button" %>
+<% end %>
+<%= turbo_frame_tag id do %>
   <%= button_to "Remove Friend",
   user_friend_path(user_id: current_user.id, id: user.id),
   method: :delete %>

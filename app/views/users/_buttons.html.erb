@@ -10,5 +10,9 @@
     } %>
   <% end %>
 <% else %>
-  <%= turbo_frame_tag "user_#{user.id}_profile_action_button" %>
+  <% if turbo_frame_request_id&.first(13) == "search_result" %>
+    <%= turbo_frame_tag "search_result_user_#{user.id}_profile_action_button" %>
+  <% else %>
+    <%= turbo_frame_tag "user_#{user.id}_profile_action_button" %>
+  <% end %>
 <% end %>
