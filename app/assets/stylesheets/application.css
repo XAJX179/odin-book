@@ -12,3 +12,11 @@
   height: 5px;
   background-color: red;
 }
+turbo-frame,div {
+  display: block;
+  border: 1px solid red;
+}
+
+turbo-frame::before, turbo-frame::after, div::before, div::after {
+  content: " id:" attr(id);
+}

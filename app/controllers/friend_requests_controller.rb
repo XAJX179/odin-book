@@ -31,9 +31,13 @@ class FriendRequestsController < ApplicationController
       flash.now.alert = "Already friended!"
       render :new, status: :unprocessable_content
     elsif existing_reqs.exists?
-      flash.now.alert = "your already sent or received a request!"
+      Friendship.find_or_create_by(user: current_user, friend: user)
+      Friendship.find_or_create_by(user: user, friend: current_user)
+      existing_reqs.first.destroy
+      existing_reqs.second&.destroy
+      flash.now.alert = "accepted an incoming request from this user!"
       if turbo_frame_request?
-        render partial: "cancel_button", locals: { user: user, friend_request: existing_reqs.first }
+        render partial: "friends/remove_button", locals: { user: user, current_user: current_user }
       else
         head :ok
       end
@@ -73,7 +77,7 @@ class FriendRequestsController < ApplicationController
       else
         @friend_request.to
       end
-      if turbo_frame_request? && turbo_frame_request_id == "profile_action_button"
+      if turbo_frame_request? && turbo_frame_request_id == "user_#{user.id}_profile_action_button"
         render partial: "send_button", locals: { user: user }
       else
         head :ok

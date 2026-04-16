@@ -1,3 +1,6 @@
+streams: users
+<%= "users_viewer_#{current_user.id}" %>
+
 <%= tag.div data: {
               controller: "search",
               search_url_value: search_users_url,
@@ -16,6 +19,7 @@
 <% end %>
 
 <%= turbo_stream_from "users" %>
+<%= turbo_stream_from "users_viewer_#{current_user.id}" %>
 
 <%= tag.ul id: "users" %>
 
