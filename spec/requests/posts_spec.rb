@@ -237,6 +237,24 @@ RSpec.describe "Posts", type: :request do
         expect(response).to have_http_status(:internal_server_error).and render_template(:show)
       end
     end
+    describe "search" do
+      it 'render search posts when search returns posts' do
+        user = create(:user)
+        sign_in user
+        post = create(:post, author: user)
+        query = post.title
+        get search_posts_url(title: query)
+        expect(response).to have_http_status(:ok).and render_template(:search)
+        assert_select "#search-results", text: Regexp.new(query)
+      end
+      it 'render search posts when search returns posts' do
+        user = create(:user)
+        sign_in user
+        get search_posts_url(title: 'hello')
+        expect(response).to have_http_status(:ok).and render_template(:search)
+        assert_select "#search-results", text: 'No results'
+      end
+    end
   end
   context "without signed in user" do
     describe '#index' do

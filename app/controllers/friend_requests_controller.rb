@@ -3,8 +3,6 @@ class FriendRequestsController < ApplicationController
 
   def index; end
 
-  def show; end
-
   def new
     @friend_request = FriendRequest.new
   end
@@ -133,6 +131,7 @@ class FriendRequestsController < ApplicationController
       Friendship.find_or_create_by(user: @friend_request.from, friend: current_user)
       @friend_request.destroy
       @friend_request.opposite_request&.destroy
+      head :ok
     else
       flash.now.alert = "Not allowed to accept other's incoming friend request"
       render :index, status: :forbidden

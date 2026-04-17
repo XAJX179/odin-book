@@ -90,7 +90,7 @@ class PostsController < ApplicationController
     end
 
     if @post.destroyed?
-      flash.now.notice = "Post destroyed !"
+      flash.notice = "Post destroyed !"
       redirect_to posts_url, status: :see_other
     else
       render :show, status: :internal_server_error
