@@ -17,6 +17,7 @@ class Post < ApplicationRecord
   end
   after_update_commit do
     broadcast_replace_to "all-posts", target: "post_#{id}"
+    broadcast_replace_to "all-posts", target: "search_result_post_#{id}"
     current_user_id = author.id
     follower_user_ids = author.friend_ids
     follower_user_ids << current_user_id
@@ -26,6 +27,7 @@ class Post < ApplicationRecord
   end
   after_destroy_commit do
     broadcast_remove_to "all-posts", target: "post_#{id}"
+    broadcast_remove_to "all-posts", target: "search_result_post_#{id}"
     current_user_id = author.id
     follower_user_ids = author.friend_ids
     follower_user_ids << current_user_id
