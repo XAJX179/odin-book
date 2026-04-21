@@ -1,5 +1,8 @@
 <%= link_to "Back", :back %>
 
+<%= turbo_stream_from "post_#{@post.id}" %>
+<%= turbo_stream_from "post_#{@post.id}_user_#{current_user.id}" %>
+
 <%= turbo_frame_tag "post" do %>
   <h2>
     title :
@@ -30,7 +33,24 @@
   </p>
 <% end %>
 <!-- TODO: implement nested comments -->
-<%= button_to "♡ Like" %>
+<%= tag.div id: "post-likes" do %>
+  <p>
+    <%= @post.post_likes.size %>
+  </p>
+<% end %>
+
+<%= tag.div id: "post-like-button" do %>
+  <% if @post.liked_by?(current_user) %>
+    <%= render partial: "post_likes/remove_like_button",
+    locals: {
+      post_id: @post.id,
+      like_id: @post.like_by(current_user).id,
+    } %>
+  <% else %>
+    <%= render partial: "post_likes/like_button", locals: { post_id: @post.id } %>
+  <% end %>
+<% end %>
+
 <%= button_to "💬 New Comment" %>
 <% @post.post_comments.each do |comment| %>
   <%= comment.author.name %>

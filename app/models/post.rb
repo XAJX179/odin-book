@@ -69,4 +69,12 @@ class Post < ApplicationRecord
       .order(created_at: :desc).limit(10)
       .with_rich_text_body_and_embeds
   end
+
+  def liked_by?(user)
+    !PostLike.where(post: self, author: user).empty?
+  end
+
+  def like_by(user)
+    PostLike.where(post: self, author: user).first
+  end
 end

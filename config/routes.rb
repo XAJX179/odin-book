@@ -47,7 +47,7 @@ Rails.application.routes.draw do
 
     resources :posts do
       resources :comments
-      resources :likes, only: %i[index create destroy]
+      resources :likes, only: %i[create destroy]
       collection do
         get "/all" => "posts#all", as: :all
         get "/load_all" => "posts#load_all", as: :load_all
