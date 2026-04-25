@@ -1,0 +1,28 @@
+<% if @parent_id.nil? || @parent_id == "" %>
+  <% id = "new_post_comment" %>
+<% else %>
+  <% id = "reply_post_comment_#{@parent_id}_form" %>
+<% end %>
+<div id=<%= id %> data-controller="remover">
+  <% if !@comment.errors.empty? %>
+    <%= @comment.errors.full_messages %>
+  <% end %>
+  <%= form_with model: @comment, format: :turbo_stream do |f| %>
+    <div>
+      <%= f.hidden_field :parent_id, value: @parent_id %>
+    </div>
+    <div>
+      <%= f.hidden_field :post_id, value: @post_id %>
+    </div>
+    <div>
+      <%= f.label :body %>
+      <%= f.rich_text_area :body %>
+    </div>
+    <div>
+      <%= f.submit %>
+    </div>
+  <% end %>
+  <div>
+    <button data-action="click->remover#remove">Cancel</button>
+  </div>
+</div>

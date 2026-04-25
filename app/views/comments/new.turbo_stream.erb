@@ -1,0 +1,9 @@
+<% if @parent_id.nil? || @parent_id == "" %>
+  <%= turbo_stream.replace "new_post_comment" do %>
+    <%= render partial: "new_form" %>
+  <% end %>
+<% else %>
+  <%= turbo_stream.replace "reply_post_comment_#{parent_id}_form" do %>
+    <%= render partial: "new_form" %>
+  <% end %>
+<% end %>

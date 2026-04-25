@@ -1,0 +1,5 @@
+<% if @parent_id.nil? || @parent_id == "" %>
+  <%= turbo_stream.remove "new_post_comment" %>
+<% else %>
+  <%= turbo_stream.remove "reply_post_comment_#{parent_id}_form" %>
+<% end %>

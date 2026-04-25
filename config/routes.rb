@@ -46,7 +46,11 @@ Rails.application.routes.draw do
     end
 
     resources :posts do
-      resources :comments
+      resources :comments do
+        member do
+          get "/buttons" => "comments#buttons"
+        end
+      end
       resources :likes, only: %i[create destroy]
       collection do
         get "/all" => "posts#all", as: :all

@@ -1,0 +1,9 @@
+<% if @parent_id.nil? || @parent_id == "" %>
+  <%= turbo_frame_tag :new_comment do %>
+    <%= render partial: "new_form" %>
+  <% end %>
+<% else %>
+  <%= turbo_frame_tag "reply_post_comment_#{@parent_id}" do %>
+    <%= render partial: "new_form" %>
+  <% end %>
+<% end %>

@@ -32,7 +32,6 @@
     <% end %>
   </p>
 <% end %>
-<!-- TODO: implement nested comments -->
 <%= tag.div id: "post-likes" do %>
   <p>
     <%= @post.post_likes.size %>
@@ -51,11 +50,27 @@
   <% end %>
 <% end %>
 
-<%= button_to "💬 New Comment" %>
+<%= link_to "💬 New Comment",
+new_post_comment_path(@post.id),
+data: {
+  turbo_frame: "new_comment",
+} %>
+
+<%= turbo_frame_tag :new_comment %>
+
 <% @post.post_comments.each do |comment| %>
-  <%= comment.author.name %>
-  :-
-  <%= comment.body %>
-  <%= button_to "💬 Reply" %>
-  <%= button_to "🗑 Delete" if comment.author == current_user %>
+  <div id="<%= dom_id(comment) %>">
+    <%= comment.author.name %>
+    :-
+    <%= comment.body %>
+    <%= link_to "💬 Reply",
+    new_post_comment_path(@post.id, parent_id: comment.id),
+    data: {
+      turbo_frame: dom_id(comment, :reply),
+    } %>
+    <%= turbo_frame_tag dom_id(comment, :reply) %>
+    <%= turbo_frame_tag dom_id(comment, :buttons), src: buttons_post_comment_path(@post.id,comment.id), lazy: :loading do %>
+      loading buttons...
+    <% end %>
+  </div>
 <% end %>

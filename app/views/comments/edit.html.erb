@@ -1,0 +1,18 @@
+<% if !@comment.errors.empty? %>
+  <%= @comment.errors.full_messages %>
+<% end %>
+<%= form_with model: @comment, url: post_comment_path(@post_id, @comment.id) do |f| %>
+  <div>
+    <%= f.hidden_field :parent_id, value: @parent_id %>
+  </div>
+  <div>
+    <%= f.hidden_field :post_id, value: @post_id %>
+  </div>
+  <div>
+    <%= f.label :body %>
+    <%= f.rich_text_area :body %>
+  </div>
+  <div>
+    <%= f.submit %>
+  </div>
+<% end %>
