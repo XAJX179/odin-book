@@ -59,8 +59,8 @@ class Post < ApplicationRecord
   end
 
   def self.show(id)
-    includes(:author, :post_likes, post_comments: %i[author rich_text_body]).where(id: id)
-                                                                            .with_rich_text_body_and_embeds.first
+    includes(:author).where(id: id)
+                     .with_rich_text_body_and_embeds.first
   end
 
   def self.search(title)

@@ -2,7 +2,10 @@ class CommentsController < ApplicationController
   # TODO: finish index and show and use turbo to start making it nested and lazy load
   def index; end
 
-  def show; end
+  def show
+    comment = PostComment.show(params[:id])
+    render "show", locals: { comment: comment }
+  end
 
   def new
     @post_id = params[:post_id]

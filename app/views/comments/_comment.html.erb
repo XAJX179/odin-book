@@ -1,0 +1,15 @@
+<%= turbo_frame_tag dom_id(comment) do %>
+  <%= comment.author.name %>
+  :-
+  <%= comment.body %>
+  <%= link_to "💬 Reply",
+  new_post_comment_path(comment.post_id, parent_id: comment.id),
+  data: {
+    turbo_frame: dom_id(comment, :reply),
+  } %>
+  <%= turbo_frame_tag dom_id(comment, :buttons), src: buttons_post_comment_path(comment.post_id,comment.id), lazy: :loading do %>
+    loading buttons...
+  <% end %>
+  <%= turbo_frame_tag dom_id(comment, :reply) %>
+  <%= tag.div id: dom_id(comment, :replies_to) %>
+<% end %>

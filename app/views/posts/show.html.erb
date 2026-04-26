@@ -1,7 +1,7 @@
 <%= link_to "Back", :back %>
 
 <%= turbo_stream_from "post_#{@post.id}" %>
-<%= turbo_stream_from "post_#{@post.id}_user_#{current_user.id}" %>
+<%# turbo_stream_from "post_#{@post.id}_user_#{current_user.id}" %>
 
 <%= turbo_frame_tag "post" do %>
   <h2>
@@ -58,19 +58,8 @@ data: {
 
 <%= turbo_frame_tag :new_comment %>
 
-<% @post.post_comments.each do |comment| %>
-  <div id="<%= dom_id(comment) %>">
-    <%= comment.author.name %>
-    :-
-    <%= comment.body %>
-    <%= link_to "💬 Reply",
-    new_post_comment_path(@post.id, parent_id: comment.id),
-    data: {
-      turbo_frame: dom_id(comment, :reply),
-    } %>
-    <%= turbo_frame_tag dom_id(comment, :reply) %>
-    <%= turbo_frame_tag dom_id(comment, :buttons), src: buttons_post_comment_path(@post.id,comment.id), lazy: :loading do %>
-      loading buttons...
-    <% end %>
-  </div>
-<% end %>
+<div id="comments">
+  <% @top_level_comments.each do |comment| %>
+    <%= render partial: "comments/comment", locals: { comment: comment } %>
+  <% end %>
+</div>

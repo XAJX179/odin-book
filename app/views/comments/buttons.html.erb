@@ -2,10 +2,17 @@
   <% if @comment.author_id == current_user.id %>
     <%= button_to "🗑 Delete", post_comment_path(@post_id, @comment.id), method: :delete %>
     <% if @comment.parent_id == nil %>
-      <%= link_to "Edit", edit_post_comment_path(@post_id, @comment.id) %>
+      <%= link_to "Edit",
+      edit_post_comment_path(@post_id, @comment.id),
+      data: {
+        turbo_frame: dom_id(@comment),
+      } %>
     <% else %>
       <%= link_to "Edit",
-      edit_post_comment_path(@post_id, @comment.id, parent_id: @comment.parent_id) %>
+      edit_post_comment_path(@post_id, @comment.id, parent_id: @comment.parent_id),
+      data: {
+        turbo_frame: dom_id(@comment),
+      } %>
     <% end %>
   <% end %>
 <% end %>
