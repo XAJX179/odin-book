@@ -30,3 +30,6 @@ a::before, a::after, turbo-frame::before, turbo-frame::after, div::before, div::
 .replies--hidden {
   display: none;
 }
+.replies-toggle {
+border: 1px solid red;
+}

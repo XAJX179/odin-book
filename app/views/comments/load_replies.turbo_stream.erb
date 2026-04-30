@@ -13,5 +13,8 @@
     offset: @offset.to_i + shift,
     format: "turbo_stream",
   ),
+  data: {
+    turbo_prefetch: "false",
+  },
   id: "#{@parent_comment.id}-replies-loader" %>
 <% end %>

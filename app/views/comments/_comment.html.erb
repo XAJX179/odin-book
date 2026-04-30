@@ -1,4 +1,6 @@
-<%= turbo_frame_tag dom_id(comment) do %>
+<%= turbo_frame_tag dom_id(comment),
+  data: { controller: "toggle-replies", 
+          toggle_replies_hidden_class: "replies--hidden", toggle_replies_show_toggle_class: "replies-toggle" } do %>
   <%= comment.author.name %>
   :-
   <%= comment.body %>
