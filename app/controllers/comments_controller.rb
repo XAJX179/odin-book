@@ -1,6 +1,12 @@
 class CommentsController < ApplicationController
+  DEFAULT_OFFSET = 0
   # TODO: finish index and show and use turbo to start making it nested and lazy load
-  def index; end
+  def index
+      @post = Post.find(params[:post_id])
+  rescue ActiveRecord::RecordNotFound
+      flash.alert = "Post not found!"
+      redirect_to posts_path, status: :see_other
+  end
 
   def show
     comment = PostComment.show(params[:id])
@@ -115,6 +121,86 @@ class CommentsController < ApplicationController
   def buttons
     @comment = PostComment.find(params[:id])
     @post_id = params[:post_id]
+  end
+
+  def load
+    begin
+      @post = Post.find(params[:post_id])
+    rescue ActiveRecord::RecordNotFound
+      flash.alert = "Post not found!"
+      redirect_to posts_path, status: :see_other
+      return
+    end
+    begin
+      parent_id = params[:parent_id]
+      @parent_comment = PostComment.find(parent_id) unless parent_id.nil? || parent_id == ""
+    rescue ActiveRecord::RecordNotFound
+      flash.alert = "Comment not found!"
+      redirect_to post_path(@post), status: :see_other
+      return
+    end
+
+    @offset = params[:offset]
+    @comments = PostComment.load(@post, @parent_comment, @offset || DEFAULT_OFFSET)
+
+    respond_to do |format|
+      if @comments.empty?
+        format.turbo_stream { render "remove_loader" }
+      else
+        format.turbo_stream { render "load" }
+      end
+    end
+  end
+
+  def replies
+    begin
+      @post = Post.find(params[:post_id])
+    rescue ActiveRecord::RecordNotFound
+      flash.alert = "Post not found!"
+      redirect_to posts_path, status: :see_other
+      return
+    end
+    begin
+      parent_id = params[:id]
+      @parent_comment = PostComment.where(id: parent_id, post_id: @post.id).first unless parent_id.nil? || parent_id == ""
+    rescue ActiveRecord::RecordNotFound
+      flash.alert = "Comment not found!"
+      redirect_to post_path(@post), status: :see_other
+      return
+    end
+
+    respond_to do |format|
+      format.turbo_stream { render "replies" }
+    end
+  end
+
+  def load_replies
+    begin
+      @post = Post.find(params[:post_id])
+    rescue ActiveRecord::RecordNotFound
+      flash.alert = "Post not found!"
+      redirect_to posts_path, status: :see_other
+      return
+    end
+    begin
+      parent_id = params[:id]
+      @parent_comment = PostComment.where(id: parent_id, post_id: @post.id).first unless parent_id.nil? || parent_id == ""
+    rescue ActiveRecord::RecordNotFound
+      flash.alert = "Comment not found!"
+      redirect_to post_path(@post), status: :see_other
+      return
+    end
+
+    @offset = params[:offset]
+    @replies = PostComment.load(@post, @parent_comment, @offset || DEFAULT_OFFSET)
+
+    respond_to do |format|
+      if @replies.empty?
+        format.turbo_stream { render "remove_replies_loader" }
+      else
+        format.turbo_stream { render "load_replies" }
+      end
+    end
   end
 
   private

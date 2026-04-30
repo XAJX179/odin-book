@@ -58,8 +58,6 @@ data: {
 
 <%= turbo_frame_tag :new_comment %>
 
-<div id="comments">
-  <% @top_level_comments.each do |comment| %>
-    <%= render partial: "comments/comment", locals: { comment: comment } %>
-  <% end %>
-</div>
+<%= turbo_frame_tag :comments, src: post_comments_path(@post.id) do %>
+  Loading...
+<% end %>

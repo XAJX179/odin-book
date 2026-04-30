@@ -12,11 +12,21 @@
   height: 5px;
   background-color: red;
 }
-turbo-frame,div {
+turbo-frame,div,a {
   display: block;
-  border: 1px solid red;
+  /* border: 1px solid red; */
 }
 
-turbo-frame::before, turbo-frame::after, div::before, div::after {
-  content: " id:" attr(id);
+a::before, a::after, turbo-frame::before, turbo-frame::after, div::before, div::after {
+  /* content: " id:" attr(id); */
+}
+
+.comment-replies {
+  padding-left: 30px;
+  border-left: 1px solid black;
+  border-bottom-left-radius: 30px 40px;
+}
+
+.replies--hidden {
+  display: none;
 }

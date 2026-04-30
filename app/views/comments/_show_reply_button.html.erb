@@ -1,0 +1,10 @@
+<%= link_to "Show Replies",
+replies_to_post_comment_path(
+  comment.post_id,
+  comment.id,
+  format: "turbo_stream",
+),
+id: dom_id(comment, :replies_toggle),
+data: {
+  turbo_frame: "_top",
+} %>

@@ -49,6 +49,11 @@ Rails.application.routes.draw do
       resources :comments do
         member do
           get "/buttons" => "comments#buttons"
+          get "/replies" => "comments#replies", as: :replies_to
+          get "/load_replies" => "comments#load_replies", as: :load_replies_to
+        end
+        collection do
+          get "/load" => "comments#load"
         end
       end
       resources :likes, only: %i[create destroy]

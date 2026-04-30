@@ -12,7 +12,6 @@ class PostsController < ApplicationController
       flash.now.alert = "Post not found!"
       render :index, status: :not_found
     else
-      @top_level_comments = PostComment.top_level(@post)
       render :show
     end
   end

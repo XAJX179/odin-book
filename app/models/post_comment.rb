@@ -12,6 +12,7 @@ class PostComment < ApplicationRecord
       broadcast_prepend_to "post_#{post.id}", target: "comments", partial: "comments/comment", locals: { comment: self }
     else
       broadcast_prepend_to "post_#{post.id}", target: "replies_to_post_comment_#{parent_id}", partial: "comments/comment", locals: { comment: self }
+      broadcast_append_to "post_#{post.id}", target: "post_comment_#{parent_id}", partial: "comments/show_reply_button", locals: { comment: parent } if parent.replies.size == 1
     end
   end
 
@@ -25,14 +26,16 @@ class PostComment < ApplicationRecord
 
   validate :has_rich_text_content
 
+  LIMIT = 1
+
   def self.show(id)
     includes(:author).where(id: id).with_rich_text_body_and_embeds.first
   end
 
-  def self.top_level(post)
-      where(parent: nil, post: post)
+  def self.load(post, parent, set_offset, set_limit = LIMIT)
+      where(parent: parent, post: post)
         .includes(:author)
-        .order(created_at: :desc).limit(10)
+        .order(created_at: :desc).limit(set_limit).offset(set_offset)
         .with_rich_text_body_and_embeds
   end
 end

@@ -7,9 +7,12 @@
   data: {
     turbo_frame: dom_id(comment, :reply),
   } %>
-  <%= turbo_frame_tag dom_id(comment, :buttons), src: buttons_post_comment_path(comment.post_id,comment.id), lazy: :loading do %>
+  <%= turbo_frame_tag dom_id(comment, :buttons),
+  src: buttons_post_comment_path(comment.post_id,comment.id), lazy: :loading do %>
     loading buttons...
   <% end %>
   <%= turbo_frame_tag dom_id(comment, :reply) %>
-  <%= tag.div id: dom_id(comment, :replies_to) %>
+  <% if comment.replies.exists? %>
+    <%= render partial: "show_reply_button", locals: { comment: comment } %>
+  <% end %>
 <% end %>

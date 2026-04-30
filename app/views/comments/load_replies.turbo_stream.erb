@@ -1,0 +1,17 @@
+<%= turbo_stream.before "#{@parent_comment.id}-replies-loader" do %>
+  <% @replies.each do |reply| %>
+    <%= render partial: "comments/comment", locals: { comment: reply } %>
+  <% end %>
+<% end %>
+
+<%= turbo_stream.replace "#{@parent_comment.id}-replies-loader" do %>
+  <% shift = PostComment::LIMIT %>
+  <%= link_to "Load More",
+  load_replies_to_post_comment_path(
+    @post.id,
+    @parent_comment.id,
+    offset: @offset.to_i + shift,
+    format: "turbo_stream",
+  ),
+  id: "#{@parent_comment.id}-replies-loader" %>
+<% end %>

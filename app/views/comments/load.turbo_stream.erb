@@ -1,0 +1,13 @@
+<%= turbo_stream.before "comments-loader" do %>
+  <% @comments.each do |comment| %>
+    <%= render partial: "comments/comment", locals: { comment: comment } %>
+  <% end %>
+<% end %>
+
+<%= turbo_stream.replace "comments-loader" do %>
+  <% shift = PostComment::LIMIT %>
+  <%= turbo_frame_tag "comments-loader", loading: "lazy",
+  src: load_post_comments_path(@post.id,offset: @offset.to_i + shift, format: "turbo_stream") do %>
+    <%= render "shared/posts/loader" %>
+  <% end %>
+<% end %>
