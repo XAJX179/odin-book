@@ -18,7 +18,8 @@ turbo-frame,div,a {
 }
 
 a::before, a::after, turbo-frame::before, turbo-frame::after, div::before, div::after {
-  /* content: " id:" attr(id); */
+  /* background: lightgreen; */
+  /* content: " id: " attr(id) ; */
 }
 
 .comment-replies {

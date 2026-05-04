@@ -1,1 +1,11 @@
+<%= turbo_stream_from "post_#{comment.post_id}" %>
+<% unless comment.parent_id.nil? || comment.parent_id == "" %>
+  <%= link_to "Parent comment",
+  post_comment_path(comment.post_id, comment.parent_id, new_tlc: comment.id),
+  data: {
+    turbo_frame: "_top",
+    turbo_prefetch: "false",
+  } %>
+<% end %>
+<%= link_to "Post", post_path(comment.post_id), data: { turbo_frame: "_top" } %>
 <%= render partial: "comment", locals: { comment: comment } %>

@@ -11,6 +11,7 @@
     @post.id,
     @parent_comment.id,
     offset: @offset.to_i + shift,
+    new_tlc: @new_tlc,
     format: "turbo_stream",
   ),
   data: {

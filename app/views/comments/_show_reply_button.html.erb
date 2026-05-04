@@ -1,11 +1,22 @@
-<%= link_to "Show Replies",
-replies_to_post_comment_path(
-  comment.post_id,
-  comment.id,
-  format: "turbo_stream",
-),
-id: dom_id(comment, :replies_toggle),
-data: {
-  turbo_frame: "_top",
-  turbo_prefetch: "false",
-} %>
+<% if comment.deep?(new_tlc: @new_tlc) %>
+  <%= link_to "Show Replies",
+  post_comment_path(comment.post_id, comment.id, new_tlc: comment.id),
+  id: dom_id(comment, :replies_toggle),
+  data: {
+    turbo_frame: "_top",
+    turbo_prefetch: "false",
+  } %>
+<% else %>
+  <%= link_to "Show Replies",
+  replies_to_post_comment_path(
+    comment.post_id,
+    comment.id,
+    new_tlc: @new_tlc,
+    format: "turbo_stream",
+  ),
+  id: dom_id(comment, :replies_toggle),
+  data: {
+    turbo_frame: "_top",
+    turbo_prefetch: "false",
+  } %>
+<% end %>

@@ -12,7 +12,7 @@
     } do %>
     <%= turbo_frame_tag "#{@parent_comment.id}-replies-loader",
     loading: "lazy", 
-    src: load_replies_to_post_comment_path(@post.id, @parent_comment.id, format: "turbo_stream") do %>
+    src: load_replies_to_post_comment_path(@post.id, @parent_comment.id, new_tlc: @new_tlc, format: "turbo_stream") do %>
       <%= render "shared/posts/loader" %>
     <% end %>
   <% end %>

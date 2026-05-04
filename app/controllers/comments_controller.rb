@@ -10,6 +10,7 @@ class CommentsController < ApplicationController
 
   def show
     comment = PostComment.show(params[:id])
+    @new_tlc = params[:new_tlc]
     render "show", locals: { comment: comment }
   end
 
@@ -169,6 +170,7 @@ class CommentsController < ApplicationController
       return
     end
 
+    @new_tlc = params[:new_tlc]
     respond_to do |format|
       format.turbo_stream { render "replies" }
     end
@@ -193,6 +195,7 @@ class CommentsController < ApplicationController
 
     @offset = params[:offset]
     @replies = PostComment.load(@post, @parent_comment, @offset || DEFAULT_OFFSET)
+    @new_tlc = params[:new_tlc]
 
     respond_to do |format|
       if @replies.empty?

@@ -1,4 +1,4 @@
-<%= link_to "Back", :back %>
+<%= link_to "Back", posts_path %>
 
 <%= turbo_stream_from "post_#{@post.id}" %>
 <%# turbo_stream_from "post_#{@post.id}_user_#{current_user.id}" %>
