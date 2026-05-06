@@ -43,7 +43,7 @@ class FriendRequestsController < ApplicationController
       @friend_request = current_user.outgoing_friend_requests.build(to: user, status: :pending)
       if @friend_request.save
         flash.now.notice = "Friend request sent!"
-        render partial: "cancel_button", locals: { friend_request: @friend_request }
+        head :ok
       else
         flash.now.alert = "Friend request invalid! could not be created!"
         render :new, status: :unprocessable_content

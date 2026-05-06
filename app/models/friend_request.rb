@@ -30,17 +30,14 @@ class FriendRequest < ApplicationRecord
   after_create_commit do
     broadcast_prepend_to "incoming-friend-requests-#{to_id}",
                          target: "friend-requests", locals: { user_id: to_id }
+
     broadcast_prepend_to "outgoing-friend-requests-#{from_id}",
                          target: "friend-requests", locals: { user_id: from_id }
-      broadcast_replace_to "users_viewer_#{to_id}",
-                           target: "user_#{from_id}_profile_action_button",
-                           partial: "friend_requests/cancel_button", locals: { user: from }
-      broadcast_replace_to "users_viewer_#{to_id}",
-                           target: "search_result_user_#{from_id}_profile_action_button",
-                           partial: "friend_requests/cancel_button", locals: { user: from, search_result: true }
+
       broadcast_replace_to "users_viewer_#{from_id}",
                            target: "user_#{to_id}_profile_action_button",
                            partial: "friend_requests/cancel_button", locals: { user: to }
+
       broadcast_replace_to "users_viewer_#{from_id}",
                            target: "search_result_user_#{to_id}_profile_action_button",
                            partial: "friend_requests/cancel_button", locals: { user: to, search_result: true }
