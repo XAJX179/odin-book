@@ -34,6 +34,10 @@ class FriendRequest < ApplicationRecord
     broadcast_prepend_to "outgoing-friend-requests-#{from_id}",
                          target: "friend-requests", locals: { user_id: from_id }
 
+      broadcast_replace_to "profile_#{to_id}_viewer_#{from_id}",
+                           target: "user_#{to_id}_profile_action_button",
+                           partial: "friend_requests/cancel_button", locals: { user: to }
+
       broadcast_replace_to "users_viewer_#{from_id}",
                            target: "user_#{to_id}_profile_action_button",
                            partial: "friend_requests/cancel_button", locals: { user: to }

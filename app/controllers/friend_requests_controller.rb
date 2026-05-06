@@ -28,7 +28,7 @@ class FriendRequestsController < ApplicationController
     if current_user.friends.include? user
       flash.now.alert = "Already friended!"
       render :new, status: :unprocessable_content
-    elsif existing_reqs.exists?
+    elsif existing_reqs.exists? && (existing_reqs.first.to == current_user || existing_reqs.second&.to == current_user)
       Friendship.find_or_create_by(user: current_user, friend: user)
       Friendship.find_or_create_by(user: user, friend: current_user)
       existing_reqs.first.destroy
