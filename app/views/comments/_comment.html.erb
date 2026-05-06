@@ -15,6 +15,6 @@
   <% end %>
   <%= turbo_frame_tag dom_id(comment, :reply) %>
   <% if comment.replies.exists? %>
-    <%= render partial: "show_reply_button", locals: { comment: comment } %>
+    <%= render partial: "comments/show_reply_button", locals: { comment: comment } %>
   <% end %>
 <% end %>

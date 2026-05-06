@@ -7,3 +7,4 @@
     <%= render partial: "new_form" %>
   <% end %>
 <% end %>
+<%= turbo_stream.update("flash", partial: "shared/flash") %>

@@ -3,3 +3,4 @@
 <% else %>
   <%= turbo_stream.remove "reply_post_comment_#{parent_id}_form" %>
 <% end %>
+<%= turbo_stream.update("flash", partial: "shared/flash") %>

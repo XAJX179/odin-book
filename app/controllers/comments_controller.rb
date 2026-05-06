@@ -94,7 +94,7 @@ class CommentsController < ApplicationController
 
     if @comment.update(comment_params)
       flash.now.notice = "Comment updated!"
-      head :ok
+      render_flash
     else
       flash.now.alert = "Comment Invalid! Could not be updated!"
       render :edit, status: :unprocessable_content
@@ -112,7 +112,7 @@ class CommentsController < ApplicationController
 
     if comment.author == current_user && comment.destroy
       flash.now.notice = "Comment Deleted!"
-      head :ok
+      render_flash
     else
       flash.alert = "Comment Could not be Deleted!"
       redirect_to posts_path, status: :see_other

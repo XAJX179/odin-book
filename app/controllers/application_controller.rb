@@ -9,6 +9,10 @@ class ApplicationController < ActionController::Base
 
   protected
 
+  def render_flash
+    render turbo_stream: turbo_stream.update("flash", partial: "shared/flash")
+  end
+
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: %i[name email])
     devise_parameter_sanitizer.permit(:sign_in, keys: [ :login ])

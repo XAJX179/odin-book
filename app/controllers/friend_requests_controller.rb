@@ -37,13 +37,13 @@ class FriendRequestsController < ApplicationController
       if turbo_frame_request?
         render partial: "friends/remove_button", locals: { user: user, current_user: current_user }
       else
-        head :ok
+        render_flash
       end
     else
       @friend_request = current_user.outgoing_friend_requests.build(to: user, status: :pending)
       if @friend_request.save
         flash.now.notice = "Friend request sent!"
-        head :ok
+        render_flash
       else
         flash.now.alert = "Friend request invalid! could not be created!"
         render :new, status: :unprocessable_content
@@ -78,7 +78,7 @@ class FriendRequestsController < ApplicationController
       if turbo_frame_request? && turbo_frame_request_id == "user_#{user.id}_profile_action_button"
         render partial: "send_button", locals: { user: user }
       else
-        head :ok
+        render_flash
       end
     else
       flash.now.alert = "Server Error"
@@ -131,7 +131,7 @@ class FriendRequestsController < ApplicationController
       Friendship.find_or_create_by(user: @friend_request.from, friend: current_user)
       @friend_request.destroy
       @friend_request.opposite_request&.destroy
-      head :ok
+      render_flash
     else
       flash.now.alert = "Not allowed to accept other's incoming friend request"
       render :index, status: :forbidden
