@@ -10,7 +10,7 @@ RSpec.describe "FriendRequests", type: :request do
     end
   end
 
-  describe "GET /create" do
+  describe "POST /create" do
     it "returns http success and renders cancel button" do
       user = create(:user)
       user1 = create(:user)
@@ -29,7 +29,7 @@ RSpec.describe "FriendRequests", type: :request do
     end
   end
 
-  describe "GET /destroy" do
+  describe "DELETE friend_request" do
     it "returns http success" do
       user = create(:user)
       user1 = create(:user)
