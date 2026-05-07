@@ -34,11 +34,7 @@ class FriendRequestsController < ApplicationController
       existing_reqs.first.destroy
       existing_reqs.second&.destroy
       flash.now.alert = "accepted an incoming request from this user!"
-      if turbo_frame_request?
-        render partial: "friends/remove_button", locals: { user: user, current_user: current_user }
-      else
-        render_flash
-      end
+      render_flash
     else
       @friend_request = current_user.outgoing_friend_requests.build(to: user, status: :pending)
       if @friend_request.save
@@ -70,16 +66,7 @@ class FriendRequestsController < ApplicationController
 
     if @friend_request.destroyed?
       flash.now.notice = "Friend request destroyed !"
-      user = if @friend_request.to == current_user
-        @friend_request.from
-      else
-        @friend_request.to
-      end
-      if turbo_frame_request? && turbo_frame_request_id == "user_#{user.id}_profile_action_button"
-        render partial: "send_button", locals: { user: user }
-      else
-        render_flash
-      end
+      render_flash
     else
       flash.now.alert = "Server Error"
       render :index, status: :internal_server_error

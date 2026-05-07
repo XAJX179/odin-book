@@ -21,7 +21,7 @@ class PostComment < ApplicationRecord
   end
 
   after_destroy_commit do
-    broadcast_remove_to "post_#{post.id}", target: "post_comment_#{id}"
+    broadcast_remove_to "post_#{post.id}", target: "post_comment_#{id}" unless post.nil?
   end
 
   validate :has_rich_text_content
