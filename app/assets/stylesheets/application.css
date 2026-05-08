@@ -34,3 +34,8 @@ a::before, a::after, turbo-frame::before, turbo-frame::after, div::before, div::
 .replies-toggle {
 border: 1px solid red;
 }
+
+.video {
+width: 700px;
+height: 400px;
+}
