@@ -16,7 +16,7 @@ class User < ApplicationRecord
 
   def self.from_omniauth(auth)
     user = find_or_create_by(provider: auth.provider, uid: auth.uid) do |user|
-      user.email = auth.info.email
+      user.email = "#{user.uid}@#{auth.provider}_no_email"
       user.password = Devise.friendly_token[0, 20]
       user.name = if auth.provider == "github"
                     auth.info.nickname + "_from_#{auth.provider}"
@@ -24,8 +24,11 @@ class User < ApplicationRecord
                     auth.extra.raw_info.username + "_from_#{auth.provider}"
       end
       user.skip_confirmation!
+    rescue StandardError
+      return
     end
-    user.profile ||= user.build_profile
+    user.save
+    user.profile
     user.profile.display_name = auth.provider == "github" ? auth.info.name : auth.extra.raw_info.global_name
     attach_profile_avatar(user, auth)
     user

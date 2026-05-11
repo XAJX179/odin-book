@@ -277,11 +277,11 @@ Devise.setup do |config|
   config.omniauth :github,
                   Rails.application.credentials.github_client_id,
                   Rails.application.credentials.github_client_secret,
-                  scope: "user"
+                  scope: "read:user"
   config.omniauth :discord,
                   Rails.application.credentials.discord_client_id,
                   Rails.application.credentials.discord_client_secret,
-                  scope: "email identify"
+                  scope: "identify"
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
