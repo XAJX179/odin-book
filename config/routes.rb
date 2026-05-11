@@ -1,68 +1,70 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  devise_for :users,
-             controllers: { omniauth_callbacks: "users/omniauth_callbacks" },
-             path_names: { sign_in: "login", sign_out: "logout" }
+  scope "/odin-book" do
+    devise_for :users,
+               controllers: { omniauth_callbacks: "users/omniauth_callbacks" },
+               path_names: { sign_in: "login", sign_out: "logout" }
 
-  unauthenticated do
-    as :user do
-      root to: "devise/sessions#new"
+    unauthenticated do
+      as :user do
+        root to: "devise/sessions#new"
+      end
     end
-  end
 
-  authenticate :user do
-    root to: redirect("/posts"), as: :authenticated_root
-    resources :users, only: %i[index] do
-      resource :profile, only: %i[edit update show], controller: "users" do
+    authenticate :user do
+      root to: redirect("/posts"), as: :authenticated_root
+      resources :users, only: %i[index] do
+        resource :profile, only: %i[edit update show], controller: "users" do
+          member do
+            get "/buttons" => "users#profile_buttons", as: :buttons_of
+          end
+        end
+        resources :friends, only: %i[index destroy]
+        collection do
+          get "/load_all" => "users#load_all", as: :load_all
+          get :search
+        end
         member do
-          get "/buttons" => "users#profile_buttons", as: :buttons_of
+          get "/posts" => "posts#index_by_user", as: :posts_index_for
+          get "/load_posts" => "posts#load_by_user", as: :load_posts_for
+          get "/load_friends" => "friends#load_for_user", as: :load_friends_for
         end
       end
-      resources :friends, only: %i[index destroy]
-      collection do
-        get "/load_all" => "users#load_all", as: :load_all
-        get :search
-      end
-      member do
-        get "/posts" => "posts#index_by_user", as: :posts_index_for
-        get "/load_posts" => "posts#load_by_user", as: :load_posts_for
-        get "/load_friends" => "friends#load_for_user", as: :load_friends_for
-      end
-    end
 
-    resources :friend_requests, only: %i[index new create edit update destroy] do
-      member do
-        post "/accept" => "friend_requests#accept", as: :accept
-      end
-      collection do
-        get "/incoming" => "friend_requests#incoming", as: :incoming
-        get "load_incoming" => "friend_requests#load_incoming",
-            as: :load_incoming
-        get "/outgoing" => "friend_requests#outgoing", as: :outgoing
-        get "load_outgoing" => "friend_requests#load_outgoing",
-            as: :load_outgoing
-      end
-    end
-
-    resources :posts do
-      resources :comments do
+      resources :friend_requests, only: %i[index new create edit update destroy] do
         member do
-          get "/buttons" => "comments#buttons"
-          get "/replies" => "comments#replies", as: :replies_to
-          get "/load_replies" => "comments#load_replies", as: :load_replies_to
+          post "/accept" => "friend_requests#accept", as: :accept
         end
         collection do
-          get "/load" => "comments#load"
+          get "/incoming" => "friend_requests#incoming", as: :incoming
+          get "load_incoming" => "friend_requests#load_incoming",
+              as: :load_incoming
+          get "/outgoing" => "friend_requests#outgoing", as: :outgoing
+          get "load_outgoing" => "friend_requests#load_outgoing",
+              as: :load_outgoing
         end
       end
-      resources :likes, only: %i[create destroy]
-      collection do
-        get "/all" => "posts#all", as: :all
-        get "/load_all" => "posts#load_all", as: :load_all
-        get "/feed" => "posts#feed", as: :feed
-        get "/load_feed" => "posts#load_feed", as: :load_feed
-        get :search
+
+      resources :posts do
+        resources :comments do
+          member do
+            get "/buttons" => "comments#buttons"
+            get "/replies" => "comments#replies", as: :replies_to
+            get "/load_replies" => "comments#load_replies", as: :load_replies_to
+          end
+          collection do
+            get "/load" => "comments#load"
+          end
+        end
+        resources :likes, only: %i[create destroy]
+        collection do
+          get "/all" => "posts#all", as: :all
+          get "/load_all" => "posts#load_all", as: :load_all
+          get "/feed" => "posts#feed", as: :feed
+          get "/load_feed" => "posts#load_feed", as: :load_feed
+          get :search
+        end
       end
     end
   end

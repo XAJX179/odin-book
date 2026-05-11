@@ -26,21 +26,21 @@ gem "jbuilder"
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 
 # Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
-gem "solid_cable"
-gem "solid_cache"
-gem "solid_queue"
+# gem "solid_cable"
+# gem "solid_cache"
+# gem "solid_queue"
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
 
 # Deploy this application anywhere as a Docker container [https://kamal-deploy.org]
-gem "kamal", require: false
+# gem "kamal", require: false
 
 # Add HTTP asset caching/compression and X-Sendfile acceleration to Puma [https://github.com/basecamp/thruster/]
 gem "thruster", require: false
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
-gem "image_processing", "~> 1.2"
+# gem "image_processing", "~> 1.2"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -84,9 +84,9 @@ group :test do
   gem "shoulda-matchers", "~> 6.0"
 end
 
-gem "devise", "~> 5.0"
+gem "devise", "~> 4.9"
 gem "omniauth-discord"
-gem "omniauth-github", "~> 2.0.0"
+gem "omniauth-github", "2.0.0"
 gem "omniauth-rails_csrf_protection"
 
-gem "cloudinary", "~> 2.4"
+gem "cloudinary", "2.4.0"
