@@ -6,8 +6,6 @@ module ActionTextValidator
     image/jpeg
     image/gif
     image/webp
-    video/mp4
-    video/webm
   ].freeze
 
   included do
@@ -18,14 +16,14 @@ module ActionTextValidator
 
       size = 0
       body.body.attachments.each do |attach|
-        return errors.add(:base, "Only images and videos are allowed. (png,jpeg,gif,webp,mp4,webm)") unless ALLOWED_TYPES.include?(attach.content_type)
+        return errors.add(:base, "Only images are allowed, in the following formats: [png,jpeg,gif,webp]. For videos you can link a youtube video!") unless ALLOWED_TYPES.include?(attach.content_type)
 
-        errors.add(:base, "File is too large. only files less than 2mb allowed.") if attach.byte_size > 2.megabytes
+        errors.add(:base, "Image is too large. only image less than 300kb allowed. compress it or share a link!") if attach.byte_size > 300.kilobytes
 
         size += attach.byte_size
       end
 
-      errors.add(:base, "Total size of files are large. Only 2mb max for all files.") if size > 2.megabytes
+      errors.add(:base, "Only 300kb max for all images in one post or comment. share links instead!") if size > 300.kilobytes
     end
   end
 end

@@ -14,10 +14,12 @@ class PostComment < ApplicationRecord
       broadcast_prepend_to "post_#{post.id}", target: "replies_to_post_comment_#{parent_id}", partial: "comments/comment", locals: { comment: self }
       broadcast_append_to "post_#{post.id}", target: "post_comment_#{parent_id}", partial: "comments/show_reply_button", locals: { comment: parent } if parent.replies.size == 1
     end
+    ActiveStorage::Blob.unattached.each(&:purge)
   end
 
   after_update_commit do
     broadcast_replace_to "post_#{post.id}", target: "post_comment_#{id}", partial: "comments/comment", locals: { comment: self }
+    ActiveStorage::Blob.unattached.each(&:purge)
   end
 
   after_destroy_commit do

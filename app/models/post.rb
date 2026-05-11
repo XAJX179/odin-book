@@ -14,6 +14,7 @@ class Post < ApplicationRecord
     user_ids.each do |user_id|
       broadcast_prepend_to "feed-posts-for-#{user_id}", target: "posts"
     end
+    ActiveStorage::Blob.unattached.find_each(&:purge)
   end
   after_update_commit do
     broadcast_replace_to "all-posts", target: "post_#{id}"
@@ -24,6 +25,7 @@ class Post < ApplicationRecord
     follower_user_ids.each do |user_id|
       broadcast_replace_to "feed-posts-for-#{user_id}", target: "post_#{id}"
     end
+    ActiveStorage::Blob.unattached.each(&:purge)
   end
   after_destroy_commit do
     broadcast_remove_to "all-posts", target: "post_#{id}"

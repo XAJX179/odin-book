@@ -88,3 +88,5 @@ gem "devise", "~> 5.0"
 gem "omniauth-discord"
 gem "omniauth-github", "~> 2.0.0"
 gem "omniauth-rails_csrf_protection"
+
+gem "cloudinary", "~> 2.4"
