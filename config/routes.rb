@@ -13,7 +13,7 @@ Rails.application.routes.draw do
     end
 
     authenticate :user do
-      root to: redirect("/posts"), as: :authenticated_root
+      root to: redirect("/odin-book/posts"), as: :authenticated_root
       resources :users, only: %i[index] do
         resource :profile, only: %i[edit update show], controller: "users" do
           member do

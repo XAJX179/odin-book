@@ -1,7 +1,11 @@
 <figure class="attachment attachment--<%= blob.representable? ? "preview" : "file" %> attachment--<%= blob.filename.extension %>">
   <% if blob.representable? %>
     <% if blob.image? %>
-      <%= image_tag url_for(blob), width: 500 %>
+      <% if Rails.env.production? %>
+        <%= image_tag cloudinary_url(blob.key), width: 100 %>
+      <% else %>
+        <%= image_tag url_for(blob), width: 100 %>
+      <% end %>
     <% elsif blob.video? %>
       <%= video_tag url_for(blob),
             controls: true,

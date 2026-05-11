@@ -5,7 +5,11 @@ streams:
 
 <%= turbo_frame_tag "profile" do %>
   <% if @user.profile.avatar.attached? %>
-    <%= image_tag @user.profile.avatar.variant(resize_to_limit: [100, 100]) %>
+    <% if Rails.env.production? %>
+      <%= image_tag cloudinary_url(@user.profile.avatar.key), width: 100 %>
+    <% else %>
+      <%= image_tag url_for(@user.profile.avatar), width: 100 %>
+    <% end %>
   <% end %>
 
   <h2>
