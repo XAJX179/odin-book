@@ -11,6 +11,8 @@ Rails.application.configure do
   config.active_storage.routes_prefix = "/odin-book/rails/active_storage"
   config.assets.prefix = "/odin-book/assets"
   config.public_file_server.enabled = true
+  config.action_cable.mount_path = "/odin-book/cable"
+  config.action_cable.url = "wss://xajx.alwaysdata.net/odin-book/cable"
 
   # Code is not reloaded between requests.
   config.enable_reloading = false
