@@ -34,7 +34,7 @@ requirements: rails, bundler gem, sqlite3 or postgresql depending on the branch
       rails server
     ```
 
-1. go to https://localhost:3000/
+1. go to https://localhost:3000/odin-book
 
 ## Info
 
