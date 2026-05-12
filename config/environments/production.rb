@@ -2,10 +2,13 @@
 
 require "active_support/core_ext/integer/time"
 
+Rails.application.routes.default_url_options { :script_name => "" }
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
   config.relative_url_root = "/odin-book"
+  config.active_storage.routes_prefix = "/odin-book/rails/active_storage"
   config.assets.prefix = "/odin-book/assets"
   config.public_file_server.enabled = true
 
@@ -64,7 +67,7 @@ Rails.application.configure do
   # config.action_mailer.raise_delivery_errors = false
 
   # Set host to be used by links generated in mailer templates.
-  config.action_mailer.default_url_options = { host: "xajx.alwaysdata.net" }
+  config.action_mailer.default_url_options = { host: "xajx.alwaysdata.net", script_name: "" }
 
   # Specify outgoing SMTP server. Remember to add smtp/* credentials via rails credentials:edit.
   config.action_mailer.delivery_method = :smtp
