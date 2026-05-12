@@ -2,8 +2,17 @@
 
 require "active_support/core_ext/integer/time"
 
+Rails.application.routes.default_url_options { :script_name => "" }
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
+
+  config.relative_url_root = "/odin-book"
+  config.active_storage.routes_prefix = "/odin-book/rails/active_storage"
+  config.assets.prefix = "/odin-book/assets"
+  config.public_file_server.enabled = true
+  config.action_cable.mount_path = "/odin-book/cable"
+  config.action_cable.url = "ws://localhost:3000/odin-book/cable"
 
   # Make code changes take effect immediately without server restart.
   config.enable_reloading = true
@@ -40,7 +49,7 @@ Rails.application.configure do
   config.action_mailer.perform_caching = false
 
   # Set localhost to be used by links generated in mailer templates.
-  config.action_mailer.default_url_options = { host: "localhost", port: 3000 }
+  config.action_mailer.default_url_options = { host: "localhost", port: 3000, script_name: "" }
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log

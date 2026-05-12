@@ -259,7 +259,7 @@ RSpec.describe "Posts", type: :request do
   context "without signed in user" do
     describe '#index' do
       it "returns http ok, redirecting to login page" do
-        get "/"
+        get "/odin-book"
         expect(response).to have_http_status(:ok).and render_template("devise/sessions/new")
       end
     end

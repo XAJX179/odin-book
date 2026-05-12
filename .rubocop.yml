@@ -41,3 +41,5 @@ Style/ClassAndModuleChildren:
   Enabled: false
 Metrics/MethodLength:
   Enabled: false
+Rails/StrongParametersExpect:
+  Enabled: false
