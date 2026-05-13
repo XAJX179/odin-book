@@ -7,7 +7,7 @@ Rails.application.routes.default_url_options { :script_name => "" }
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
-  config.relative_url_root = "/odin-book"
+  # config.relative_url_root = "/odin-book"
   config.active_storage.routes_prefix = "/odin-book/rails/active_storage"
   config.assets.prefix = "/odin-book/assets"
   config.public_file_server.enabled = true
