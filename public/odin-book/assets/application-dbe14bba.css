@@ -1,0 +1,42 @@
+@import "tailwindcss";
+/*
+ * This is a manifest file that'll be compiled into application.css.
+ *
+ * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
+ * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
+ * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
+ * depending on specificity.
+ *
+ * Consider organizing styles into separate files for maintainability.
+ */
+/* .turbo-progress-bar { */
+/*   height: 5px; */
+/*   background-color: red; */
+/* } */
+/* turbo-frame,div,a { */
+/*   display: block; */
+/*   /* border: 1px solid red; */ 
+/* } */
+/**/
+/* a::before, a::after, turbo-frame::before, turbo-frame::after, div::before, div::after { */
+/*   /* background: lightgreen; */ 
+/*   /* content: " id: " attr(id) ; */ 
+/* } */
+/**/
+/* .comment-replies { */
+/*   padding-left: 30px; */
+/*   border-left: 1px solid black; */
+/*   border-bottom-left-radius: 30px 40px; */
+/* } */
+/**/
+/* .replies--hidden { */
+/*   display: none; */
+/* } */
+/* .replies-toggle { */
+/* border: 1px solid red; */
+/* } */
+/**/
+/* .video { */
+/* width: 700px; */
+/* height: 400px; */
+/* } */
