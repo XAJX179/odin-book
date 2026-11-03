@@ -1,25 +1,52 @@
-<h2>Change your password</h2>
+<div class="max-w-[70%] md:max-w-[50%] lg:max-w-[30%]">
+  <h2 class="font-mono text-xl p-2 text-center">Change your password</h2>
 
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
-  <%= f.hidden_field :reset_password_token %>
+  <%= form_for(resource, as: resource_name, url: password_path(resource_name), 
+               html: { class: "bg-white px-2  pt-6 pb-2 m-2 rounded-sm shadow-sm text-md accent-rose-400",method: :put }) do |f| %>
+    <div class=" text-xs text-red-600">
+      <%= render "devise/shared/error_messages", resource: resource %>
+    </div>
+    <%= f.hidden_field :reset_password_token %>
 
-  <div class="field">
-    <p><%= f.label :password, "New password" %></p>
-    <% if @minimum_password_length %>
-      <p><em>(<%= @minimum_password_length %> characters minimum)</em></p>
-    <% end %>
-    <p><%= f.password_field :password, autofocus: true, autocomplete: "new-password" %></p>
-  </div>
+    <div class="field relative mt-3 mb-10">
+      <%= f.password_field :password,
+                       autofocus: true,
+                       autocomplete: "new-password",
+                       placeholder: "Password",
+                       class:
+                         "peer w-full placeholder-transparent border-b-2 focus:outline-none focus:border-rose-400" %>
+      <%= f.label :password,
+              "New password",
+              class:
+                "absolute left-0 top-0 peer-not-placeholder-shown:-top-4 peer-not-placeholder-shown:text-sm peer-focus:-top-4 peer-focus:text-sm text-gray-600 transition-all" %>
 
-  <div class="field">
-    <p><%= f.label :password_confirmation, "Confirm new password" %></p>
-    <p><%= f.password_field :password_confirmation, autocomplete: "new-password" %></p>
-  </div>
+      <% if @minimum_password_length %>
+        <p class="text-xs absolute left-0 top-7"><em>(<%= @minimum_password_length %>
+            characters minimum)</em></p>
+      <% end %>
+    </div>
 
-  <div class="actions">
-    <%= f.submit "Change my password" %>
-  </div>
-<% end %>
+    <div class="field relative mt-3">
+      <%= f.password_field :password_confirmation,
+                       autocomplete: "new-password",
+                       placeholder: "Password",
+                       class:
+                         "peer w-full placeholder-transparent border-b-2 focus:outline-none focus:border-rose-400" %>
+      <%= f.label :password_confirmation,
+              "Confirm new password",
+              class:
+                "absolute left-0 top-0 peer-not-placeholder-shown:-top-4 peer-not-placeholder-shown:text-sm peer-focus:-top-4 peer-focus:text-sm text-gray-600 transition-all" %>
+    </div>
 
-<%= render "devise/shared/links" %>
+    <div
+      class="
+        actions mt-4 text-white text-center bg-rose-400 rounded-sm accent-black
+        active:bg-black
+      "
+    >
+      <%= f.submit "Change my password", class: "w-full p-2" %>
+    </div>
+  <% end %>
+
+  <%= render "devise/shared/links" %>
+</div>

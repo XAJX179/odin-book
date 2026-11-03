@@ -1,16 +1,35 @@
-<h2>Forgot your password?</h2>
+<div class="max-w-[70%] md:max-w-[50%] lg:max-w-[30%]">
+  <h2 class="font-mono text-xl p-2 text-center">Forgot your password?</h2>
 
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+  <%= form_for(resource, as: resource_name, url: password_path(resource_name), 
+               html: { class: "bg-white px-2  pt-6 pb-2 m-2 rounded-sm shadow-sm text-md accent-rose-400", method: :post }) do |f| %>
+    <div class=" text-xs text-red-600">
+      <%= render "devise/shared/error_messages", resource: resource %>
+    </div>
 
-  <div class="field">
-    <p><%= f.label :email %></p>
-    <p><%= f.email_field :email, autofocus: true, autocomplete: "email" %></p>
-  </div>
+    <div class="field relative mt-3">
+      <%= f.email_field :email,
+                    autofocus: true,
+                    autocomplete: "email",
+                    placeholder: "example@gmail.com",
+                    class:
+                      "peer w-full placeholder-transparent border-b-2 focus:outline-none focus:border-rose-400" %>
+      <%= f.label :email,
+              class:
+                "absolute left-0 top-0 peer-not-placeholder-shown:-top-4
+                                                  peer-not-placeholder-shown:text-sm peer-focus:-top-4
+                                                  peer-focus:text-sm text-gray-600 transition-all" %>
+    </div>
 
-  <div class="actions">
-    <%= f.submit "Send me password reset instructions" %>
-  </div>
-<% end %>
+    <div
+      class="
+        actions mt-4 text-white text-center bg-rose-400 rounded-sm accent-black
+        active:bg-black
+      "
+    >
+      <%= f.submit "Send password reset", class: "w-full p-2" %>
+    </div>
+  <% end %>
 
-<%= render "devise/shared/links" %>
+  <%= render "devise/shared/links" %>
+</div>

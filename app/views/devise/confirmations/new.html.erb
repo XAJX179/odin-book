@@ -1,16 +1,50 @@
-<h2>Resend confirmation instructions</h2>
+<div class="max-w-[70%] md:max-w-[50%] lg:max-w-[30%]">
+  <h2 class="font-mono text-xl p-2 text-center">Resend verification link</h2>
 
-<%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+  <img
+    class="max-w-full m-auto md:max-w-[60%]"
+    src="<%= image_url('undraw_authentication.svg') %>"
+    alt=""
+    role="img"
+  >
+  <%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { 
+    class: "bg-white px-2  pt-6 pb-2 m-2 rounded-sm shadow-sm text-md accent-rose-400",  method: :post }) do |f| %>
 
-  <div class="field">
-    <p><%= f.label :email %></p>
-    <p><%= f.email_field :email, autofocus: true, autocomplete: "email", value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email) %></p>
-  </div>
+    <div class=" text-xs text-red-600">
+      <%= render "devise/shared/error_messages", resource: resource %>
+    </div>
 
-  <div class="actions">
-    <%= f.submit "Resend confirmation instructions" %>
-  </div>
-<% end %>
+    <div class="field relative mt-3">
+      <%= f.email_field :email,
+                    autofocus: true,
+                    placeholder: "example@gmail.com",
+                    autocomplete: "email",
+                    value:
+                      (
+                        if resource.pending_reconfirmation?
+                          resource.unconfirmed_email
+                        else
+                          resource.email
+                        end
+                      ),
+                    class:
+                      "peer w-full placeholder-transparent border-b-2 focus:outline-none focus:border-rose-400" %>
+      <%= f.label :email,
+              class:
+                "absolute left-0 top-0 peer-not-placeholder-shown:-top-4
+                  peer-not-placeholder-shown:text-sm peer-focus:-top-4
+                  peer-focus:text-sm text-gray-600 transition-all" %>
+    </div>
 
-<%= render "devise/shared/links" %>
+    <div
+      class="
+        actions mt-4 text-white text-center bg-rose-400 rounded-sm accent-black
+        active:bg-black
+      "
+    >
+      <%= f.submit "Resend", class: "w-full p-2" %>
+    </div>
+  <% end %>
+
+  <%= render "devise/shared/links" %>
+</div>
