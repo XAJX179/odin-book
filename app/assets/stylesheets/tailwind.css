@@ -7,6 +7,7 @@
     sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
     monospace;
+    --color-red-600: oklch(57.7% 0.245 27.325);
     --color-indigo-500: oklch(58.5% 0.233 277.117);
     --color-fuchsia-50: oklch(97.7% 0.017 320.058);
     --color-rose-400: oklch(71.2% 0.194 13.428);
@@ -187,6 +188,12 @@
   .-top-6 {
     top: calc(var(--spacing) * -6);
   }
+  .top-0 {
+    top: 0px;
+  }
+  .top-7 {
+    top: calc(var(--spacing) * 7);
+  }
   .left-0 {
     left: 0px;
   }
@@ -208,14 +215,17 @@
   .mt-7 {
     margin-top: calc(var(--spacing) * 7);
   }
+  .mb-10 {
+    margin-bottom: calc(var(--spacing) * 10);
+  }
+  .mb-15 {
+    margin-bottom: calc(var(--spacing) * 15);
+  }
   .flex {
     display: flex;
   }
   .inline {
     display: inline;
-  }
-  .h-full {
-    height: 100%;
   }
   .min-h-full {
     min-height: 100%;
@@ -225,6 +235,9 @@
   }
   .max-w-\[15\%\] {
     max-width: 15%;
+  }
+  .max-w-\[40\%\] {
+    max-width: 40%;
   }
   .max-w-\[70\%\] {
     max-width: 70%;
@@ -305,6 +318,9 @@
   .text-gray-600 {
     color: var(--color-gray-600);
   }
+  .text-red-600 {
+    color: var(--color-red-600);
+  }
   .text-rose-400 {
     color: var(--color-rose-400);
   }
@@ -333,12 +349,22 @@
     transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
     transition-duration: var(--tw-duration, var(--default-transition-duration));
   }
+  .peer-not-placeholder-shown\:-top-4:is(:where(.peer):not(:placeholder-shown) ~ *) {
+    top: calc(var(--spacing) * -4);
+  }
+  .peer-not-placeholder-shown\:text-sm:is(:where(.peer):not(:placeholder-shown) ~ *) {
+    font-size: var(--text-sm);
+    line-height: var(--tw-leading, var(--text-sm--line-height));
+  }
   .peer-placeholder-shown\:top-1\/30:is(:where(.peer):placeholder-shown ~ *) {
     top: calc(1 / 30 * 100%);
   }
   .peer-placeholder-shown\:text-base:is(:where(.peer):placeholder-shown ~ *) {
     font-size: var(--text-base);
     line-height: var(--tw-leading, var(--text-base--line-height));
+  }
+  .peer-focus\:-top-4:is(:where(.peer):focus ~ *) {
+    top: calc(var(--spacing) * -4);
   }
   .peer-focus\:-top-6:is(:where(.peer):focus ~ *) {
     top: calc(var(--spacing) * -6);
@@ -387,6 +413,9 @@
     .md\:max-w-\[10\%\] {
       max-width: 10%;
     }
+    .md\:max-w-\[30\%\] {
+      max-width: 30%;
+    }
     .md\:max-w-\[50\%\] {
       max-width: 50%;
     }
@@ -395,17 +424,14 @@
     }
   }
   @media (width >= 64rem) {
-    .lg\:max-w-\[10\%\] {
-      max-width: 10%;
+    .lg\:mb-10 {
+      margin-bottom: calc(var(--spacing) * 10);
     }
     .lg\:max-w-\[30\%\] {
       max-width: 30%;
     }
   }
   @media (width >= 96rem) {
-    .\32 xl\:max-w-\[2\%\] {
-      max-width: 2%;
-    }
     .\32 xl\:max-w-\[5\%\] {
       max-width: 5%;
     }
@@ -417,6 +443,13 @@
   }
   turbo-frame, a {
     display: block;
+  }
+  .field_with_errors input {
+    border-color: red;
+  }
+  .field_with_errors:has(input:not(:placeholder-shown), input:focus)  + .field_with_errors  label {
+    top: -1rem !important;
+    font-size: 0.875rem;
   }
 }
 @property --tw-border-style {

@@ -5,7 +5,7 @@
     <% end %>
 
     <%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>
-      <p><%= link_to "Didn't receive confirmation instructions?",
+      <p><%= link_to "Didn't receive verification link?",
         new_confirmation_path(resource_name) %></p>
     <% end %>
 
@@ -23,7 +23,10 @@
     <% end %>
 
     <%- if controller_name != 'sessions' %>
-      <p><%= link_to "Log in", new_session_path(resource_name), class: "rounded-sm outline-2" %></p>
+      <p><%= link_to "Log in",
+        new_session_path(resource_name),
+        class:
+          "rounded-sm outline-2 p-1 focus:outline-black focus:bg-rose-400 focus:text-white hover:bg-rose-400 hover:text-white active:bg-black" %></p>
     <% end %>
     <%- if devise_mapping.omniauthable? %>
       <%- resource_class.omniauth_providers.each do |provider| %>

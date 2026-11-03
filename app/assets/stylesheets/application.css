@@ -22,6 +22,18 @@
   a {
     display: block;
   }
+  .field_with_errors input {
+    border-color: red;
+  }
+
+  /* my floating labels in form using peer/sibling got messed up by rails automatically adding the field_with_errors div around inputs and labels :( */
+  .field_with_errors:has(input:not(:placeholder-shown), input:focus) /* get elem with that class which has input but placeholder not shown */
+    + .field_with_errors /* go to the elem sitting after it */
+    label {
+    /* inside it grab the label and float it again*/
+    top: -1rem !important; /* clashing with top-0 */
+    font-size: 0.875rem;
+  }
 }
 /*   /* border: 1px solid red; */
 /* } */

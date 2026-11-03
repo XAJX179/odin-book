@@ -1,38 +1,87 @@
-<h2>Sign up</h2>
+<div class="max-w-[70%] md:max-w-[50%] lg:max-w-[30%]">
+  <h2 class="font-mono text-xl p-2 text-center">Sign up</h2>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+  <img
+    class="max-w-[40%] m-auto md:max-w-[30%]"
+    src="<%= image_url('undraw_authentication.svg') %>"
+    alt="Sign Up"
+    role="img"
+  >
 
-  <p><em>
-      only digits 0-9, alphabets a-z, _. are allowed
-    </em></p>
-  <div class="field">
-    <p><%= f.label :name %></p>
-    <p><%= f.text_field :name, autocomplete: "name" %></p>
-  </div>
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), 
+             html: {
+               class: "bg-white px-2  pt-6 pb-2 m-2 rounded-sm shadow-sm text-md accent-rose-400"
+             }) do |f| %>
 
-  <div class="field">
-    <p><%= f.label :email %></p>
-    <p><%= f.email_field :email, autofocus: true, autocomplete: "email" %></p>
-  </div>
+    <div class=" text-xs text-red-600">
+      <%= render "devise/shared/error_messages", resource: resource %>
+    </div>
 
-  <div class="field">
-    <p><%= f.label :password %></p>
-    <% if @minimum_password_length %>
-      <p><em>(<%= @minimum_password_length %>
-          characters minimum)</em></p>
-    <% end %>
-    <p><%= f.password_field :password, autocomplete: "new-password" %></p>
-  </div>
+    <div class="field relative mt-2 mb-15 lg:mb-10">
+      <%= f.text_field :name,
+                   autocomplete: "name",
+                   autofocus: true,
+                   placeholder: "xajx",
+                   class:
+                     "peer w-full placeholder-transparent border-b-2 focus:outline-none focus:border-rose-400" %>
+      <%= f.label :name,
+              class:
+                "absolute left-0 top-0 peer-not-placeholder-shown:-top-4 peer-not-placeholder-shown:text-sm peer-focus:-top-4 peer-focus:text-sm text-gray-600 transition-all" %>
+      <p class="text-xs absolute left-0 top-7"><em>
+          Only digits 0-9, alphabets a-z, _. are allowed, 3 characters
+          minimum.
+        </em></p>
+    </div>
 
-  <div class="field">
-    <p><%= f.label :password_confirmation %></p>
-    <p><%= f.password_field :password_confirmation, autocomplete: "new-password" %></p>
-  </div>
+    <div class="field relative mt-2 mb-15 lg:mb-10">
+      <%= f.email_field :email,
+                    autocomplete: "email",
+                    placeholder: "example@gmail.com",
+                    class:
+                      "peer w-full placeholder-transparent border-b-2 focus:outline-none focus:border-rose-400" %>
+      <%= f.label :email,
+              class:
+                "absolute left-0 top-0 peer-not-placeholder-shown:-top-4 peer-not-placeholder-shown:text-sm peer-focus:-top-4 peer-focus:text-sm text-gray-600 transition-all" %>
+      <p class="text-xs absolute left-0 top-7"><em>
+          A verification link will be sent to this email.
+        </em></p>
+    </div>
 
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
-<% end %>
+    <div class="field relative mb-10 ">
+      <%= f.password_field :password,
+                       autocomplete: "new-password",
+                       placeholder: "Password",
+                       class:
+                         "peer w-full placeholder-transparent border-b-2 focus:outline-none focus:border-rose-400" %>
+      <%= f.label :password,
+              class:
+                "absolute left-0 top-0 peer-not-placeholder-shown:-top-4 peer-not-placeholder-shown:text-sm peer-focus:-top-4 peer-focus:text-sm text-gray-600 transition-all" %>
+      <% if @minimum_password_length %>
+        <p class="text-xs absolute left-0 top-7"><em><%= @minimum_password_length %>
+            characters minimum</em></p>
+      <% end %>
+    </div>
 
-<%= render "devise/shared/links" %>
+    <div class="field relative">
+      <%= f.password_field :password_confirmation,
+                       autocomplete: "new-password",
+                       placeholder: "Same Password",
+                       class:
+                         "peer w-full placeholder-transparent border-b-2 focus:outline-none focus:border-rose-400" %>
+      <%= f.label :password_confirmation,
+              class:
+                "absolute left-0 top-0 peer-not-placeholder-shown:-top-4 peer-not-placeholder-shown:text-sm peer-focus:-top-4 peer-focus:text-sm text-gray-600 transition-all" %>
+    </div>
+
+    <div
+      class="
+        actions mt-4 text-white text-center bg-rose-400 rounded-sm accent-black
+        active:bg-black
+      "
+    >
+      <%= f.submit "Sign up", class: "w-full p-2" %>
+    </div>
+  <% end %>
+
+  <%= render "devise/shared/links" %>
+</div>
