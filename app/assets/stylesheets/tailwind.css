@@ -193,6 +193,9 @@
   .m-2 {
     margin: calc(var(--spacing) * 2);
   }
+  .m-auto {
+    margin: auto;
+  }
   .mt-1 {
     margin-top: var(--spacing);
   }
@@ -213,6 +216,9 @@
   }
   .h-full {
     height: 100%;
+  }
+  .min-h-full {
+    min-height: 100%;
   }
   .w-full {
     width: 100%;
@@ -376,6 +382,33 @@
   }
   .active\:bg-black:active {
     background-color: var(--color-black);
+  }
+  @media (width >= 48rem) {
+    .md\:max-w-\[10\%\] {
+      max-width: 10%;
+    }
+    .md\:max-w-\[50\%\] {
+      max-width: 50%;
+    }
+    .md\:max-w-\[60\%\] {
+      max-width: 60%;
+    }
+  }
+  @media (width >= 64rem) {
+    .lg\:max-w-\[10\%\] {
+      max-width: 10%;
+    }
+    .lg\:max-w-\[30\%\] {
+      max-width: 30%;
+    }
+  }
+  @media (width >= 96rem) {
+    .\32 xl\:max-w-\[2\%\] {
+      max-width: 2%;
+    }
+    .\32 xl\:max-w-\[5\%\] {
+      max-width: 5%;
+    }
   }
 }
 @layer base {

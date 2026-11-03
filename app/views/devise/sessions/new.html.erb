@@ -1,8 +1,8 @@
-<div class="max-w-[70%]">
+<div class="max-w-[70%] md:max-w-[50%] lg:max-w-[30%]">
   <h1 class="font-mono text-xl p-2 text-center">Log in</h1>
 
   <img
-    class="max-w-full"
+    class="max-w-full m-auto md:max-w-[60%]"
     src="<%= image_url('undraw_tree-swing.svg') %>"
     alt="Login"
     role="img"
@@ -10,7 +10,7 @@
 
   <%= form_for(resource, as: resource_name, url: session_path(resource_name), 
              html: {
-               class: "bg-white px-2 pt-6 pb-2 m-2 rounded-sm shadow-sm text-md accent-rose-400"
+               class: "bg-white px-2  pt-6 pb-2 m-2 rounded-sm shadow-sm text-md accent-rose-400"
              }) do |f| %>
     <div class="field relative mt-2">
       <%= f.text_field :login,
