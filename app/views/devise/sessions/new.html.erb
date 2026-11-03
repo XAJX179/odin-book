@@ -1,29 +1,58 @@
-<h2>Log in</h2>
+<div class="max-w-[70%]">
+  <h1 class="font-mono text-xl p-2 text-center">Log in</h1>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <p><%= f.label :login %></p>
-    <p><%= f.text_field :login,
+  <img
+    class="max-w-full"
+    src="<%= image_url('undraw_tree-swing.svg') %>"
+    alt="Login"
+    role="img"
+  >
+
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name), 
+             html: {
+               class: "bg-white px-2 pt-6 pb-2 m-2 rounded-sm shadow-sm text-md accent-rose-400"
+             }) do |f| %>
+    <div class="field relative mt-2">
+      <%= f.text_field :login,
+                   class:
+                     "peer w-full placeholder-transparent border-b-2 focus:outline-none focus:border-rose-400",
                    autofocus: true,
                    autocomplete: "login",
-                   placeholder: "Username or Email" %></p>
-  </div>
+                   placeholder: "example@gmail.com" %>
+      <%= f.label :login,
+              "Email or username",
+              class:
+                "absolute left-0 -top-6 text-gray-600 text-sm transition-all peer-placeholder-shown:top-1/30 peer-placeholder-shown:text-base peer-focus:-top-6 peer-focus:text-gray-600 peer-focus:text-sm" %>
+    </div>
 
-  <div class="field">
-    <p><%= f.label :password %></p>
-    <p><%= f.password_field :password, autocomplete: "current-password" %></p>
-  </div>
+    <div class="field relative mt-7">
+      <%= f.password_field :password,
+                       autocomplete: "current-password",
+                       placeholder: "Password",
+                       class:
+                         " peer w-full placeholder-transparent border-b-2 focus:outline-none focus:border-rose-400" %>
+      <%= f.label :password,
+              "Password",
+              class:
+                "absolute left-0 -top-6 text-gray-600 text-sm transition-all peer-placeholder-shown:top-1/30 peer-placeholder-shown:text-base  peer-focus:-top-6 peer-focus:text-gray-600 peer-focus:text-sm" %>
+    </div>
 
-  <% if devise_mapping.rememberable? %>
-    <div class="field">
-      <p><%= f.check_box :remember_me %></p>
-      <p><%= f.label :remember_me %></p>
+    <% if devise_mapping.rememberable? %>
+      <div class="field mt-4">
+        <p class=" inline "><%= f.check_box :remember_me %></p>
+        <p class="inline text-sm"><%= f.label :remember_me %></p>
+      </div>
+    <% end %>
+
+    <div
+      class="
+        actions mt-4 text-white text-center bg-rose-400 rounded-sm accent-black
+        active:bg-black
+      "
+    >
+      <%= f.submit "Log in", class: "w-full p-2" %>
     </div>
   <% end %>
 
-  <div class="actions">
-    <%= f.submit "Log in" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+  <%= render "devise/shared/links" %>
+</div>

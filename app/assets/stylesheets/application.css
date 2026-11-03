@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import "tailwindcss" source("../../views");
 /*
  * This is a manifest file that'll be compiled into application.css.
  *
@@ -13,14 +13,22 @@
 /*   height: 5px; */
 /*   background-color: red; */
 /* } */
-/* turbo-frame,div,a { */
-/*   display: block; */
-/*   /* border: 1px solid red; */ 
+@layer base {
+  html,
+  body {
+    height: 100%;
+  }
+  turbo-frame,
+  a {
+    display: block;
+  }
+}
+/*   /* border: 1px solid red; */
 /* } */
 /**/
 /* a::before, a::after, turbo-frame::before, turbo-frame::after, div::before, div::after { */
-/*   /* background: lightgreen; */ 
-/*   /* content: " id: " attr(id) ; */ 
+/*   /* background: lightgreen; */
+/*   /* content: " id: " attr(id) ; */
 /* } */
 /**/
 /* .comment-replies { */
