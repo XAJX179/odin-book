@@ -1,5 +1,9 @@
 <% flash.each do |type, message| %>
-  <%= tag.div class: type, data: {turbo_temporary: true} do %>
+  <%= tag.div class: type + "
+  rounded-sm shadow-sm mt-1 animate-fade-in-scale  #{alert ? "bg-red-600" : "bg-blue-500"}  #{ flash.empty? ? "" : "p-2"} 
+  ",
+    data: {turbo_temporary: true, controller: "remover"} do %>
     <%= message %>
+    <span class="text-base font-bold px-2 hover:text-black"><button data-action="click->remover#remove">x</button></span>
   <% end %>
 <% end %>
