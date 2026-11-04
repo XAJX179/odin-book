@@ -1,7 +1,13 @@
 <h1>Users#show</h1>
 <p>Find me in app/views/users/show.html.erb</p>
-streams:
-<%= "profile_#{@user.id}_viewer_#{current_user.id}" %>
+streams: profile_<%= @user.id %>_viewer_<%= current_user.id %>
+
+<%= link_to  destroy_user_session_path, data: { turbo_method: :delete },class: "hover:bg-gray-100 rounded-full p-2 bg-white" do %>
+  <div class="flex gap-1">
+    <img src="<%= image_url("icons/log-out.svg") %>" alt="Logoout" role="img">
+    <p>Sign out</p>
+  </div>
+<% end %>
 
 <%= turbo_frame_tag "profile" do %>
   <% if @user.profile.avatar.attached? %>

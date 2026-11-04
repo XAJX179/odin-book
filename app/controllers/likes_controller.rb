@@ -4,7 +4,7 @@ class LikesController < ApplicationController
     post = Post.find(params[:post_id])
     rescue ActiveRecord::RecordNotFound
       flash.now.alert = "Post not found!"
-      render :index, status: :not_found
+      head :not_found
       return
     end
 
@@ -25,7 +25,7 @@ class LikesController < ApplicationController
       post_like = PostLike.find(params[:id])
     rescue ActiveRecord::RecordNotFound
       flash.now.alert = "Like not found!"
-      render :index, status: :not_found
+      head :not_found
       return
     end
 
