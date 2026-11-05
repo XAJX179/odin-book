@@ -1,7 +1,10 @@
-<%= tag.ul id: "search-results" do %>
+<p class="pl-2 text-gray-500 text-sm mb-0">First
+  <%= @posts.size %>
+  results</p>
+<%= tag.ul id: "search-results", class: "p-2" do %>
   <% if @posts.any? %>
     <%= render partial: "post", collection: @posts %>
   <% else %>
-    <li>No results</li>
+    <li class="text-sm">No results</li>
   <% end %>
 <% end %>

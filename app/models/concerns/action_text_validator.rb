@@ -11,6 +11,7 @@ module ActionTextValidator
   included do
     def has_rich_text_content # rubocop:disable Naming/PredicatePrefix
       errors.add(:base, "Body too short (minimum length: 20)") if body&.body&.to_plain_text.to_s.length < 20
+      errors.add(:base, "Body too long (maximum length: 20000)") if body&.body&.to_plain_text.to_s.length > 20_000
 
       return if body&.body&.attachments.blank?
 

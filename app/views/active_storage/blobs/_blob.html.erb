@@ -1,16 +1,18 @@
-<figure class="attachment attachment--<%= blob.representable? ? "preview" : "file" %> attachment--<%= blob.filename.extension %>">
+<figure
+  class="
+    attachment attachment--<%= blob.representable? ? "preview" : "file" %>
+    attachment--<%= blob.filename.extension %>
+  "
+>
   <% if blob.representable? %>
     <% if blob.image? %>
       <% if Rails.env.production? %>
         <%= image_tag cloudinary_url(blob.key), width: 100 %>
       <% else %>
-        <%= image_tag url_for(blob), width: 100 %>
+        <%= image_tag url_for(blob), class: "w-full" %>
       <% end %>
     <% elsif blob.video? %>
-      <%= video_tag url_for(blob),
-            controls: true,
-            preload: "metadata",
-            width: 640 %>
+      <%= video_tag url_for(blob), controls: true, preload: "metadata", width: 640 %>
     <% end %>
   <% end %>
 
