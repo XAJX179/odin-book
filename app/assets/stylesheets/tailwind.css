@@ -206,8 +206,14 @@
   .top-7 {
     top: calc(var(--spacing) * 7);
   }
+  .-right-25 {
+    right: calc(var(--spacing) * -25);
+  }
   .right-0 {
     right: 0px;
+  }
+  .right-auto {
+    right: auto;
   }
   .bottom-0 {
     bottom: 0px;
@@ -215,11 +221,23 @@
   .left-0 {
     left: 0px;
   }
+  .left-5 {
+    left: calc(var(--spacing) * 5);
+  }
+  .left-10 {
+    left: calc(var(--spacing) * 10);
+  }
+  .left-13 {
+    left: calc(var(--spacing) * 13);
+  }
+  .left-15 {
+    left: calc(var(--spacing) * 15);
+  }
+  .left-25 {
+    left: calc(var(--spacing) * 25);
+  }
   .z-1 {
     z-index: 1;
-  }
-  .m-1 {
-    margin: var(--spacing);
   }
   .m-2 {
     margin: calc(var(--spacing) * 2);
@@ -257,6 +275,9 @@
   .flex {
     display: flex;
   }
+  .hidden {
+    display: none;
+  }
   .inline {
     display: inline;
   }
@@ -267,8 +288,14 @@
   .min-h-full {
     min-height: 100%;
   }
+  .w-\[max-content\] {
+    width: max-content;
+  }
   .w-full {
     width: 100%;
+  }
+  .w-max {
+    width: max-content;
   }
   .max-w-\[15\%\] {
     max-width: 15%;
@@ -278,6 +305,9 @@
   }
   .max-w-\[70\%\] {
     max-width: 70%;
+  }
+  .max-w-\[max-content\] {
+    max-width: max-content;
   }
   .max-w-full {
     max-width: 100%;
@@ -349,14 +379,20 @@
   .p-2 {
     padding: calc(var(--spacing) * 2);
   }
-  .p-2\.5 {
-    padding: calc(var(--spacing) * 2.5);
-  }
   .p-3 {
     padding: calc(var(--spacing) * 3);
   }
+  .px-1 {
+    padding-inline: var(--spacing);
+  }
   .px-2 {
     padding-inline: calc(var(--spacing) * 2);
+  }
+  .px-3 {
+    padding-inline: calc(var(--spacing) * 3);
+  }
+  .py-3 {
+    padding-block: calc(var(--spacing) * 3);
   }
   .pt-6 {
     padding-top: calc(var(--spacing) * 6);
@@ -505,6 +541,12 @@
     }
   }
   @media (width >= 48rem) {
+    .md\:top-0 {
+      top: 0px;
+    }
+    .md\:right-auto {
+      right: auto;
+    }
     .md\:max-w-\[10\%\] {
       max-width: 10%;
     }
@@ -517,8 +559,22 @@
     .md\:max-w-\[60\%\] {
       max-width: 60%;
     }
+    .md\:flex-col {
+      flex-direction: column;
+    }
+    .md\:justify-center {
+      justify-content: center;
+    }
     .md\:gap-6 {
       gap: calc(var(--spacing) * 6);
+    }
+    @media (hover: hover) {
+      .md\:group-hover\:block:is(:where(.group):hover *) {
+        display: block;
+      }
+    }
+    .md\:group-focus-visible\:block:is(:where(.group):focus-visible *) {
+      display: block;
     }
   }
   @media (width >= 64rem) {
