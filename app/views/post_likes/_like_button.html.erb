@@ -1,1 +1,8 @@
-<%= button_to "♡ Like", post_likes_path(post_id) %>
+<%= button_to  post_likes_path(post_id), class: "" do %>
+  <img
+    class="size-10 px-auto"
+    src="<%= image_url('icons/heart.svg') %>"
+    alt="Like"
+    role="img"
+  >
+<% end %>

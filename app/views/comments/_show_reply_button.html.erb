@@ -5,7 +5,8 @@
   data: {
     turbo_frame: "_top",
     turbo_prefetch: "false",
-  } %>
+  },
+  class: "w-max p-2 my-2 rounded-full bg-rose-400 text-white" %>
 <% else %>
   <%= link_to "Show Replies",
   replies_to_post_comment_path(
@@ -18,5 +19,6 @@
   data: {
     turbo_frame: "_top",
     turbo_prefetch: "false",
-  } %>
+  },
+  class: "w-max p-2 my-2 rounded-full bg-rose-400 text-white" %>
 <% end %>

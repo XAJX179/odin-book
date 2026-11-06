@@ -1,63 +1,104 @@
-<%= link_to "Back", posts_path %>
+<div
+  class="
+    w-[90%] sm:max-w-[80%] md:max-w-[60%] lg:max-w-[50%] max-w-[90%] min-w-[50%]
+    pb-50
+  "
+>
 
-<%= turbo_stream_from "post_#{@post.id}" %>
-<%# turbo_stream_from "post_#{@post.id}_user_#{current_user.id}" %>
+  <%= link_to "Go to Posts",
+  posts_path,
+  class:
+    "actions w-max px-4 py-2 my-4 text-white text-center bg-rose-400 rounded-sm accent-black active:bg-black" %>
+  <%= turbo_stream_from "post_#{@post.id}" %>
+  <%# turbo_stream_from "post_#{@post.id}_user_#{current_user.id}" %>
 
-<%= turbo_frame_tag "post" do %>
-  <h2>
-    title :
-    <%= @post.title %>
-  </h2>
-  <h3>
-    author :
-    <%= @post.author.name %>
-  </h3>
-  <p>
-    <%= @post.body %>
-  </p>
-  <p>
-    posted :
-    <%= @post.created_at %>
-  </p>
+  <%= turbo_frame_tag "post" do %>
+    <h2 class="font-mono text-xl p-2 text-center">
+      <%= @post.title %>
+    </h2>
+    <div class="bg-white py-2 px-4 rounded-sm shadow-sm">
+      <p class="flex items-center gap-1 py-2">
+        <% if @post.author.profile.avatar.attached? %>
+          <%= image_tag url_for(@post.author.profile.avatar), class: "rounded-full size-10" %>
+        <% else %>
+          <%= image_tag image_url("icons/user-default-pfp.svg"), class: "rounded-full size-10" %>
+        <% end %>
+        <span class="font-bold px-1">
+          <%= @post.author.name %>
+        </span>
+        <span class="text-xs text-gray-500">
+          <%= time_ago_in_words @post.created_at %>
+          ago
+        </span>
+      </p>
+      <p>
+        <%= @post.body %>
+      </p>
 
-  <p>
-    <% if current_user == @post.author %>
-      <%= link_to "Edit", edit_post_path(@post) %>
-      <%= button_to "Delete Post",
-      post_path(@post),
-      method: :delete,
-      data: {
-        turbo_frame: "_top",
-      } %>
-    <% end %>
-  </p>
-<% end %>
-<%= tag.div id: "post-likes" do %>
-  <p>
-    <%= @post.post_likes.size %>
-  </p>
-<% end %>
-
-<%= tag.div id: "post-like-button" do %>
-  <% if @post.liked_by?(current_user) %>
-    <%= render partial: "post_likes/remove_like_button",
-    locals: {
-      post_id: @post.id,
-      like_id: @post.like_by(current_user).id,
-    } %>
-  <% else %>
-    <%= render partial: "post_likes/like_button", locals: { post_id: @post.id } %>
+      <p>
+        <% if current_user == @post.author %>
+          <%= link_to "Edit",
+          edit_post_path(@post),
+          class:
+            "w-max my-2 px-4 py-2 outline-none rounded-sm border-2 border-rose-400 text-rose-400 focus:bg-rose-400 focus:text-white hover:bg-rose-400 hover:text-white" %>
+        <% end %>
+      </p>
+    </div>
   <% end %>
-<% end %>
 
-<%= link_to "💬 New Comment",
-new_post_comment_path(@post.id),
-data: {
-  turbo_frame: "new_comment",
-} %>
+  <%= button_to  post_path(@post),
+              method: :delete,
+              data: {
+                turbo_frame: "_top",
+              },
+              class:
+                "rounded-sm min-w-max mt-2 p-2 bg-red-600 text-white flex justify-center items-center active:scale-95" do %>
 
-<%= turbo_frame_tag :new_comment %>
+    <img
+      class="max-w-[30%] pr-2"
+      src="<%= image_url('icons/trash.svg') %>"
+      alt="Delete Post"
+      role="img"
+    >
+    <p>Delete</p>
+  <% end %>
+  <div class="flex flex-col items-center">
+    <%= tag.div id: "post-likes", class: "text-center" do %>
+      <p>
+        <%= @post.post_likes.size %>
+      </p>
+    <% end %>
 
-<%= turbo_frame_tag :comments, src: post_comments_path(@post.id) do %>
-  Loading...
-<% end %>
+    <%= tag.div id: "post-like-button" do %>
+      <% if @post.liked_by?(current_user) %>
+        <%= render partial: "post_likes/remove_like_button",
+        locals: {
+          post_id: @post.id,
+          like_id: @post.like_by(current_user).id,
+        } %>
+      <% else %>
+        <%= render partial: "post_likes/like_button", locals: { post_id: @post.id } %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <%= link_to new_post_comment_path(@post.id),
+  data: {
+    turbo_frame: "new_comment",
+  },
+  class: "bg-white text-rose-400 p-2 mb-2 w-max rounded-sm shadow-sm" do %>
+    <img
+      class="size-6 inline"
+      src="<%= image_url('icons/message-square.svg') %>"
+      alt="Add comment"
+      role="img"
+    >
+    <span>Add Comment</span>
+  <% end %>
+
+  <%= turbo_frame_tag :new_comment %>
+
+  <%= turbo_frame_tag :comments, src: post_comments_path(@post.id) do %>
+    Loading...
+  <% end %>
+</div>

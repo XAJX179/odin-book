@@ -1,1 +1,8 @@
-<%= button_to "🖤 Like", post_like_path(post_id, like_id), method: :delete %>
+<%= button_to  post_like_path(post_id, like_id), method: :delete, class: "w-full" do %>
+  <img
+    class="size-10 mx-auto"
+    src="<%= image_url('icons/heart-filled.svg') %>"
+    alt="Remove like"
+    role="img"
+  >
+<% end %>

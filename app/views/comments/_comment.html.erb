@@ -1,14 +1,30 @@
 <%= turbo_frame_tag dom_id(comment),
   data: { controller: "toggle-replies", 
-          toggle_replies_hidden_class: "replies--hidden", toggle_replies_show_toggle_class: "replies-toggle" } do %>
-  <%= comment.author.name %>
-  :-
+          toggle_replies_hidden_class: "replies--hidden", toggle_replies_show_toggle_class: "replies-toggle" },
+          class: "bg-white my-2 p-2 rounded-sm shadow-sm border-l-2 border-gray-400" do %>
+  <p class="flex items-center gap-1 py-2">
+    <% if comment.author.profile.avatar.attached? %>
+      <%= image_tag url_for(comment.author.profile.avatar), class: "rounded-full size-10" %>
+    <% else %>
+      <%= image_tag image_url("icons/user-default-pfp.svg"), class: "rounded-full size-10" %>
+    <% end %>
+    <span class="font-bold px-1">
+      <%= comment.author.name %>
+    </span>
+    <span class="text-xs text-gray-500">
+      <%= time_ago_in_words comment.created_at %>
+      ago
+    </span>
+  </p>
   <%= comment.body %>
-  <%= link_to "💬 Reply",
-  new_post_comment_path(comment.post_id, parent_id: comment.id),
+  <%= link_to new_post_comment_path(comment.post_id, parent_id: comment.id),
   data: {
     turbo_frame: dom_id(comment, :reply),
-  } %>
+  } ,class: "bg-white text-rose-400 p-2 mb-2 w-max rounded-sm shadow-sm" do %>
+
+    <%= image_tag "icons/reply.svg", class: "size-6 inline", alt: "Reply comment" %>
+    <span>Reply</span>
+  <% end %>
   <%= turbo_frame_tag dom_id(comment, :buttons),
   src: buttons_post_comment_path(comment.post_id,comment.id), lazy: :loading do %>
     loading buttons...

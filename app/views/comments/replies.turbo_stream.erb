@@ -3,7 +3,7 @@
              id: dom_id(@parent_comment, :replies_toggle),
              data: {
                action: "click->toggle-replies#hide",
-             } %>
+             }, class: "w-max p-2 my-2 rounded-full bg-white text-rose-400 outline-none border-rose-400 border-1" %>
 <% end %>
 <%= turbo_stream.append dom_id(@parent_comment) do %>
   <%= tag.div id: dom_id(@parent_comment, :replies_to) , class: "comment-replies",
