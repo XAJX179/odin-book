@@ -46,7 +46,8 @@
     </div>
   <% end %>
 
-  <%= button_to  post_path(@post),
+  <% if current_user == @post.author %>
+    <%= button_to  post_path(@post),
               method: :delete,
               data: {
                 turbo_frame: "_top",
@@ -54,13 +55,14 @@
               class:
                 "rounded-sm min-w-max mt-2 p-2 bg-red-600 text-white flex justify-center items-center active:scale-95" do %>
 
-    <img
-      class="max-w-[30%] pr-2"
-      src="<%= image_url('icons/trash.svg') %>"
-      alt="Delete Post"
-      role="img"
-    >
-    <p>Delete</p>
+      <img
+        class="max-w-[30%] pr-2"
+        src="<%= image_url('icons/trash.svg') %>"
+        alt="Delete Post"
+        role="img"
+      >
+      <p>Delete</p>
+    <% end %>
   <% end %>
   <div class="flex flex-col items-center">
     <%= tag.div id: "post-likes", class: "text-center" do %>

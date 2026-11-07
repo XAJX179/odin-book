@@ -1,19 +1,38 @@
 <%= turbo_frame_tag "post" do %>
-  <% if !@post.errors.empty? %>
-    <%= @post.errors.full_messages %>
-  <% end %>
-  <%= form_with model: @post do |f| %>
-    <div>
-      <%= f.label :title %>
-      <%= f.text_field :title %>
+  <div class=" text-xs text-red-600">
+    <% if !@post.errors.empty? %>
+      <ul>
+        <% @post.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
+  <%= form_with model: @post , class: "bg-white px-2 py-4" , data: {turbo_frame: "_top"} do |f| %>
+    <div class="field relative">
+      <%= f.text_field :title,
+                   placeholder: "title",
+                   class:
+                     "peer w-full placeholder-transparent border-b-2 focus:outline-none focus:border-rose-400" %>
+      <%= f.label :title,
+              class:
+                "absolute left-0 top-0 peer-not-placeholder-shown:-top-4 peer-not-placeholder-shown:text-sm peer-focus:-top-4 peer-focus:text-sm text-gray-600 transition-all" %>
     </div>
     <div>
       <%= f.label :body %>
       <%= f.rich_text_area :body %>
     </div>
-    <div>
-      <%= f.submit %>
+    <div
+      class="
+        actions mt-4 text-white text-center bg-rose-400 rounded-sm accent-black
+        active:bg-black
+      "
+    >
+      <%= f.submit "Update Post", class: "w-full p-2" %>
     </div>
   <% end %>
-  <%= link_to "Cancel", @post %>
+  <%= link_to "Cancel",
+  @post,
+  class:
+    "my-2 p-1 border-1 text-center focus:bg-rose-400 focus:text-white hover:bg-rose-400 hover:text-white active:bg-black rounded-sm" %>
 <% end %>
