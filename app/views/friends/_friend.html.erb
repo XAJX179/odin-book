@@ -1,22 +1,45 @@
-<div id=<%= dom_id(friend) %>>
-  <%= link_to user_profile_path(friend), data: { turbo_frame: "_top" } do %>
-    <p>
-      id :
-      <%= friend.id %>
-    </p>
-    <h2>
-      name :
-      <%= friend.profile.display_name %>
-    </h2>
-    <h3>
-      username : @<%= friend.name %>
-    </h3>
-    <p>
-      about :
-      <%= friend.profile.about %>
-    </p>
-  <% end %>
-  <% if current_user == user %>
-    <%= button_to "Remove", user_friend_path(user.id, friend.id), method: :delete %>
-  <% end %>
+<div id="<%= dom_id(friend) %>" class="bg-white shadow-sm rounded-sm my-2 p-2">
+  <div class="flex justify-between items-center">
+    <%= link_to user_profile_path(friend), data: { turbo_frame: "_top" } do %>
+      <div class="flex items-center gap-2">
+        <% if friend.profile.avatar.attached? %>
+          <% if Rails.env.production? %>
+            <%= image_tag cloudinary_url(friend.profile.avatar.key),
+            class: "rounded-full size-10" %>
+          <% else %>
+            <%= image_tag url_for(friend.profile.avatar), class: "rounded-full size-10" %>
+          <% end %>
+        <% else %>
+          <%= image_tag image_url("icons/user-default-pfp.svg"), class: "rounded-full size-10" %>
+        <% end %>
+
+        <div>
+          <p class="font-bold text-base pl-1">
+            <%= friend.profile.display_name %>
+          </p>
+          <p class="text-sm text-gray-400">
+            @<%= friend.name %>
+          </p>
+        </div>
+      </div>
+    <% end %>
+    <% if current_user == user %>
+      <%= button_to user_friend_path(user.id, friend.id),
+          method: :delete,
+          class: "rounded-sm min-w-max mt-2 p-2 bg-red-600 text-white flex justify-center items-center active:scale-95" do %>
+
+        <img
+          class="max-w-[30%] pr-2"
+          src="<%= image_url('icons/trash.svg') %>"
+          alt="Delete Post"
+          role="img"
+        >
+        <p>Remove</p>
+      <% end %>
+    <% end %>
+  </div>
+
+  <p>
+    <%= friend.profile.about %>
+  </p>
 </div>

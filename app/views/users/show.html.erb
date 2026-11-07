@@ -30,6 +30,8 @@
             <% else %>
               <%= image_tag url_for(@user.profile.avatar), class: "rounded-full size-20" %>
             <% end %>
+          <% else %>
+            <%= image_tag image_url("icons/user-default-pfp.svg"), class: "rounded-full size-10" %>
           <% end %>
 
           <div>
@@ -53,6 +55,11 @@
       </p>
     <% end %>
   </div>
+
+  <%= link_to "View Friends",
+  user_friends_path(@user),
+  class:
+    "w-max px-4 py-2 my-4 text-white text-center bg-rose-400 rounded-sm accent-black active:bg-black" %>
 
   <%= turbo_stream_from "profile_#{@user.id}_viewer_#{current_user.id}" %>
 

@@ -1,17 +1,38 @@
-<h1>Friends#index</h1>
-<p>Find me in app/views/friends/index.html.erb</p>
+<div
+  class="
+    w-[90%] sm:max-w-[80%] md:max-w-[60%] lg:max-w-[50%] max-w-[90%] min-w-[50%]
+    pb-50
+  "
+>
+  <h2 class="font-mono text-xl p-2 text-center">Friends</h2>
 
-<div>
-  <%= @user.name %>
-  id:
-  <%= @user.id %>
-  friends
-</div>
+  <div>
+    <div class="flex items-center justify-center gap-2">
+      <% if @user.profile.avatar.attached? %>
+        <% if Rails.env.production? %>
+          <%= image_tag cloudinary_url(@user.profile.avatar.key),
+          class: "rounded-full size-10" %>
+        <% else %>
+          <%= image_tag url_for(@user.profile.avatar), class: "rounded-full size-10" %>
+        <% end %>
+      <% else %>
+        <%= image_tag image_url("icons/user-default-pfp.svg"), class: "rounded-full size-10" %>
+      <% end %>
 
-<%= turbo_stream_from "friends-#{@user.id}" %>
+      <span class="font-bold pl-1">
+        <%= @user.profile.display_name %>
+      </span>
+      <span class="text-gray-400 text-sm pr-1">
+        @<%= @user.name %>
+      </span>
+    </div>
+  </div>
 
-<%= tag.div id: "friends" do %>
-  <%= turbo_frame_tag "friends-loader",
+  <%= turbo_stream_from "friends-#{@user.id}" %>
+
+  <%= tag.div id: "friends" do %>
+    <%= turbo_frame_tag "friends-loader",
     loading: "lazy", src: load_friends_for_user_path(id: @user.id,format: "turbo_stream") do %>
+    <% end %>
   <% end %>
-<% end %>
+</div>
