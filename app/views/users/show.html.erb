@@ -12,9 +12,10 @@ streams: profile_<%= @user.id %>_viewer_<%= current_user.id %>
 <%= turbo_frame_tag "profile" do %>
   <% if @user.profile.avatar.attached? %>
     <% if Rails.env.production? %>
-      <%= image_tag cloudinary_url(@user.profile.avatar.key), width: 100 %>
+      <%= image_tag cloudinary_url(@user.profile.avatar.key),
+      class: "rounded-full size-20" %>
     <% else %>
-      <%= image_tag url_for(@user.profile.avatar), width: 100 %>
+      <%= image_tag url_for(@user.profile.avatar), class: "rounded-full size-20" %>
     <% end %>
   <% end %>
 

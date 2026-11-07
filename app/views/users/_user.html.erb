@@ -6,9 +6,9 @@
       <div>
         <% if user.profile.avatar.attached? %>
           <% if Rails.env.production? %>
-            <%= image_tag cloudinary_url(user.profile.avatar.key), width: 100 %>
+            <%= image_tag cloudinary_url(user.profile.avatar.key), class: "rounded-full size-10" %>
           <% else %>
-            <%= image_tag url_for(user.profile.avatar), width: 100 %>
+            <%= image_tag url_for(user.profile.avatar), class: "rounded-full size-10" %>
           <% end %>
         <% end %>
         <h2>

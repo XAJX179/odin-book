@@ -5,7 +5,12 @@ class: "bg-white rounded-sm shadow-sm my-2" do %>
   <div class="post p-2">
     <p class="flex items-center gap-1">
       <% if post.author.profile.avatar.attached? %>
-        <%= image_tag url_for(post.author.profile.avatar), class: "rounded-full size-10" %>
+        <% if Rails.env.production? %>
+          <%= image_tag cloudinary_url(post.author.profile.avatar.key),
+          class: "rounded-full size-10" %>
+        <% else %>
+          <%= image_tag url_for(post.author.profile.avatar), class: "rounded-full size-10" %>
+        <% end %>
       <% else %>
         <%= image_tag image_url("icons/user-default-pfp.svg"), class: "rounded-full size-10" %>
       <% end %>
