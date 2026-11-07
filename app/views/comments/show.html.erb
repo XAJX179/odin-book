@@ -1,11 +1,27 @@
-<%= turbo_stream_from "post_#{comment.post_id}" %>
-<% unless comment.parent_id.nil? || comment.parent_id == "" %>
-  <%= link_to "Parent comment",
-  post_comment_path(comment.post_id, comment.parent_id, new_tlc: comment.id),
+<div
+  class="
+    w-[90%] sm:max-w-[80%] md:max-w-[60%] lg:max-w-[50%] max-w-[90%] min-w-[50%]
+    pb-50
+  "
+>
+  <%= turbo_stream_from "post_#{comment.post_id}" %>
+
+  <%= link_to "Post",
+  post_path(comment.post_id),
   data: {
     turbo_frame: "_top",
-    turbo_prefetch: "false",
-  } %>
-<% end %>
-<%= link_to "Post", post_path(comment.post_id), data: { turbo_frame: "_top" } %>
-<%= render partial: "comment", locals: { comment: comment } %>
+  },
+  class: "w-max p-2 my-2 rounded-full bg-rose-400 text-white" %>
+
+  <% unless comment.parent_id.nil? || comment.parent_id == "" %>
+    <%= link_to "Parent comment",
+    post_comment_path(comment.post_id, comment.parent_id, new_tlc: comment.id),
+    data: {
+      turbo_frame: "_top",
+      turbo_prefetch: "false",
+    },
+    class:
+      "w-max p-2 my-2 rounded-full bg-white text-rose-400 outline-none border-rose-400 border-1" %>
+  <% end %>
+  <%= render partial: "comment", locals: { comment: comment, show: true } %>
+</div>

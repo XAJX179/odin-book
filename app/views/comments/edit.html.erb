@@ -1,7 +1,13 @@
 <%= turbo_frame_tag dom_id(@comment) do %>
-  <% if !@comment.errors.empty? %>
-    <%= @comment.errors.full_messages %>
-  <% end %>
+  <div class=" text-xs text-red-600">
+    <% if !@comment.errors.empty? %>
+      <ul>
+        <% @comment.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
   <%= form_with model: @comment, url: post_comment_path(@post_id, @comment.id) do |f| %>
     <div>
       <%= f.hidden_field :parent_id, value: @parent_id %>
@@ -13,11 +19,21 @@
       <%= f.label :body %>
       <%= f.rich_text_area :body %>
     </div>
-    <div>
-      <%= f.submit %>
+    <div
+      class="
+        actions mt-4 text-white text-center bg-rose-400 rounded-sm accent-black
+        active:bg-black
+      "
+    >
+      <%= f.submit "Update Post Comment", class: "w-full p-2" %>
     </div>
   <% end %>
-  <div>
+  <div
+    class="
+      my-2 p-1 border text-center focus:bg-rose-400 focus:text-white hover:bg-rose-400
+      hover:text-white active:bg-black rounded-sm
+    "
+  >
     <%= link_to "Cancel", post_comment_path(@comment) %>
   </div>
 <% end %>

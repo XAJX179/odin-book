@@ -16,7 +16,25 @@
       ago
     </span>
   </p>
-  <%= comment.body %>
+  <% if local_assigns[:show] %>
+    <%= comment.body %>
+  <% else %>
+    <%= link_to post_comment_path(comment.post_id, comment.id, new_tlc: comment.id),
+  data: {
+    turbo_frame: "_top",
+    turbo_prefetch: "false",
+  }, class: "max-h-[40vh] overflow-hidden" do %>
+      <%= comment.body %>
+    <% end %>
+
+    <%= link_to post_comment_path(comment.post_id, comment.id, new_tlc: comment.id),
+  data: {
+    turbo_frame: "_top",
+    turbo_prefetch: "false",
+  } do %>
+      <p class="text-gray-400 text-center text-xs pt-1">Click to Expand</p>
+    <% end %>
+  <% end %>
   <%= link_to new_post_comment_path(comment.post_id, parent_id: comment.id),
   data: {
     turbo_frame: dom_id(comment, :reply),
