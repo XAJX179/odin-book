@@ -31,7 +31,7 @@ class: "bg-white rounded-sm shadow-sm my-2" do %>
         locals: {
           blob: post.body.embeds.attachments.first.blob,
         } %>
-        <p>See more</p>
+        <p class="text-gray-400 text-center text-xs pt-1">Click to Expand</p>
       <% else %>
         <div class="max-h-[40vh] overflow-hidden">
           <%= post.body %>
