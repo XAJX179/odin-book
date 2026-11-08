@@ -1,32 +1,47 @@
-streams: users
-<%= "users_viewer_#{current_user.id}" %>
-
-<%= tag.div data: {
+<div
+  class="
+    w-[90%] sm:max-w-[80%] md:max-w-[60%] lg:max-w-[50%] max-w-[90%] min-w-[50%]
+    pb-50
+  "
+>
+  <h2 class="font-mono text-xl p-2 text-center">
+    Users
+  </h2>
+  <%= tag.div data: {
               controller: "search",
               search_url_value: search_users_url,
-              }  do %>
+              },class: "bg-white relative rounded-sm shadow-sm"  do %>
 
-  <%= text_field_tag :name,
-  "",
-  placeholder: "Search users by name",
-  data: {
-    action: "keyup->search#fetchResults",
-    search_target: "searchField",
-  },
-  autofocus: true,
-  autocomplete: "off" %>
-  <div data-search-target="results"></div>
-<% end %>
+    <img
+      class="absolute left-2 top-2 max-w-[15%] md:max-w-[10%] pr-2"
+      src="<%= image_url('icons/user-search.svg') %>"
+      alt="Search"
+      role="img"
+    >
+    <%= text_field_tag :name,
+    "",
+    placeholder: "Search users by name",
+    data: {
+      action: "keyup->search#fetchResults",
+      search_target: "searchField",
+    },
+    autofocus: true,
+    autocomplete: "off",
+    class:
+      "py-1 pl-10 w-full accent-rose-500 focus:border-rose-500 border-b-1 rounded-sm outline-none" %>
+    <div data-search-target="results"></div>
+  <% end %>
 
-<%= turbo_stream_from "users" %>
-<%= turbo_stream_from "users_viewer_#{current_user.id}" %>
+  <%= turbo_stream_from "users" %>
+  <%= turbo_stream_from "users_viewer_#{current_user.id}" %>
 
-<%= tag.ul id: "users" %>
+  <%= tag.ul id: "users" %>
 
-<%= turbo_frame_tag "users-loader",
+  <%= turbo_frame_tag "users-loader",
 loading: "lazy",
 src: load_all_users_path(format: "turbo_stream") do %>
-  <p>
-    Loading...
-  </p>
-<% end %>
+    <p>
+      Loading...
+    </p>
+  <% end %>
+</div>

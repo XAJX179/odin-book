@@ -4,7 +4,11 @@
   <% id = "user_#{user.id}_profile_action_button" %>
 <% end %>
 <%= turbo_frame_tag id do %>
-  <%= button_to "Cancel friend request",
-  friend_request_path(id: friend_request.id),
-  method: :delete %>
+  <%= button_to friend_request_path(id: friend_request.id),
+  method: :delete, class: "rounded-sm min-w-max mt-2 p-2 bg-red-600 text-white flex justify-center items-center active:scale-95" do %>
+    <%= image_tag "icons/remove-friend.svg",
+    class: "max-w-[30%] pr-2",
+    alt: "Cancel Request" %>
+    <p>Cancel Request</p>
+  <% end %>
 <% end %>

@@ -8,12 +8,7 @@
           method: :delete,
           class: "rounded-sm min-w-max mt-2 p-2 bg-red-600 text-white flex justify-center items-center active:scale-95" do %>
 
-    <img
-      class="max-w-[30%] pr-2"
-      src="<%= image_url('icons/trash.svg') %>"
-      alt="Delete Post"
-      role="img"
-    >
-    <p>Remove</p>
+    <%= image_tag "icons/trash.svg", class: "max-w-[30%] pr-2", alt: "Remove Friend" %>
+    <p>Remove Friend</p>
   <% end %>
 <% end %>

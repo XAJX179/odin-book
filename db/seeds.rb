@@ -87,19 +87,20 @@ if Rails.env.development?
     end
   end
 
-  users[1..-2].each do |user|
-    FriendRequest.find_or_create_by!(
-      from: user,
-      to: users.first,
-      status: :pending
-    )
-    FriendRequest.find_or_create_by!(
-      from: users.first,
-      to: user,
-      status: :pending
-    )
-  end
+  # users[1..-2].each do |user|
+  #   FriendRequest.find_or_create_by!(
+  #     from: user,
+  #     to: users.first,
+  #     status: :pending
+  #   )
+  #   FriendRequest.find_or_create_by!(
+  #     from: users.first,
+  #     to: user,
+  #     status: :pending
+  #   )
+  # end
 
+  FriendRequest.find_or_create_by!(from: (User.find_by name: :xajx), to: (User.find_by name: :xplo), status: :pending)
   Friendship.find_or_create_by!(user: users.first, friend: users.last)
   Friendship.find_or_create_by!(user: users.last, friend: users.first)
 end

@@ -1,7 +1,7 @@
 <% if current_user.id != user.id %>
   <% if  current_user.friend_ids.include?(user.id) %>
     <%= render partial: "friends/remove_button", locals: { user: user } %>
-  <% elsif requests.empty? || requests.first.to_id == current_user.id || requests.second&.from_id == current_user.id %>
+  <% elsif requests.empty? || requests.first.to_id == current_user.id || requests.second&.to_id == current_user.id %>
     <%= render partial: "friend_requests/send_button", locals: { user: user } %>
   <% else %>
     <%= render partial: "friend_requests/cancel_button",

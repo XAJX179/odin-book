@@ -1,36 +1,42 @@
-<li>
+<li class="bg-white p-2 my-2 shadow-sm rounded-sm ">
   <div
     id="<%= controller.action_name == "search" ? dom_id(user,:search_result) : dom_id(user) %>"
   >
-    <%= link_to user_profile_path(user), data: { turbo_frame: "_top" } do %>
-      <div>
-        <% if user.profile.avatar.attached? %>
-          <% if Rails.env.production? %>
-            <%= image_tag cloudinary_url(user.profile.avatar.key), class: "rounded-full size-10" %>
+    <div class="flex justify-between items-center">
+      <%= link_to user_profile_path(user), data: { turbo_frame: "_top" } do %>
+        <div class="flex items-center gap-2">
+          <% if user.profile.avatar.attached? %>
+            <% if Rails.env.production? %>
+              <%= image_tag cloudinary_url(user.profile.avatar.key), class: "rounded-full size-10" %>
+            <% else %>
+              <%= image_tag url_for(user.profile.avatar), class: "rounded-full size-10" %>
+            <% end %>
           <% else %>
-            <%= image_tag url_for(user.profile.avatar), class: "rounded-full size-10" %>
+            <%= image_tag image_url("icons/user-default-pfp.svg"), class: "rounded-full size-10" %>
           <% end %>
-        <% end %>
-        <h2>
-          name :
-          <%= user.profile.display_name %>
-        </h2>
-        <h3>
-          username : @<%= user.name %>
-        </h3>
-        <p>
-          about :
-          <%= user.profile.about %>
-        </p>
-      </div>
-    <% end %>
 
-    <% if controller.action_name == "search" %>
-      <%= turbo_frame_tag "search_result_user_#{user.id}_profile_action_button",
-      src: buttons_of_user_profile_path(user) %>
-    <% else %>
-      <%= turbo_frame_tag "user_#{user.id}_profile_action_button",
-      src: buttons_of_user_profile_path(user) %>
-    <% end %>
+          <div>
+            <p class="font-bold text-base pl-1">
+              <%= user.profile.display_name %>
+            </p>
+            <p class="text-sm text-gray-400">
+              @<%= user.name %>
+            </p>
+          </div>
+        </div>
+      <% end %>
+
+      <% if controller.action_name == "search" %>
+        <%= turbo_frame_tag "search_result_user_#{user.id}_profile_action_button",
+        src: buttons_of_user_profile_path(user) %>
+      <% else %>
+        <%= turbo_frame_tag "user_#{user.id}_profile_action_button",
+        src: buttons_of_user_profile_path(user) %>
+      <% end %>
+    </div>
   </div>
+
+  <p>
+    <%= user.profile.about %>
+  </p>
 </li>
