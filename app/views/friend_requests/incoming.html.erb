@@ -1,12 +1,9 @@
-<h1>FriendRequests#incoming</h1>
-<p>Find me in app/views/friend_requests/incoming.html.erb</p>
-
 <%= turbo_frame_tag "friend-requests" do %>
 
   <%= turbo_stream_from "incoming-friend-requests-#{current_user.id}" %>
-  <div>
-    incoming requests:
-  </div>
+  <p class="text-center font-mono">
+    Incoming requests
+  </p>
   <%= turbo_frame_tag "friend-requests-loader",
     loading: "lazy", src: load_incoming_friend_requests_path(format: "turbo_stream") do %>
   <% end %>

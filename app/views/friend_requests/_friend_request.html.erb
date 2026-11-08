@@ -1,29 +1,82 @@
-<div id="<%= dom_id(friend_request) %>">
-  <% if friend_request.to_id == user_id %>
+<div
+  id="<%= dom_id(friend_request) %>"
+  class="bg-white shadow-sm rounded-sm my-2 p-2"
+>
+  <div class='flex justify-between'>
     <div>
-      <%= link_to user_profile_path(friend_request.from), data: { turbo_frame: "_top" } do %>
-        from :
-        <span><%= friend_request.from.name %></span>
+      <% if friend_request.to_id == user_id %>
+        <%= link_to user_profile_path(friend_request.from), data: { turbo_frame: "_top" } do %>
+          <% if friend_request.from.profile.avatar.attached? %>
+            <% if Rails.env.production? %>
+              <%= image_tag cloudinary_url(friend_request.from.profile.avatar.key),
+              class: "rounded-full size-10" %>
+            <% else %>
+              <%= image_tag url_for(friend_request.from.profile.avatar),
+              class: "rounded-full size-10" %>
+            <% end %>
+          <% else %>
+            <%= image_tag image_url("icons/user-default-pfp.svg"), class: "rounded-full size-10" %>
+          <% end %>
+
+          <div>
+            <p class="font-bold text-base pl-1">
+              <%= friend_request.from.profile.display_name %>
+            </p>
+            <p class="text-sm text-gray-400">
+              @<%= friend_request.from.name %>
+            </p>
+          </div>
+        <% end %>
+      <% else %>
+        <%= link_to user_profile_path(friend_request.to), data: { turbo_frame: "_top" } do %>
+          <% if friend_request.to.profile.avatar.attached? %>
+            <% if Rails.env.production? %>
+              <%= image_tag cloudinary_url(friend_request.to.profile.avatar.key),
+              class: "rounded-full size-10" %>
+            <% else %>
+              <%= image_tag url_for(friend_request.to.profile.avatar),
+              class: "rounded-full size-10" %>
+            <% end %>
+          <% else %>
+            <%= image_tag image_url("icons/user-default-pfp.svg"), class: "rounded-full size-10" %>
+          <% end %>
+
+          <div>
+            <p class="font-bold text-base pl-1">
+              <%= friend_request.to.profile.display_name %>
+            </p>
+            <p class="text-sm text-gray-400">
+              @<%= friend_request.to.name %>
+            </p>
+          </div>
+        <% end %>
       <% end %>
     </div>
-  <% else %>
-    <div>
-      <%= link_to user_profile_path(friend_request.to), data: { turbo_frame: "_top" } do %>
-        to :
-        <span><%= friend_request.to.name %></span>
+    <div class="flex flex-col">
+      <% if friend_request.from_id == user_id %>
+        <%= button_to friend_request_path(friend_request), method: :delete, 
+          class: "rounded-sm min-w-max mt-2 p-2 bg-red-600 text-white flex justify-center items-center active:scale-95" do %>
+
+          <img
+            class="max-w-[30%] pr-2"
+            src="<%= image_url('icons/remove-friend.svg') %>"
+            alt="Remove Friend"
+            role="img"
+          >
+          <p>Cancel Request</p>
+        <% end %>
+      <% else %>
+        <%= button_to accept_friend_request_path(friend_request) ,class: "rounded-sm min-w-max mt-2 p-2 bg-rose-400 text-white flex justify-center items-center active:scale-95" do %>
+          <%= image_tag "icons/add-friend.svg", class: "max-w-[30%] pr-2", alt: "Send Request" %>
+          <p>Accept Request</p>
+        <% end %>
+        <%= button_to friend_request_path(friend_request), method: :delete, class: "rounded-sm min-w-max mt-2 p-2 bg-red-600 text-white flex justify-center items-center active:scale-95" do %>
+          <%= image_tag "icons/remove-friend.svg",
+          class: "max-w-[30%] pr-2",
+          alt: "Reject Request" %>
+          <p>Reject Request</p>
+        <% end %>
       <% end %>
     </div>
-  <% end %>
-  <p>
-    status :
-    <%= friend_request.status %>
-  </p>
-  <div>
-    <% if friend_request.from_id == user_id %>
-      <%= button_to "Cancel", friend_request_path(friend_request), method: :delete %>
-    <% else %>
-      <%= button_to "Accept", accept_friend_request_path(friend_request) %>
-      <%= button_to "Reject", friend_request_path(friend_request), method: :delete %>
-    <% end %>
   </div>
 </div>
