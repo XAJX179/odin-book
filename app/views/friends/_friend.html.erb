@@ -1,5 +1,5 @@
 <div id="<%= dom_id(friend) %>" class="bg-white shadow-sm rounded-sm my-2 p-2">
-  <div class="flex justify-between items-center">
+  <div class="flex flex-col md:flex-row justify-between md:items-center">
     <%= link_to user_profile_path(friend), data: { turbo_frame: "_top" } do %>
       <div class="flex items-center gap-2">
         <% if friend.profile.avatar.attached? %>

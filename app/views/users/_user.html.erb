@@ -2,7 +2,7 @@
   <div
     id="<%= controller.action_name == "search" ? dom_id(user,:search_result) : dom_id(user) %>"
   >
-    <div class="flex justify-between items-center">
+    <div class="flex flex-col md:flex-row justify-between md:items-center">
       <%= link_to user_profile_path(user), data: { turbo_frame: "_top" } do %>
         <div class="flex items-center gap-2">
           <% if user.profile.avatar.attached? %>

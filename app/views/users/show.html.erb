@@ -50,9 +50,9 @@
             class:
               "w-max my-2 px-4 py-2 outline-none rounded-sm border-2 border-rose-400 text-rose-400 focus:bg-rose-400 focus:text-white hover:bg-rose-400 hover:text-white" %>
           <% end %>
-          <%= render partial: "buttons", locals: { user: @user, requests: @requests } %>
         </div>
       </div>
+      <%= render partial: "buttons", locals: { user: @user, requests: @requests } %>
       <p>
         <%= @user.profile.about %>
       </p>
