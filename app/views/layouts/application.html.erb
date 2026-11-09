@@ -27,6 +27,33 @@
   </head>
 
   <body class="bg-fuchsia-50 ">
+    <a href="https://github.com/XAJX179/odin-book" class="flex justify-center">
+      <% if current_user %>
+        <h1 class=" items-center flex gap-1">
+          <img src="/icon.svg" alt="logo" class="w-15">
+          <div class="font-mono">
+            <p>
+              Odin Book
+            </p>
+            <p class="text-xs">
+              by XAJX179
+            </p>
+          </div>
+        </h1>
+      <% else %>
+        <h1 class="absolute left-1 top-1 text-center">
+          <img src="/icon.svg" alt="logo" class="w-15 mx-auto">
+          <div class="font-mono">
+            <p>
+              Odin Book
+            </p>
+            <p class="text-xs">
+              by XAJX179
+            </p>
+          </div>
+        </h1>
+      <% end %>
+    </a>
     <% if current_user %>
       <nav
         class="

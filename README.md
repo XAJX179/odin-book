@@ -4,60 +4,73 @@
 ![last-commit](https://img.shields.io/github/last-commit/XAJX179/odin-book?logo=git&label=Last%20Commit)
 [![CI](https://github.com/XAJX179/odin-book/actions/workflows/ci.yml/badge.svg)](https://github.com/XAJX179/odin-book/actions/workflows/ci.yml)
 
-Building single page social media site using https://hotwired.dev/
+<p align="center">
+  <img src="./public/icon.svg" alt="Description" width="200" />
+</p>
+
+Live at : <https://xajx.alwaysdata.net/odin-book>
+
+Building single page social media site using <https://hotwired.dev/>
 
 <!-- live at: https://xajx.alwaysdata.net/odin-book -->
 
-## how to run locally:
+## how to run locally
 
 requirements: rails, bundler gem, sqlite3 or postgresql depending on the branch
 
 1. clone the repo:
-    ```sh
-      git clone git@github.com:XAJX179/odin-book.git
-    ```
+
+   ```sh
+     git clone git@github.com:XAJX179/odin-book.git
+   ```
 
 1. install gems using bundler:
-    ```sh
-      bundle install
-    ```
+
+   ```sh
+     bundle install
+   ```
 
 1. create,migrate and seed database:
-    ```sh
-      rails db:create
-      rails db:migrate
-      rails db:seed:replant
-    ```
+
+   ```sh
+     rails db:create
+     rails db:migrate
+     rails db:seed:replant
+   ```
 
 1. start server:
-    ```sh
-      rails server
-    ```
 
-1. go to https://localhost:3000/odin-book
+   ```sh
+     rails server
+   ```
+
+1. go to <https://localhost:3000/odin-book>
 
 ## Info
 
-* Ruby version
+- Ruby version
   - built using `3.3.5`
 
-* dependencies
+- dependencies
   - check `Gemfile`
 
-* Configuration
+- Configuration
   - check `config/*`
 
-* Database creation
+- Database creation
+
   ```sh
     rails db:create
   ```
 
-* Database initialization
+- Database initialization
+
   ```sh
     rails db:seed:replant
   ```
 
-* How to run the test suite
+- How to run the test suite
+
   ```sh
     bundle exec rspec # tests are inside spec/ dir
   ```
