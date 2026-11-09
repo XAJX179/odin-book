@@ -14,13 +14,15 @@ class: "bg-white rounded-sm shadow-sm my-2" do %>
       <% else %>
         <%= image_tag image_url("icons/user-default-pfp.svg"), class: "rounded-full size-10" %>
       <% end %>
-      <span class="font-bold pl-1">
-        <%= post.author.profile.display_name %>
+      <span class="flex flex-col">
+        <span class="font-bold pl-1">
+          <%= post.author.profile.display_name %>
+        </span>
+        <span class="text-gray-400 text-sm pr-1">
+          @<%= post.author.name %>
+        </span>
       </span>
-      <span class="text-gray-400 text-sm pr-1">
-        @<%= post.author.name %>
-      </span>
-      <span class="text-xs text-gray-500">
+      <span class="text-xs text-gray-500 bg-white">
         <%= time_ago_in_words post.created_at %>
         ago
       </span>
