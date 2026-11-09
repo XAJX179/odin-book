@@ -7,7 +7,7 @@
   <% if blob.representable? %>
     <% if blob.image? %>
       <% if Rails.env.production? %>
-        <%= image_tag cloudinary_url(blob.key), width: 100 %>
+        <%= image_tag cloudinary_url(blob.key), class: "w-full" %>
       <% else %>
         <%= image_tag url_for(blob), class: "w-full" %>
       <% end %>
