@@ -92,6 +92,7 @@ class User < ApplicationRecord
 
   def self.search(name)
     where("name ILIKE ?", "%#{User.sanitize_sql_like(name)}%")
+      .where.not(confirmed_at: nil)
       .includes(profile: { avatar_attachment: :blob }).order(created_at: :desc).limit(10)
   end
 
