@@ -1,13 +1,65 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <style>
       /* Email styles need to be inline */
     </style>
   </head>
 
-  <body>
-    <%= yield %>
+  <body
+    style="
+      margin: 2rem auto;
+      font-size: 1.3rem;
+      border-radius: 0.25rem;
+      box-shadow:
+        0 1px 3px 0 rgb(0 0 0 / 0.1),
+        0 1px 2px -1px rgb(0 0 0 / 0.1);
+      max-width: 80%;
+    "
+  >
+    <h1
+      style="
+        font-size: 1rem;
+        background-color: #ff637e;
+        color: #ffffff;
+        border-radius: 0.25rem;
+        padding: 1rem;
+        margin: 0;
+        font-family:
+          ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+          &quot;Liberation Mono&quot;, &quot;Courier New&quot;, monospace;
+      "
+    >
+      Odin Book
+    </h1>
+    <div
+      style="
+        padding: 1rem;
+        font-family:
+          ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+          &quot;Liberation Mono&quot;, &quot;Courier New&quot;, monospace;
+        font-size: 1rem;
+      "
+    >
+      <%= yield %>
+    </div>
+    <footer
+      style="
+        font-size: 1rem;
+        border-radius: 0.25rem;
+        background-color: #ff637e;
+        color: #ffffff;
+        padding: 1rem;
+        margin: 0;
+        font-family:
+          ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+          &quot;Liberation Mono&quot;, &quot;Courier New&quot;, monospace;
+      "
+    >
+      <p style="word-break: break-all;">This email was sent by xajx.alwaysdata.net/odin-book.</p>
+
+      <p>If you did not request this you can safely ignore this email.</p>
+    </footer>
   </body>
 </html>
