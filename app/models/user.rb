@@ -87,7 +87,7 @@ class User < ApplicationRecord
 
   def self.load_all(set_offset, set_limit = LIMIT)
     where.not(confirmed_at: nil)
-    .includes(profile: { avatar_attachment: :blob }).order(created_at: :desc).limit(set_limit).offset(set_offset)
+         .includes(profile: { avatar_attachment: :blob }).order(created_at: :desc).limit(set_limit).offset(set_offset)
   end
 
   def self.search(name)
