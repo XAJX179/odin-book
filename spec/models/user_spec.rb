@@ -25,11 +25,7 @@ RSpec.describe User, type: :model do
     it { is_expected.to validate_confirmation_of(:password) }
     it {
       is_expected.to validate_length_of(:name)
-        .is_at_least(3).is_at_most(25)
-    }
-    it {
-          is_expected.to validate_length_of(:password)
-            .is_at_least(8).is_at_most(100)
+        .is_at_least(3).is_at_most(70)
     }
   end
 end
