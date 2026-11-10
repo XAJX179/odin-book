@@ -27,7 +27,7 @@ class User < ApplicationRecord
     rescue StandardError
       return
     end
-    user.save
+    user.save!
     user.profile
     user.profile.display_name = auth.provider == "github" ? auth.info.name : auth.extra.raw_info.global_name
     attach_profile_avatar(user, auth)
@@ -78,7 +78,7 @@ class User < ApplicationRecord
     broadcast_prepend_to "users"
   end
 
-  validates :name, presence: true, length: { within: 3..25 }, uniqueness: { case_sensitive: false }, format: { with: /\A[a-zA-Z0-9_.-]+\z/ }
+  validates :name, presence: true, length: { within: 3..60 }, uniqueness: { case_sensitive: false }, format: { with: /\A[a-zA-Z0-9_.-]+\z/ }
   validates :password, presence: true, length: { within: 8..100 }
 
   after_create :add_profile
