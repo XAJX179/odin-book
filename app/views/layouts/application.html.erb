@@ -5,6 +5,18 @@
 
     <%= action_cable_meta_tag %>
 
+    <meta property="og:title" content="Odin Book"/>
+    <meta
+      property="og:description"
+      content="Social Media built with Ruby on Rails, Hotwire &amp; PostgreSQL."
+    />
+    <meta property="og:image" content="<%= image_url("og.png") %>"/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="630"/>
+    <meta property="og:image:alt" content="Odin Book"/>
+    <meta property="og:url" content="https://xajx.alwaysdata.net/odin-book">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image"/>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
@@ -16,8 +28,8 @@
     <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
     <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
 
-    <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="icon" href="<%= image_url("icon.png") %>" type="image/png">
+    <link rel="icon" href="<%= image_url("icon.svg") %>" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
