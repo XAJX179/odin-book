@@ -29,6 +29,13 @@
           "rounded-sm mt-2 outline-2 p-1 focus:outline-black focus:bg-rose-400 focus:text-white hover:bg-rose-400 hover:text-white active:bg-black" %></p>
     <% end %>
     <%- if devise_mapping.omniauthable? %>
+      <hr
+        class="
+          border-t border-gray-500 mt-6 after:content-['OR'] after:text-black h-5
+          overflow-visible text-center after:px-2 after:relative after:-top-[13px]
+          after:bg-fuchsia-50 after:text-sm
+        "
+      >
       <%- resource_class.omniauth_providers.each do |provider| %>
         <div>
           <% if provider == :github %>
