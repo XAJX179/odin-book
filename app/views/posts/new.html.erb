@@ -6,6 +6,10 @@
 >
   <h2 class="font-mono text-xl p-2 text-center">New Post</h2>
 
+  <p class="text-sm text-center text-gray-500">
+    Note - You can link to YouTube videos, they will automatically get
+    embedded!</p>
+
   <div class=" text-xs text-red-600">
     <% if !@post.errors.empty? %>
       <ul>
@@ -15,18 +19,19 @@
       </ul>
     <% end %>
   </div>
-  <%= form_with model: @post, class: "bg-white px-2 py-4" do |f| %>
+  <%= form_with model: @post, class: "bg-white px-2 py-6" do |f| %>
     <div class="field relative">
       <%= f.text_field :title,
                    placeholder: "title",
                    class:
                      "peer w-full placeholder-transparent border-b-2 focus:outline-none focus:border-rose-400" %>
       <%= f.label :title,
+              "Title (minimum 10 characters.)",
               class:
                 "absolute left-0 top-0 peer-not-placeholder-shown:-top-4 peer-not-placeholder-shown:text-sm peer-focus:-top-4 peer-focus:text-sm text-gray-600 transition-all" %>
     </div>
-    <div>
-      <%= f.label :body %>
+    <div class="mt-5 md:mt-2">
+      <%= f.label :body, "Body (minimum 20 characters and image should be below 300kb.)" %>
       <%= f.rich_text_area :body %>
     </div>
     <div

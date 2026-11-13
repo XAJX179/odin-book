@@ -54,13 +54,13 @@
     </div>
     <div class="flex flex-col">
       <% if friend_request.from_id == user_id %>
-        <%= button_to friend_request_path(friend_request), method: :delete, 
+        <%= button_to friend_request_path(friend_request), method: :delete, form: {data: { turbo_confirm: "Are you sure?"}},
           class: "rounded-sm min-w-max mt-2 p-2 bg-red-600 text-white flex justify-center items-center active:scale-95" do %>
 
           <img
             class="max-w-[30%] pr-2"
             src="<%= image_url('icons/remove-friend.svg') %>"
-            alt="Remove Friend"
+            alt="Cancel Friend Request"
             role="img"
           >
           <p>Cancel Request</p>
@@ -70,7 +70,8 @@
           <%= image_tag "icons/add-friend.svg", class: "max-w-[30%] pr-2", alt: "Send Request" %>
           <p>Accept Request</p>
         <% end %>
-        <%= button_to friend_request_path(friend_request), method: :delete, class: "rounded-sm min-w-max mt-2 p-2 bg-red-600 text-white flex justify-center items-center active:scale-95" do %>
+        <%= button_to friend_request_path(friend_request), method: :delete, form: {data: { turbo_confirm: "Are you sure?"}},
+          class: "rounded-sm min-w-max mt-2 p-2 bg-red-600 text-white flex justify-center items-center active:scale-95" do %>
           <%= image_tag "icons/remove-friend.svg",
           class: "max-w-[30%] pr-2",
           alt: "Reject Request" %>
