@@ -23,10 +23,11 @@ if Rails.env.development?
     { name: 'kochi', email: 'kochi@gmail.com' },
     { name: 'lamb',  email: 'lamb@gmail.com' },
     { name: 'zero',  email: 'zero@gmail.com' },
-    { name: 'hiss',  email: 'hiss@gmail.com' }
+    { name: 'hiss',  email: 'hiss@gmail.com' },
+    { name: 'guest',  email: 'guest@gmail.com' }
   ]
 
-  USERNAMES_FOR_TEST = %w[xajx hiss xplo viena].freeze
+  USERNAMES_FOR_TEST = %w[xajx hiss xplo viena guest].freeze
 
   user_attrs.each do |attr|
     user = User.where(email: attr[:email]).first_or_initialize

@@ -1,5 +1,5 @@
 <div class="text-center text-rose-400 px-2 m-2 max-w-full">
-  <div class="text-xs ">
+  <div class="text-sm ">
     <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
       <p><%= link_to "Forgot your password?", new_password_path(resource_name) %></p>
     <% end %>
@@ -19,14 +19,14 @@
       <p><%= link_to "Sign up",
         new_registration_path(resource_name),
         class:
-          "rounded-sm outline-2 p-1 focus:outline-black focus:bg-rose-400 focus:text-white hover:bg-rose-400 hover:text-white active:bg-black" %></p>
+          "rounded-sm outline-2 p-1 focus:outline-black focus:bg-rose-400 focus:text-white hover:bg-rose-400 hover:text-white active:bg-black active:text-white" %></p>
     <% end %>
 
     <%- if controller_name != 'sessions' %>
       <p><%= link_to "Log in",
         new_session_path(resource_name),
         class:
-          "rounded-sm mt-2 outline-2 p-1 focus:outline-black focus:bg-rose-400 focus:text-white hover:bg-rose-400 hover:text-white active:bg-black" %></p>
+          "rounded-sm mt-2 outline-2 p-1 focus:outline-black focus:bg-rose-400 focus:text-white hover:bg-rose-400 hover:text-white active:bg-black active:text-white" %></p>
     <% end %>
     <%- if devise_mapping.omniauthable? %>
       <hr
