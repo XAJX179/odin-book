@@ -15,10 +15,10 @@
 
         <div>
           <p class="font-bold text-base pl-1">
-            <%= friend.profile.display_name %>
+            <%= truncate(friend.profile.display_name, length: 25) %>
           </p>
           <p class="text-sm text-gray-400">
-            @<%= friend.name %>
+            @<%= truncate(friend.name, length: 25) %>
           </p>
         </div>
       </div>

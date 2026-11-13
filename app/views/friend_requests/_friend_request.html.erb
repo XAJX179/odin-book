@@ -20,10 +20,10 @@
 
           <div>
             <p class="font-bold text-base pl-1">
-              <%= friend_request.from.profile.display_name %>
+              <%= truncate(friend_request.from.profile.display_name, length: 25) %>
             </p>
             <p class="text-sm text-gray-400">
-              @<%= friend_request.from.name %>
+              @<%= truncate(friend_request.from.name, length: 25) %>
             </p>
           </div>
         <% end %>
@@ -43,10 +43,10 @@
 
           <div>
             <p class="font-bold text-base pl-1">
-              <%= friend_request.to.profile.display_name %>
+              <%= truncate(friend_request.to.profile.display_name, length: 25) %>
             </p>
             <p class="text-sm text-gray-400">
-              @<%= friend_request.to.name %>
+              @<%= truncate(friend_request.to.name, length: 25) %>
             </p>
           </div>
         <% end %>

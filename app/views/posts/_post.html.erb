@@ -16,10 +16,10 @@ class: "bg-white rounded-sm shadow-sm my-2" do %>
       <% end %>
       <span class="flex flex-col">
         <span class="font-bold pl-1">
-          <%= post.author.profile.display_name %>
+          <%= truncate(post.author.profile.display_name, length: 17) %>
         </span>
         <span class="text-gray-400 text-sm pr-1">
-          @<%= post.author.name %>
+          @<%= truncate(post.author.name, length: 17) %>
         </span>
       </span>
       <span class="text-xs text-gray-500 bg-white">
@@ -27,7 +27,7 @@ class: "bg-white rounded-sm shadow-sm my-2" do %>
         ago
       </span>
     </p>
-    <p class="text-lg font-sans font-extrabold pb-1">
+    <p class="text-lg font-sans font-extrabold pb-1 break-all">
       <%= post.title %>
     </p>
     <div class="px-2">

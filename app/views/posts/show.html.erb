@@ -13,7 +13,7 @@
   <%# turbo_stream_from "post_#{@post.id}_user_#{current_user.id}" %>
 
   <%= turbo_frame_tag "post" do %>
-    <h2 class="font-mono text-xl p-2 text-center">
+    <h2 class="font-mono text-xl p-2 text-center break-all">
       <%= @post.title %>
     </h2>
     <div class="bg-white py-2 px-4 rounded-sm shadow-sm">
@@ -30,11 +30,11 @@
             <%= image_tag image_url("icons/user-default-pfp.svg"), class: "rounded-full size-10" %>
           <% end %>
           <span class="flex flex-col">
-            <span class="font-bold pl-1">
-              <%= @post.author.profile.display_name %>
+            <span class="font-bold pl-2">
+              <%= truncate(@post.author.profile.display_name, length: 15) %>
             </span>
-            <span class="text-gray-400 text-sm pr-1">
-              @<%= @post.author.name %>
+            <span class="text-gray-400 text-sm pr-2">
+              @<%= truncate(@post.author.name, length: 15) %>
             </span>
           </span>
         <% end %>

@@ -14,12 +14,12 @@
       <% else %>
         <%= image_tag image_url("icons/user-default-pfp.svg"), class: "rounded-full size-10" %>
       <% end %>
-      <span class="flex flex-col">
+      <span class="flex flex-col break-all">
         <span class="font-bold pl-1">
-          <%= comment.author.profile.display_name %>
+          <%= truncate(comment.author.profile.display_name, length: 10) %>
         </span>
         <span class="text-gray-400 bg-white text-sm pr-1">
-          @<%= comment.author.name %>
+          @<%= truncate(comment.author.name, length: 10) %>
         </span>
       </span>
     <% end %>

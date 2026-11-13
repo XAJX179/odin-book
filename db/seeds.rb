@@ -23,8 +23,8 @@ if Rails.env.development?
     { name: 'kochi', email: 'kochi@gmail.com' },
     { name: 'lamb',  email: 'lamb@gmail.com' },
     { name: 'zero',  email: 'zero@gmail.com' },
-    { name: 'hiss',  email: 'hiss@gmail.com' },
-    { name: 'guest',  email: 'guest@gmail.com' }
+    { name: 'hisssssssssssssssssssssssssssssssssssssssssss', email: 'hiss@gmail.com' },
+    { name: 'guest', email: 'guest@gmail.com' }
   ]
 
   USERNAMES_FOR_TEST = %w[xajx hiss xplo viena guest].freeze
