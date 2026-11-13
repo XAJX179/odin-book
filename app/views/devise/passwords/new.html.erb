@@ -1,5 +1,5 @@
 <div class="max-w-[90%] md:max-w-[50%] lg:max-w-[30%]">
-  <h2 class="font-mono text-xl mt-30 p-2 text-center">Forgot your password?</h2>
+  <h2 class="font-mono text-xl w-full mt-30 p-2 text-center">Forgot your password?</h2>
 
   <%= form_for(resource, as: resource_name, url: password_path(resource_name), 
                html: { class: "bg-white px-2  pt-6 pb-2 m-2 rounded-sm shadow-sm text-md accent-rose-400", method: :post }) do |f| %>
@@ -17,8 +17,8 @@
       <%= f.label :email,
               class:
                 "absolute left-0 top-0 peer-not-placeholder-shown:-top-4
-                                                                    peer-not-placeholder-shown:text-sm peer-focus:-top-4
-                                                                    peer-focus:text-sm text-gray-600 transition-all" %>
+                                                                                peer-not-placeholder-shown:text-sm peer-focus:-top-4
+                                                                                peer-focus:text-sm text-gray-600 transition-all" %>
     </div>
 
     <div

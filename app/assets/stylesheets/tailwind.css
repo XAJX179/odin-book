@@ -836,6 +836,18 @@
     .md\:right-auto {
       right: auto;
     }
+    .md\:mt-6 {
+      margin-top: calc(var(--spacing) * 6);
+    }
+    .md\:mt-10 {
+      margin-top: calc(var(--spacing) * 10);
+    }
+    .md\:mt-15 {
+      margin-top: calc(var(--spacing) * 15);
+    }
+    .md\:mb-15 {
+      margin-bottom: calc(var(--spacing) * 15);
+    }
     .md\:max-w-\[10\%\] {
       max-width: 10%;
     }
@@ -873,6 +885,15 @@
     }
   }
   @media (width >= 64rem) {
+    .lg\:mt-15 {
+      margin-top: calc(var(--spacing) * 15);
+    }
+    .lg\:mt-20 {
+      margin-top: calc(var(--spacing) * 20);
+    }
+    .lg\:mt-30 {
+      margin-top: calc(var(--spacing) * 30);
+    }
     .lg\:mb-10 {
       margin-bottom: calc(var(--spacing) * 10);
     }
