@@ -114,6 +114,6 @@
   <%= turbo_frame_tag :new_comment %>
 
   <%= turbo_frame_tag :comments, src: post_comments_path(@post.id) do %>
-    Loading...
+    <%= render "shared/loader" %>
   <% end %>
 </div>
